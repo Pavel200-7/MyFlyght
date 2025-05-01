@@ -22,7 +22,7 @@ class SeatShablon
     private ?int $compartmentNumber = null;
 
     #[ORM\Column]
-    private CompartmentTypeEnum |null $compartmentType = null;
+    private ?string $compartmentType = null;
 
     #[ORM\Column]
     private ?int $zoneNumber = null;
@@ -41,12 +41,12 @@ class SeatShablon
         return $this->id;
     }
 
-    public function getSeatShablon(): ?int
+    public function getSeatShablon(): ?SeatsDiscriptionShablon
     {
         return $this->SeatShablon;
     }
 
-    public function setSeatShablon(int $SeatShablon): static
+    public function setSeatShablon(?SeatsDiscriptionShablon $SeatShablon): static
     {
         $this->SeatShablon = $SeatShablon;
 
@@ -65,17 +65,18 @@ class SeatShablon
         return $this;
     }
 
-    public function getCompartmentType(): ?int
+    public function getCompartmentType(): ?string
     {
         return $this->compartmentType;
     }
 
-    public function setCompartmentType(int $compartmentType): static
+    public function setCompartmentType(?CompartmentTypeEnum $compartmentType): static
     {
-        $this->compartmentType = $compartmentType;
+        $this->compartmentType = $compartmentType->value;
 
         return $this;
     }
+
 
     public function getZoneNumber(): ?int
     {

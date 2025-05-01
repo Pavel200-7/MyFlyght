@@ -37,6 +37,7 @@ class MainPageType extends AbstractType
             ->add('ServisClass', EnumType::class, [
                 'attr' => ['placeholder' => 'Класс обслуживания'],
                 'class' => CompartmentTypeEnum::class,
+
             ])
         ;
     }

@@ -19,7 +19,8 @@ class SeatShablonType extends AbstractType
             ->add('compartmentNumber')
 //            ->add('compartmentType')
             ->add('compartmentType', EnumType::class, [
-                'class' => CompartmentTypeEnum::class
+                'class' => CompartmentTypeEnum::class,
+//                'choice_value' => 'value',
             ])
             ->add('zoneNumber')
             ->add('sectorNumber')
@@ -29,6 +30,7 @@ class SeatShablonType extends AbstractType
                 'class' => SeatsDiscriptionShablon::class,
                 'choice_label' => 'SeatsDiscriptionShablonName',
             ])
+
         ;
     }
 
