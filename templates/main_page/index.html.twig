@@ -9,33 +9,65 @@
 {% block body %}
     <div class="Main_poster" style="background-image: url('{{ asset('img/Main_page_theme.png') }}')">
         <h1>MyFlight - это профессиональные перелеты</h1>
+
+        <div class="search_div">
+            <form>
+                <div class="search_form">
+                    <div class="form_fields">
+                        <input type="text" name="From" placeholder="Откуда" list="predefined-values">
+                        <datalist id="predefined-values">
+                            {% for City in Cyties %}
+                                <option value="{{ City }}">
+                            {% endfor %}
+                        </datalist>
+                        <input type="text" name="To" placeholder="Куда">
+                        <input type="text" name="When" placeholder="Когда">
+                        <input type="text" name="PersonCount" placeholder="Количество человек">
+                        <input type="text" name="ServisClass" placeholder="Класс обслуживания">
+                    </div>
+                    <div>
+                        <input type="submit" name="PerCount" class="submit_button" value="Найти билеты">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="container my-4">
         <div class="row">
+
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Краткое описание или новости.</p>
+                    <div class="d-flex align-items-center p-3" >
+                        <img src="{{ asset('img/flight_statistic_icon.png') }}" style="width:50px; height:auto; margin-right:10px;">
+                        <div>
+                            <h5 class="card-title mb-2">Постоянный рост направлений</h5>
+                            <p class="card-text lines-3">Количество доступных рейсов растет из-за дня в день.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Краткое описание или новости.</p>
+                    <div class="d-flex align-items-center p-3" >
+                        <img src="{{ asset('img/tickets_icon.png') }}" style="width:50px; height:auto; margin-right:10px;">
+                        <div>
+                            <h5 class="card-title mb-2">Доступные билеты</h5>
+                            <p class="card-text lines-3">Быстрая и дешевая покупка авиабилетов из любой точки мира.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Краткое описание или новости.</p>
+                    <div class="d-flex align-items-center p-3" >
+                        <img src="{{ asset('img/support_icon.png') }}" style="width:50px; height:auto; margin-right:10px;">
+                        <div>
+                            <h5 class="card-title mb-2">Поддержка 24 / 7</h5>
+                            <p class="card-text lines-3">Ответим на ваши вопросы в месенжерах или по телефону.</p>
+                        </div>
                     </div>
                 </div>
             </div>

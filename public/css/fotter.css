@@ -15,9 +15,8 @@ footer {
 .messengers:hover {
 
     filter: brightness(1.2);
-    transition: filter 0.3s ease;
-
-
+    /*transition: filter 0.3s ease;*/
+    transform: translateY(-4px) scale(1.05);
 
 }
 
