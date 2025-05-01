@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Главная{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Main_page.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="Main_poster" style="background-image: url('{{ asset('img/Main_page_theme.png') }}')">
+        <h1>MyFlight - это профессиональные перелеты</h1>
+    </div>
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Заголовок карточки</h5>
+                        <p class="card-text">Краткое описание или новости.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Заголовок карточки</h5>
+                        <p class="card-text">Краткое описание или новости.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Заголовок карточки</h5>
+                        <p class="card-text">Краткое описание или новости.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Можно добавить ещё карточек -->
+        </div>
+    </div>
+
+
+
+{% endblock %}

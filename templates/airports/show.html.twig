@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Airports{% endblock %}
+
+{% block body %}
+    <h1>Airports</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ airport.id }}</td>
+            </tr>
+            <tr>
+                <th>AirportName</th>
+                <td>{{ airport.AirportName }}</td>
+            </tr>
+            <tr>
+                <th>Longtitude</th>
+                <td>{{ airport.longtitude }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ airport.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Timezone</th>
+                <td>{{ airport.timezone }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_airports_index') }}">back to list</a>
+
+    <a href="{{ path('app_airports_edit', {'id': airport.id}) }}">edit</a>
+
+    {{ include('airports/_delete_form.html.twig') }}
+{% endblock %}

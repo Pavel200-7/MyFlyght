@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SeatsDiscriptionShablon{% endblock %}
+
+{% block body %}
+    <h1>SeatsDiscriptionShablon</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ seats_discription_shablon.id }}</td>
+            </tr>
+            <tr>
+                <th>SeatsDiscriptionShablonName</th>
+                <td>{{ seats_discription_shablon.SeatsDiscriptionShablonName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_seats_discription_shablon_index') }}">back to list</a>
+
+    <a href="{{ path('app_seats_discription_shablon_edit', {'id': seats_discription_shablon.id}) }}">edit</a>
+
+    {{ include('seats_discription_shablon/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Airline{% endblock %}
+
+{% block body %}
+    <h1>Airline</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ airline.id }}</td>
+            </tr>
+            <tr>
+                <th>AirlineName</th>
+                <td>{{ airline.airlineName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_airline_index') }}">back to list</a>
+
+    <a href="{{ path('app_airline_edit', {'id': airline.id}) }}">edit</a>
+
+    {{ include('airline/_delete_form.html.twig') }}
+{% endblock %}

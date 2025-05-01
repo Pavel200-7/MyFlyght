@@ -1,0 +1,18 @@
+.Main_poster {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100vw;
+    height: 40vw;
+    text-align: center;
+
+    border-top: solid 1px #dbeafe;
+}
+
+.Main_poster h1 {
+    margin-top: 10%;
+    color: white;
+    font-size: 62px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+}

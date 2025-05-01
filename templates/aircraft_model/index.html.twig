@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AircraftModel index{% endblock %}
+
+{% block body %}
+    <h1>AircraftModel index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Model</th>
+                <th>MaxSits</th>
+                <th>MaxWeight</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for aircraft_model in aircraft_models %}
+            <tr>
+                <td>{{ aircraft_model.id }}</td>
+                <td>{{ aircraft_model.model }}</td>
+                <td>{{ aircraft_model.MaxSits }}</td>
+                <td>{{ aircraft_model.MaxWeight }}</td>
+                <td>
+                    <a href="{{ path('app_aircraft_model_show', {'id': aircraft_model.id}) }}">show</a>
+                    <a href="{{ path('app_aircraft_model_edit', {'id': aircraft_model.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_aircraft_model_new') }}">Create new</a>
+{% endblock %}

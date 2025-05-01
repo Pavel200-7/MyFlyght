@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New HundLuggagePoliticy{% endblock %}
+
+{% block body %}
+    <h1>Create new HundLuggagePoliticy</h1>
+
+    {{ include('hund_luggage_politicy/_form.html.twig') }}
+
+    <a href="{{ path('app_hund_luggage_politicy_index') }}">back to list</a>
+{% endblock %}

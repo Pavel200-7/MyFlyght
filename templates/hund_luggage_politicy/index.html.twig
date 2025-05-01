@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HundLuggagePoliticy index{% endblock %}
+
+{% block body %}
+    <h1>HundLuggagePoliticy index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ItemsCount</th>
+                <th>WeightPerItem</th>
+                <th>WidthX</th>
+                <th>LengthY</th>
+                <th>HeightZ</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hund_luggage_politicy in hund_luggage_politicies %}
+            <tr>
+                <td>{{ hund_luggage_politicy.id }}</td>
+                <td>{{ hund_luggage_politicy.ItemsCount }}</td>
+                <td>{{ hund_luggage_politicy.weightPerItem }}</td>
+                <td>{{ hund_luggage_politicy.widthX }}</td>
+                <td>{{ hund_luggage_politicy.lengthY }}</td>
+                <td>{{ hund_luggage_politicy.heightZ }}</td>
+                <td>
+                    <a href="{{ path('app_hund_luggage_politicy_show', {'id': hund_luggage_politicy.id}) }}">show</a>
+                    <a href="{{ path('app_hund_luggage_politicy_edit', {'id': hund_luggage_politicy.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_hund_luggage_politicy_new') }}">Create new</a>
+{% endblock %}
