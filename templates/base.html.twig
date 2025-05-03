@@ -11,6 +11,7 @@
 
             <link rel="stylesheet" href="{{ asset('css/header.css') }}">
             <link rel="stylesheet" href="{{ asset('css/fotter.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/common_form.css') }}">
         {% endblock %}
 
         {% block javascripts %}
@@ -35,12 +36,17 @@
             </ul>
 
             <div class="col-md-3 text-end">
+                {% if app.user %}
+                    <a href="{{ path('app_logout') }}" class="btn btn-outline-primary me-2">Выйти</a>
+                    {% if isAdmin is defined and isAdmin %}
+                        <a href="{{ path('app_admin') }}" class="btn btn-outline-primary me-2">Админка</a>
+                    {% endif %}
+                {% endif %}
                 <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2">Войти</a>
                 <a href="{{ path('app_register') }}" class="btn btn-primary">Регирация</a>
             </div>
         {% endblock %}
     </header>
-
 
     <body>
         <div class="main-content">

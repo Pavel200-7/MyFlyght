@@ -27,9 +27,11 @@ final class CitiesController extends AbstractController
     {
         $city = new Cities();
         $form = $this->createForm(CitiesType::class, $city);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->persist($city);
             $entityManager->flush();
 

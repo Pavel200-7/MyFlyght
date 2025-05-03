@@ -2,44 +2,60 @@
 
 namespace App\Form;
 
-use App\Entity\Airports;
 use App\Entity\Cities;
 use App\Enum\CompartmentTypeEnum;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+
 
 class MainPageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('departureAirport', Cities::class, [
-                'attr' => ['placeholder' => 'Откуда'],
+            ->add('departureAirport', EntityType::class, [
+                'placeholder' => 'Откуда',
                 'class' => Cities::class,
                 'choice_label' => 'CityName',
             ])
-            ->add('arrivalAirport', Cities::class, [
-                'attr' => ['placeholder' => 'Куда'],
+            ->add('arrivalAirport', EntityType::class, [
+                'placeholder' => 'Куда',
                 'class' => Cities::class,
                 'choice_label' => 'CityName',
             ])
-            ->add('sheduledDeparture', null, [
-                'attr' => ['placeholder' => 'Когда'],
+            ->add('sheduledDeparture', DateType::class, [
+                'placeholder' => 'Когда',
+                'attr' => [
+                    'placeholder' => 'Когда', // ваш текст для placeholder
+                ],
                 'widget' => 'single_text',
+
             ])
-            ->add('PersonCount', null, [
-                'attr' => ['placeholder' => 'Количество человек'],
-                'widget' => 'single_text',
+            ->add('PersonCount', ChoiceType::class, [
+                'placeholder' => 'Количество человек',
+                'choices'  => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                ],
+//                'choice_label' => 'displayName',
+//                'data' => '1',
+//                'widget' => 'single_text',
             ])
             ->add('ServisClass', EnumType::class, [
-                'attr' => ['placeholder' => 'Класс обслуживания'],
+                'placeholder' => 'Класс обслуживания',
                 'class' => CompartmentTypeEnum::class,
-
+                'choice_label' => 'value',
             ])
         ;
     }
+
 
 }

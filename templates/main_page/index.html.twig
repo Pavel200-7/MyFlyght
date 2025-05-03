@@ -11,25 +11,21 @@
         <h1>MyFlight - это профессиональные перелеты</h1>
 
         <div class="search_div">
-            <form>
-                <div class="search_form">
-                    <div class="form_fields">
-                        <input type="text" name="From" placeholder="Откуда" list="predefined-values">
-                        <datalist id="predefined-values">
-                            {% for City in Cyties %}
-                                <option value="{{ City }}">
-                            {% endfor %}
-                        </datalist>
-                        <input type="text" name="To" placeholder="Куда">
-                        <input type="text" name="When" placeholder="Когда">
-                        <input type="text" name="PersonCount" placeholder="Количество человек">
-                        <input type="text" name="ServisClass" placeholder="Класс обслуживания">
-                    </div>
-                    <div>
-                        <input type="submit" name="PerCount" class="submit_button" value="Найти билеты">
-                    </div>
-                </div>
-            </form>
+            {{ form_start(form, {'attr': {'class': 'search_form'} } ) }}
+
+            <div class="form_fields">
+                {{ form_widget(form.departureAirport, {'attr': {'class': 'form_field'}}) }}
+                {{ form_widget(form.arrivalAirport, {'attr': {'class': 'form_field'}}) }}
+                {{ form_widget(form.sheduledDeparture, {'attr': {'class': 'form_field'}}) }}
+                {{ form_widget(form.PersonCount, {'attr': {'class': 'form_field'}}) }}
+                {{ form_widget(form.ServisClass, {'attr': {'class': 'form_field'}}) }}
+            </div>
+
+            <div>
+                <input type="submit" name="PerCount" class="submit_button" value="Найти билеты">
+            </div>
+
+            {{ form_end(form) }}
         </div>
     </div>
 
@@ -74,7 +70,6 @@
             <!-- Можно добавить ещё карточек -->
         </div>
     </div>
-
 
 
 {% endblock %}

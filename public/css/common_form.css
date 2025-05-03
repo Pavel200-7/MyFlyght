@@ -1,0 +1,33 @@
+
+.form_div{
+    margin: auto;
+    margin-top: 10%;
+    border: solid 1px black;
+    border-radius: 10px;
+    width: 40%;
+    padding: 3%;
+    text-align: center;
+    background-color: rgba(85, 85, 85, 30%);
+
+}
+
+
+.form_div input,
+.form_div label,
+.form_div button {
+    display: block;
+    margin: auto;
+}
+
+.form_div button {
+    border: solid 1px black;
+}
+
+.form_div input[type='email'],
+.form_div input[type='password'],
+.form_div input[type='text'] {
+    width: 100%;
+    padding: 1%;
+    border: solid 1px white;
+    border-radius: 10px;
+}
