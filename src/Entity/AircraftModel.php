@@ -20,11 +20,34 @@ class AircraftModel
     #[ORM\JoinColumn(name: 'SeatsDiscriptionShablon_id', referencedColumnName: 'id')]
     private SeatsDiscriptionShablon|null $seatsDiscriptionId = null;
 
-    #[ORM\Column]
-    private ?int $MaxSits = null;
+    #[ORM\ManyToOne(targetEntity: Manufacturers::class)]
+    #[ORM\JoinColumn(name: 'Manufacturers_id', referencedColumnName: 'id')]
+    private Manufacturers|null $manufacturerId = null;
 
     #[ORM\Column]
-    private ?int $MaxWeight = null;
+    private ?int $maxSits = null;
+
+    #[ORM\Column]
+    private ?int $maxWeight = null;
+
+    #[ORM\Column]
+    private ?int $averageSpeed = null;
+
+    #[ORM\Column]
+    private ?int $range = null;
+    private int $MaxWeight;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function getModel(): ?string
     {
@@ -39,13 +62,12 @@ class AircraftModel
     }
 
 
-
-    public function getSeatsDiscriptionId(): ?int
+    public function getSeatsDiscriptionId(): ?SeatsDiscriptionShablon
     {
         return $this->seatsDiscriptionId;
     }
 
-    public function setSeatsDiscriptionId(int $seatsDiscriptionId): static
+    public function setSeatsDiscriptionId(SeatsDiscriptionShablon|null $seatsDiscriptionId): static
     {
         $this->seatsDiscriptionId = $seatsDiscriptionId;
 
@@ -54,24 +76,24 @@ class AircraftModel
 
     public function getMaxSits(): ?int
     {
-        return $this->MaxSits;
+        return $this->maxSits;
     }
 
-    public function setMaxSits(int $MaxSits): static
+    public function setMaxSits(int $maxSits): static
     {
-        $this->MaxSits = $MaxSits;
+        $this->maxSits = $maxSits;
 
         return $this;
     }
 
     public function getMaxWeight(): ?int
     {
-        return $this->MaxWeight;
+        return $this->maxWeight;
     }
 
     public function setMaxWeight(int $MaxWeight): static
     {
-        $this->MaxWeight = $MaxWeight;
+        $this->maxWeight = $MaxWeight;
 
         return $this;
     }
@@ -88,12 +110,12 @@ class AircraftModel
         return $this;
     }
 
-    public function getManufacturerId(): ?int
+    public function getManufacturerId(): Manufacturers|null
     {
         return $this->manufacturerId;
     }
 
-    public function setManufacturerId(int $manufacturerId): static
+    public function setManufacturerId(Manufacturers|null $manufacturerId): static
     {
         $this->manufacturerId = $manufacturerId;
 

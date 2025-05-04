@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/hundLuggagePoliticy')]
+#[Route('/admin/hundLuggagePoliticy')]
 final class HundLuggagePoliticyController extends AbstractController
 {
     #[Route(name: 'app_hund_luggage_politicy_index', methods: ['GET'])]

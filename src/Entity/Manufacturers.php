@@ -26,10 +26,12 @@ class Manufacturers
         return $this->manufacturerName;
     }
 
-    public function setManufacturerName(string $manufacturerName): static
+    public function setManufacturerName(?string $manufacturerName): static
     {
         $this->manufacturerName = $manufacturerName;
 
         return $this;
     }
+
+
 }

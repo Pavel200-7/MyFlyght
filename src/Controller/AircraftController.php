@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/aircraft')]
+#[Route('/admin/aircraft')]
 final class AircraftController extends AbstractController
 {
     #[Route(name: 'app_aircraft_index', methods: ['GET'])]
     public function index(AircraftRepository $aircraftRepository): Response
     {
-        return $this->render('aircraft/index.html.twig', [
+        return $this->render('admin/templates/aircraft/index.html.twig', [
             'aircraft' => $aircraftRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class AircraftController extends AbstractController
             return $this->redirectToRoute('app_aircraft_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('aircraft/new.html.twig', [
+        return $this->render('admin/templates/aircraft/new.html.twig', [
             'aircraft' => $aircraft,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class AircraftController extends AbstractController
     #[Route('/{id}', name: 'app_aircraft_show', methods: ['GET'])]
     public function show(Aircraft $aircraft): Response
     {
-        return $this->render('aircraft/show.html.twig', [
+        return $this->render('admin/templates/aircraft/show.html.twig', [
             'aircraft' => $aircraft,
         ]);
     }
@@ -62,7 +62,7 @@ final class AircraftController extends AbstractController
             return $this->redirectToRoute('app_aircraft_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('aircraft/edit.html.twig', [
+        return $this->render('admin/templates/aircraft/edit.html.twig', [
             'aircraft' => $aircraft,
             'form' => $form,
         ]);
@@ -76,6 +76,6 @@ final class AircraftController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_aircraft_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin/templates/app_aircraft_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -1,10 +1,40 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin_pages.css') }}">
+{% endblock %}
+
 {% block body %}
-    {% block sidebar %}
-        <H1>sdrfsraser</H1>
-    {% endblock sidebar %}
-    {% block workPlace %}
-    {% endblock workPlace %}
+    <div class="window_div">
+        <div class="sidenav">
+            {% block sidebar %}
+                    <a href="{{ path('app_admin') }}">Главная</a>
+                    <a href="{{ path('app_aircraft_index') }}">Транспорт</a>
+                    <a href="{{ path('app_aircraft_model_index') }}">Модель транспорта</a>
+                    <a href="{{ path('app_airline_index') }}">Авиакомпании</a>
+                    <a href="{{ path('app_airports_index') }}">Аэропорты</a>
+                    <a href="{{ path('app_admin') }}">Контакт</a>
+                    <a href="{{ path('app_admin') }}">Услуги</a>
+                    <a href="{{ path('app_admin') }}">Клинты</a>
+                    <a href="{{ path('app_admin') }}">Контакт</a>
+                    <a href="{{ path('app_admin') }}">Услуги</a>
+                    <a href="{{ path('app_admin') }}">Клинты</a>
+                    <a href="{{ path('app_admin') }}">Контакт</a>
+                    <a href="{{ path('app_admin') }}">Услуги</a>
+                    <a href="{{ path('app_admin') }}">Клинты</a>
+                    <a href="{{ path('app_admin') }}">Контакт</a>
+            {% endblock sidebar %}
+        </div>
+        <div class="work_place">
+            {% block workPlace %}
+                <h1>fftdsr</h1>
+
+            {% endblock workPlace %}
+        </div>
+
+
+    </div>
+
 
 {% endblock%}

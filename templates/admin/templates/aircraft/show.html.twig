@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/baseAdmin.html.twig' %}
 
 {% block title %}Aircraft{% endblock %}
 
@@ -26,5 +26,5 @@
 
     <a href="{{ path('app_aircraft_edit', {'id': aircraft.id}) }}">edit</a>
 
-    {{ include('aircraft/_delete_form.html.twig') }}
+    {{ include('admin/templates/aircraft/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,0 +1,102 @@
+
+.window_div {
+    border-top: solid white 1px;
+    box-sizing: border-box;
+}
+
+
+.sidenav {
+    width: 15%;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    background-color: #333;
+    overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+    padding-top: 20px;
+    padding-right: 1%;
+    padding-left: 1%;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    border-bottom: solid #dbeafe 1px;
+}
+
+.sidenav a:last-child {
+    border-bottom: none;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+.work_place {
+    margin-left: 15%; /* То же, что и ширина боковой панели */
+
+    width: 85%;
+    /*position: absolute;*/
+
+    box-sizing: border-box;
+    border: solid black 2px;
+    padding: 3%;
+
+}
+
+thead {
+    /*all: unset;*/
+    border-bottom: solid black 5px;
+}
+
+.work_place a{
+    all: unset;
+    border: black solid 1px;
+    border-radius: 5px;
+    padding: 1%;
+    color: #131313;
+    /*font-size: 10px;*/
+
+    font-weight: 700;
+
+}
+
+.work_place .aBackToList {
+    background-color: rgba(112, 119, 112, 0.32);
+}
+
+.work_place .aBackToList:hover {
+    background-color: rgba(24, 25, 24, 0.32);
+}
+
+.work_place .aCreate {
+    background-color: rgba(3, 198, 3, 0.7);
+}
+
+.work_place .aCreate:hover {
+    background-color: rgba(17, 175, 17, 0.7);
+}
+
+.work_place .aUpdate {
+    background-color: rgba(15, 140, 204, 0.7);
+}
+
+.work_place .aUpdate:hover {
+    background-color: rgba(8, 114, 168, 0.7);
+}
+
+.work_place .aDelete {
+    background-color: rgba(228, 9, 15, 0.7);
+}
+
+.work_place .aDelete:hover {
+    background-color: rgba(174, 3, 8, 0.7);
+}

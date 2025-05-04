@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/manufacturers')]
+#[Route('/admin/manufacturers')]
 final class ManufacturersController extends AbstractController
 {
     #[Route(name: 'app_manufacturers_index', methods: ['GET'])]

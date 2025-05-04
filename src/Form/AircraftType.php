@@ -17,15 +17,18 @@ class AircraftType extends AbstractType
         $builder
             ->add('ManufactureDate', null, [
                 'widget' => 'single_text',
+                'label' => 'Дата изготовления',
             ])
             ->add('registrationNumber')
             ->add('airlineId', EntityType::class, [
                 'class' => Airline::class,
-                'choice_label' => 'id',
+                'label' => 'Авиакомпания',
+                'choice_label' => 'airlineName',
             ])
             ->add('aircraftModelId', EntityType::class, [
                 'class' => AircraftModel::class,
-                'choice_label' => 'id',
+                'label' => 'Модель',
+                'choice_label' => 'model',
             ])
         ;
     }

@@ -1,0 +1,12 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Изменить модель транспорта{% endblock %}
+
+{% block workPlace %}
+    <h1>Изменить модель транспорта</h1>
+
+    {{ include('admin/templates/aircraft_model/_form.html.twig', {'button_label': 'Обновить'}) }}
+
+    {{ include('admin/templates/aircraft_model/_delete_form.html.twig') }}
+
+{% endblock %}

@@ -25,7 +25,7 @@ class Aircraft
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $ManufactureDate = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 7)]
     private ?string $registrationNumber = null;
 
     public function getId(): ?int

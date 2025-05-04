@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/clients')]
+#[Route('/admin/clients')]
 final class ClientsController extends AbstractController
 {
     #[Route(name: 'app_clients_index', methods: ['GET'])]

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/seatShablon')]
+#[Route('/admin/seatShablon')]
 final class SeatShablonController extends AbstractController
 {
     #[Route(name: 'app_seat_shablon_index', methods: ['GET'])]

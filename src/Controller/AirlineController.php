@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/airline')]
+#[Route('/admin/airline')]
 final class AirlineController extends AbstractController
 {
     #[Route(name: 'app_airline_index', methods: ['GET'])]

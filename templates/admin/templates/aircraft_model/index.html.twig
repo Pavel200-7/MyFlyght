@@ -1,0 +1,50 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Транспорт модель{% endblock %}
+
+{% block workPlace %}
+    <h1>Модель транспорта главная</h1>
+    <br>
+    <a href="{{ path('app_aircraft_model_new') }}" class="aCreate">Создать</a>
+    <br><br>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Идентификатор</th>
+                <th>Модель</th>
+                <th>Шаблон посадочных мест</th>
+                <th>Изготовитель</th>
+                <th>Максимум мест</th>
+                <th>Максимальный вес (кг)</th>
+                <th>Средняя скорость (км/ч)</th>
+                <th>Максимальная дальность перелета(км)</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for aircraft_model in aircraft_models %}
+            <tr>
+                <td>{{ aircraft_model.id }}</td>
+                <td>{{ aircraft_model.model }}</td>
+                <td>{{ aircraft_model.seatsDiscriptionId.SeatsDiscriptionShablonName }}</td>
+                <td>{{ aircraft_model.manufacturerId.manufacturerName }}</td>
+                <td>{{ aircraft_model.maxSits }}</td>
+                <td>{{ aircraft_model.maxWeight }}</td>
+                <td>{{ aircraft_model.averageSpeed }}</td>
+                <td>{{ aircraft_model.range }}</td>
+                <td>
+{#                    <a href="{{ path('app_aircraft_model_show', {'id': aircraft_model.id}) }}">Показать</a>#}
+                    <a href="{{ path('app_aircraft_model_edit', {'id': aircraft_model.id}) }}" class="aUpdate">Изменить</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Записей нет</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

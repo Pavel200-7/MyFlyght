@@ -1,0 +1,39 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+
+
+{% block title %}Транспорт{% endblock %}
+
+{% block workPlace %}
+    <h1>Транспорт главная</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Идентификатор</th>
+                <th>Дата изготовления</th>
+                <th>Регистрационный номер</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for aircraft in aircraft %}
+            <tr>
+                <td>{{ aircraft.id }}</td>
+                <td>{{ aircraft.ManufactureDate ? aircraft.ManufactureDate|date('Y-m-d') : '' }}</td>
+                <td>{{ aircraft.registrationNumber }}</td>
+                <td>
+                    <a href="{{ path('app_aircraft_show', {'id': aircraft.id}) }}">Показать</a>
+                    <a href="{{ path('app_aircraft_edit', {'id': aircraft.id}) }}">Изменить</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Записей нет</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_aircraft_new') }}">Создать</a>
+{% endblock %}

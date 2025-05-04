@@ -1,0 +1,10 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Новый модель транспорта{% endblock %}
+
+{% block workPlace %}
+    <h1>Создать новую запись: модель транспорта</h1>
+
+    {{ include('admin/templates/aircraft_model/_form.html.twig') }}
+
+{% endblock %}
