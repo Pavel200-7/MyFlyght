@@ -12,11 +12,21 @@ class HundLuggagePoliticyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('ItemsCount')
-            ->add('weightPerItem')
-            ->add('widthX')
-            ->add('lengthY')
-            ->add('heightZ')
+            ->add('ItemsCount', null, [
+                'label' => 'Количество вещей',
+            ])
+            ->add('weightPerItem', null, [
+                'label' => 'Вес на единицу (кг)',
+            ])
+            ->add('widthX', null, [
+                'label' => 'Ширина (см)',
+            ])
+            ->add('lengthY', null, [
+                'label' => 'Длина (см)',
+            ])
+            ->add('heightZ', null, [
+                'label' => 'Высота (см)',
+            ])
         ;
     }
 

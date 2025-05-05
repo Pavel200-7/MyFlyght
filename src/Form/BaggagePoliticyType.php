@@ -12,8 +12,12 @@ class BaggagePoliticyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('itemsCount')
-            ->add('weightPerItem')
+            ->add('itemsCount', null, [
+                'label' => 'Количество вещей',
+            ])
+            ->add('weightPerItem', null, [
+                'label' => 'Вес на единицу (кг)',
+            ])
         ;
     }
 

@@ -47,7 +47,7 @@
     /*position: absolute;*/
 
     box-sizing: border-box;
-    border: solid black 2px;
+    /*border: solid black 2px;*/
     padding: 3%;
 
 }
@@ -64,10 +64,13 @@ thead {
     padding: 1%;
     color: #131313;
     /*font-size: 10px;*/
+    display: inline-block; /* или block, если нужно */
+    margin-bottom: 1em;
 
     font-weight: 700;
 
 }
+
 
 .work_place .aBackToList {
     background-color: rgba(112, 119, 112, 0.32);

@@ -16,7 +16,7 @@ class AircraftModelType extends AbstractType
     {
         $builder
             ->add('model', null,[
-                'label' => 'Модель',
+                'label' => 'Наименование модели',
             ])
             ->add('seatsDiscriptionId', EntityType::class, [
                 'class' => SeatsDiscriptionShablon::class,

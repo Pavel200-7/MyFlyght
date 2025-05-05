@@ -12,7 +12,9 @@ class ManufacturersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('manufacturerName')
+            ->add('manufacturerName', null, [
+                'label' => 'Наименование изготовителя',
+            ])
         ;
     }
 

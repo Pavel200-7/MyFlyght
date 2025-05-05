@@ -16,14 +16,14 @@ class Aircraft
 
     #[ORM\ManyToOne(targetEntity: Airline::class)]
     #[ORM\JoinColumn(name: 'Airline_id', referencedColumnName: 'id')]
-    private Airline|null $airlineId = null;
+    private ?Airline $airlineId = null;
 
     #[ORM\ManyToOne(targetEntity: AircraftModel::class)]
     #[ORM\JoinColumn(name: 'AircraftModel_id', referencedColumnName: 'id')]
-    private AircraftModel|null $aircraftModelId = null;
+    private ?AircraftModel $aircraftModelId = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $ManufactureDate = null;
+    private ?\DateTimeInterface $manufactureDate = null;
 
     #[ORM\Column(length: 7)]
     private ?string $registrationNumber = null;
@@ -33,24 +33,24 @@ class Aircraft
         return $this->id;
     }
 
-    public function getAirlineId(): ?int
+    public function getAirlineId(): ?Airline
     {
         return $this->airlineId;
     }
 
-    public function setAirlineId(int $airlineId): static
+    public function setAirlineId(?Airline $airlineId): static
     {
         $this->airlineId = $airlineId;
 
         return $this;
     }
 
-    public function getAircraftModelId(): ?int
+    public function getAircraftModelId(): ?AircraftModel
     {
         return $this->aircraftModelId;
     }
 
-    public function setAircraftModelId(int $aircraftModelId): static
+    public function setAircraftModelId(?AircraftModel $aircraftModelId): static
     {
         $this->aircraftModelId = $aircraftModelId;
 
@@ -59,12 +59,12 @@ class Aircraft
 
     public function getManufactureDate(): ?\DateTimeInterface
     {
-        return $this->ManufactureDate;
+        return $this->manufactureDate;
     }
 
-    public function setManufactureDate(\DateTimeInterface $ManufactureDate): static
+    public function setManufactureDate(\DateTimeInterface $manufactureDate): static
     {
-        $this->ManufactureDate = $ManufactureDate;
+        $this->manufactureDate = $manufactureDate;
 
         return $this;
     }

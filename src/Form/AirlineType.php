@@ -12,7 +12,9 @@ class AirlineType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('airlineName')
+            ->add('airlineName', null, [
+        'label' => 'Наименование авиакомпании',
+    ])
         ;
     }
 

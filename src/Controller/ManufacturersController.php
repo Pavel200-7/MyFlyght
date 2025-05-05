@@ -17,7 +17,7 @@ final class ManufacturersController extends AbstractController
     #[Route(name: 'app_manufacturers_index', methods: ['GET'])]
     public function index(ManufacturersRepository $manufacturersRepository): Response
     {
-        return $this->render('manufacturers/index.html.twig', [
+        return $this->render('admin/templates/manufacturers/index.html.twig', [
             'manufacturers' => $manufacturersRepository->findAll(),
         ]);
     }
@@ -36,17 +36,9 @@ final class ManufacturersController extends AbstractController
             return $this->redirectToRoute('app_manufacturers_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('manufacturers/new.html.twig', [
+        return $this->render('admin/templates/manufacturers/new.html.twig', [
             'manufacturer' => $manufacturer,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_manufacturers_show', methods: ['GET'])]
-    public function show(Manufacturers $manufacturer): Response
-    {
-        return $this->render('manufacturers/show.html.twig', [
-            'manufacturer' => $manufacturer,
         ]);
     }
 
@@ -62,7 +54,7 @@ final class ManufacturersController extends AbstractController
             return $this->redirectToRoute('app_manufacturers_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('manufacturers/edit.html.twig', [
+        return $this->render('admin/templates/manufacturers/edit.html.twig', [
             'manufacturer' => $manufacturer,
             'form' => $form,
         ]);

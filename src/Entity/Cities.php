@@ -14,7 +14,7 @@ class Cities
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $CityName = null;
+    private ?string $cityName = null;
 
     public function getId(): ?int
     {
@@ -23,12 +23,12 @@ class Cities
 
     public function getCityName(): ?string
     {
-        return $this->CityName;
+        return $this->cityName;
     }
 
-    public function setCityName(string $CityName): static
+    public function setCityName(string $cityName): static
     {
-        $this->CityName = $CityName;
+        $this->cityName = $cityName;
 
         return $this;
     }

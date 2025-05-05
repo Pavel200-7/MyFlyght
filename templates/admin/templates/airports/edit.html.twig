@@ -1,0 +1,14 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Изменить данные аэропорта{% endblock %}
+
+{% block workPlace %}
+    <h1>Изменить данные аэропорта</h1>
+
+    <button type="submit" class="btn aUpdate" form="myFormId">Обновить</button>
+    <button type="submit" class="btn aDelete" form="myDeleteFormId">Удалить</button>
+
+    {{ include('admin/templates/airports/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/templates/airports/_delete_form.html.twig') }}
+
+{% endblock %}

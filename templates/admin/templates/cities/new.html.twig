@@ -1,0 +1,11 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Новый город{% endblock %}
+
+{% block workPlace %}
+    <h1>Создать новую запись: город</h1>
+
+    <button type="submit" class="btn aCreate" form="myFormId">Сохранить</button>
+
+    {{ include('admin/templates/cities/_form.html.twig') }}
+{% endblock %}

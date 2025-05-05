@@ -1,12 +1,11 @@
 {% extends 'admin/baseAdmin.html.twig' %}
 
-{% block title %}Транспорт модель{% endblock %}
+{% block title %}Модель транспорта{% endblock %}
 
 {% block workPlace %}
     <h1>Модель транспорта главная</h1>
-    <br>
+
     <a href="{{ path('app_aircraft_model_new') }}" class="aCreate">Создать</a>
-    <br><br>
 
     <table class="table">
         <thead>
@@ -34,17 +33,15 @@
                 <td>{{ aircraft_model.averageSpeed }}</td>
                 <td>{{ aircraft_model.range }}</td>
                 <td>
-{#                    <a href="{{ path('app_aircraft_model_show', {'id': aircraft_model.id}) }}">Показать</a>#}
                     <a href="{{ path('app_aircraft_model_edit', {'id': aircraft_model.id}) }}" class="aUpdate">Изменить</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">Записей нет</td>
+                <td colspan="9">Записей нет</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
 
 {% endblock %}

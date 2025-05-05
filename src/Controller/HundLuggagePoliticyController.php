@@ -17,7 +17,7 @@ final class HundLuggagePoliticyController extends AbstractController
     #[Route(name: 'app_hund_luggage_politicy_index', methods: ['GET'])]
     public function index(HundLuggagePoliticyRepository $hundLuggagePoliticyRepository): Response
     {
-        return $this->render('hund_luggage_politicy/index.html.twig', [
+        return $this->render('admin/templates/hund_luggage_politicy/index.html.twig', [
             'hund_luggage_politicies' => $hundLuggagePoliticyRepository->findAll(),
         ]);
     }
@@ -36,17 +36,9 @@ final class HundLuggagePoliticyController extends AbstractController
             return $this->redirectToRoute('app_hund_luggage_politicy_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('hund_luggage_politicy/new.html.twig', [
+        return $this->render('admin/templates/hund_luggage_politicy/new.html.twig', [
             'hund_luggage_politicy' => $hundLuggagePoliticy,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_hund_luggage_politicy_show', methods: ['GET'])]
-    public function show(HundLuggagePoliticy $hundLuggagePoliticy): Response
-    {
-        return $this->render('hund_luggage_politicy/show.html.twig', [
-            'hund_luggage_politicy' => $hundLuggagePoliticy,
         ]);
     }
 
@@ -62,7 +54,7 @@ final class HundLuggagePoliticyController extends AbstractController
             return $this->redirectToRoute('app_hund_luggage_politicy_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('hund_luggage_politicy/edit.html.twig', [
+        return $this->render('admin/templates/hund_luggage_politicy/edit.html.twig', [
             'hund_luggage_politicy' => $hundLuggagePoliticy,
             'form' => $form,
         ]);

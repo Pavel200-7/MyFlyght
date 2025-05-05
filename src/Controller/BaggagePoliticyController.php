@@ -17,7 +17,7 @@ final class BaggagePoliticyController extends AbstractController
     #[Route(name: 'app_baggage_politicy_index', methods: ['GET'])]
     public function index(BaggagePoliticyRepository $baggagePoliticyRepository): Response
     {
-        return $this->render('baggage_politicy/index.html.twig', [
+        return $this->render('admin/templates/baggage_politicy/index.html.twig', [
             'baggage_politicies' => $baggagePoliticyRepository->findAll(),
         ]);
     }
@@ -36,17 +36,9 @@ final class BaggagePoliticyController extends AbstractController
             return $this->redirectToRoute('app_baggage_politicy_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('baggage_politicy/new.html.twig', [
+        return $this->render('admin/templates/baggage_politicy/new.html.twig', [
             'baggage_politicy' => $baggagePoliticy,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_baggage_politicy_show', methods: ['GET'])]
-    public function show(BaggagePoliticy $baggagePoliticy): Response
-    {
-        return $this->render('baggage_politicy/show.html.twig', [
-            'baggage_politicy' => $baggagePoliticy,
         ]);
     }
 
@@ -62,7 +54,7 @@ final class BaggagePoliticyController extends AbstractController
             return $this->redirectToRoute('app_baggage_politicy_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('baggage_politicy/edit.html.twig', [
+        return $this->render('admin/templates/baggage_politicy/edit.html.twig', [
             'baggage_politicy' => $baggagePoliticy,
             'form' => $form,
         ]);

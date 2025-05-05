@@ -1,0 +1,35 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Авиакомпании{% endblock %}
+
+{% block workPlace %}
+    <h1>Авиакомпании главная</h1>
+
+    <a href="{{ path('app_airline_new') }}" class="aCreate">Create new</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Идентификатор</th>
+                <th>Авиакомпания</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for airline in airlines %}
+            <tr>
+                <td>{{ airline.id }}</td>
+                <td>{{ airline.airlineName }}</td>
+                <td>
+                    <a href="{{ path('app_airline_edit', {'id': airline.id}) }}" class="aUpdate">Обновить</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Записей нет</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

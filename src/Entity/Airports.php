@@ -15,11 +15,11 @@ class Airports
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $AirportName = null;
+    private ?string $airportName = null;
 
     #[ORM\ManyToOne(targetEntity: Cities::class)]
     #[ORM\JoinColumn(name: 'City_id', referencedColumnName: 'id')]
-    private Cities|null $City = null;
+    private Cities|null $city = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $longtitude = null;
@@ -37,24 +37,24 @@ class Airports
 
     public function getAirportName(): ?string
     {
-        return $this->AirportName;
+        return $this->airportName;
     }
 
-    public function setAirportName(string $AirportName): static
+    public function setAirportName(string $airportName): static
     {
-        $this->AirportName = $AirportName;
+        $this->airportName = $airportName;
 
         return $this;
     }
 
     public function getCity(): ?Cities
     {
-        return $this->City;
+        return $this->city;
     }
 
-    public function setCity(?Cities $City): static
+    public function setCity(?Cities $city): static
     {
-        $this->City = $City;
+        $this->city = $city;
 
         return $this;
     }

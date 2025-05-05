@@ -17,7 +17,7 @@ final class CitiesController extends AbstractController
     #[Route(name: 'app_cities_index', methods: ['GET'])]
     public function index(CitiesRepository $citiesRepository): Response
     {
-        return $this->render('cities/index.html.twig', [
+        return $this->render('admin/templates/cities/index.html.twig', [
             'cities' => $citiesRepository->findAll(),
         ]);
     }
@@ -38,17 +38,9 @@ final class CitiesController extends AbstractController
             return $this->redirectToRoute('app_cities_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('cities/new.html.twig', [
+        return $this->render('admin/templates/cities/new.html.twig', [
             'city' => $city,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_cities_show', methods: ['GET'])]
-    public function show(Cities $city): Response
-    {
-        return $this->render('cities/show.html.twig', [
-            'city' => $city,
         ]);
     }
 
@@ -64,7 +56,7 @@ final class CitiesController extends AbstractController
             return $this->redirectToRoute('app_cities_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('cities/edit.html.twig', [
+        return $this->render('admin/templates/cities/edit.html.twig', [
             'city' => $city,
             'form' => $form,
         ]);

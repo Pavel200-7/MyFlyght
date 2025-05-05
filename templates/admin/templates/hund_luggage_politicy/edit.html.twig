@@ -1,0 +1,14 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Изменить данные политики ручной клади{% endblock %}
+
+{% block workPlace %}
+    <h1>Изменить данные политики ручной клади</h1>
+
+    <button type="submit" class="btn aUpdate" form="myFormId">Обновить</button>
+    <button type="submit" class="btn aDelete" form="myDeleteFormId">Удалить</button>
+
+    {{ include('admin/templates/hund_luggage_politicy/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/templates/hund_luggage_politicy/_delete_form.html.twig') }}
+
+{% endblock %}

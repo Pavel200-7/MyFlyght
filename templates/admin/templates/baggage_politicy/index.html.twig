@@ -1,0 +1,37 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Политика багажа{% endblock %}
+
+{% block workPlace %}
+    <h1>Политика багажа главная</h1>
+
+    <a href="{{ path('app_baggage_politicy_new') }}" class="aCreate">Создать</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Идентификатор</th>
+                <th>Количество вещей</th>
+                <th>Вес на единицу (кг)</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for baggage_politicy in baggage_politicies %}
+            <tr>
+                <td>{{ baggage_politicy.id }}</td>
+                <td>{{ baggage_politicy.itemsCount }}</td>
+                <td>{{ baggage_politicy.weightPerItem }}</td>
+                <td>
+                    <a href="{{ path('app_baggage_politicy_edit', {'id': baggage_politicy.id}) }}" class="aUpdate">Обновить</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Записей нет</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

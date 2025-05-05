@@ -18,11 +18,11 @@ class AircraftModel
 
     #[ORM\ManyToOne(targetEntity: SeatsDiscriptionShablon::class)]
     #[ORM\JoinColumn(name: 'SeatsDiscriptionShablon_id', referencedColumnName: 'id')]
-    private SeatsDiscriptionShablon|null $seatsDiscriptionId = null;
+    private ?SeatsDiscriptionShablon $seatsDiscriptionId = null;
 
     #[ORM\ManyToOne(targetEntity: Manufacturers::class)]
     #[ORM\JoinColumn(name: 'Manufacturers_id', referencedColumnName: 'id')]
-    private Manufacturers|null $manufacturerId = null;
+    private ?Manufacturers $manufacturerId = null;
 
     #[ORM\Column]
     private ?int $maxSits = null;
@@ -35,7 +35,6 @@ class AircraftModel
 
     #[ORM\Column]
     private ?int $range = null;
-    private int $MaxWeight;
 
     public function getId(): ?int
     {
@@ -67,7 +66,7 @@ class AircraftModel
         return $this->seatsDiscriptionId;
     }
 
-    public function setSeatsDiscriptionId(SeatsDiscriptionShablon|null $seatsDiscriptionId): static
+    public function setSeatsDiscriptionId(?SeatsDiscriptionShablon $seatsDiscriptionId): static
     {
         $this->seatsDiscriptionId = $seatsDiscriptionId;
 
@@ -91,9 +90,9 @@ class AircraftModel
         return $this->maxWeight;
     }
 
-    public function setMaxWeight(int $MaxWeight): static
+    public function setMaxWeight(int $maxWeight): static
     {
-        $this->maxWeight = $MaxWeight;
+        $this->maxWeight = $maxWeight;
 
         return $this;
     }

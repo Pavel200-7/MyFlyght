@@ -1,0 +1,12 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Новый изготовитель{% endblock %}
+
+{% block workPlace %}
+    <h1>Создать новую запись: изготовитель</h1>
+
+    <button type="submit" class="btn aCreate" form="myFormId">Сохранить</button>
+
+    {{ include('admin/templates/manufacturers/_form.html.twig') }}
+
+{% endblock %}

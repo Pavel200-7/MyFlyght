@@ -15,11 +15,6 @@ class AircraftType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('ManufactureDate', null, [
-                'widget' => 'single_text',
-                'label' => 'Дата изготовления',
-            ])
-            ->add('registrationNumber')
             ->add('airlineId', EntityType::class, [
                 'class' => Airline::class,
                 'label' => 'Авиакомпания',
@@ -30,6 +25,15 @@ class AircraftType extends AbstractType
                 'label' => 'Модель',
                 'choice_label' => 'model',
             ])
+            ->add('manufactureDate', null, [
+                'widget' => 'single_text',
+                'label' => 'Дата изготовления',
+            ])
+            ->add('registrationNumber',null, [
+                'label' => 'Регистрационный номер',
+            ])
+
+
         ;
     }
 

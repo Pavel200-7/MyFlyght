@@ -1,5 +1,3 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'id': 'myFormId'}} ) }}
     {{ form_widget(form) }}
-    <br>
-    <button class="btn aUpdate">{{ button_label|default('Сохранить') }}</button>
 {{ form_end(form) }}

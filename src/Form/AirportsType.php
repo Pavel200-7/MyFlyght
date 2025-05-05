@@ -14,13 +14,22 @@ class AirportsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('AirportName')
-            ->add('longtitude')
-            ->add('latitude')
-            ->add('timezone')
-            ->add('City', EntityType::class, [
+            ->add('airportName', null, [
+                'label' => 'Наименование аэропорта',
+            ])
+            ->add('longtitude', null, [
+                'label' => 'Долгота',
+            ])
+            ->add('latitude', null, [
+                'label' => 'Широта',
+            ])
+            ->add('timezone', null, [
+                'label' => 'Временная зона',
+            ])
+            ->add('city', EntityType::class, [
+                'label' => 'Город',
                 'class' => Cities::class,
-                'choice_label' => 'id',
+                'choice_label' => 'cityName',
             ])
         ;
     }

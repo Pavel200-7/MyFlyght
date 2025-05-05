@@ -1,0 +1,35 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Изготовители{% endblock %}
+
+{% block workPlace %}
+    <h1>Изготовители главная</h1>
+
+    <a href="{{ path('app_manufacturers_new') }}" class="aCreate">Создать</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Идентификатор</th>
+                <th>Изготовитель</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for manufacturer in manufacturers %}
+            <tr>
+                <td>{{ manufacturer.id }}</td>
+                <td>{{ manufacturer.manufacturerName }}</td>
+                <td>
+                    <a href="{{ path('app_manufacturers_edit', {'id': manufacturer.id}) }}" class="aUpdate">Обновить</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Записей нет</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

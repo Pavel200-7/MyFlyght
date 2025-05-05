@@ -42,14 +42,6 @@ final class AircraftController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_aircraft_show', methods: ['GET'])]
-    public function show(Aircraft $aircraft): Response
-    {
-        return $this->render('admin/templates/aircraft/show.html.twig', [
-            'aircraft' => $aircraft,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_aircraft_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Aircraft $aircraft, EntityManagerInterface $entityManager): Response
     {
@@ -58,6 +50,8 @@ final class AircraftController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+//            dd($form->getData());
 
             return $this->redirectToRoute('app_aircraft_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -76,6 +70,6 @@ final class AircraftController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin/templates/app_aircraft_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_aircraft_index', [], Response::HTTP_SEE_OTHER);
     }
 }

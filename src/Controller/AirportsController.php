@@ -17,7 +17,7 @@ final class AirportsController extends AbstractController
     #[Route(name: 'app_airports_index', methods: ['GET'])]
     public function index(AirportsRepository $airportsRepository): Response
     {
-        return $this->render('airports/index.html.twig', [
+        return $this->render('admin/templates/airports/index.html.twig', [
             'airports' => $airportsRepository->findAll(),
         ]);
     }
@@ -36,17 +36,9 @@ final class AirportsController extends AbstractController
             return $this->redirectToRoute('app_airports_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('airports/new.html.twig', [
+        return $this->render('admin/templates/airports/new.html.twig', [
             'airport' => $airport,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_airports_show', methods: ['GET'])]
-    public function show(Airports $airport): Response
-    {
-        return $this->render('airports/show.html.twig', [
-            'airport' => $airport,
         ]);
     }
 
@@ -62,7 +54,7 @@ final class AirportsController extends AbstractController
             return $this->redirectToRoute('app_airports_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('airports/edit.html.twig', [
+        return $this->render('admin/templates/airports/edit.html.twig', [
             'airport' => $airport,
             'form' => $form,
         ]);

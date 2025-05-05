@@ -17,7 +17,7 @@ final class AirlineController extends AbstractController
     #[Route(name: 'app_airline_index', methods: ['GET'])]
     public function index(AirlineRepository $airlineRepository): Response
     {
-        return $this->render('airline/index.html.twig', [
+        return $this->render('admin/templates/airline/index.html.twig', [
             'airlines' => $airlineRepository->findAll(),
         ]);
     }
@@ -36,17 +36,9 @@ final class AirlineController extends AbstractController
             return $this->redirectToRoute('app_airline_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('airline/new.html.twig', [
+        return $this->render('admin/templates/airline/new.html.twig', [
             'airline' => $airline,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_airline_show', methods: ['GET'])]
-    public function show(Airline $airline): Response
-    {
-        return $this->render('airline/show.html.twig', [
-            'airline' => $airline,
         ]);
     }
 
@@ -62,7 +54,7 @@ final class AirlineController extends AbstractController
             return $this->redirectToRoute('app_airline_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('airline/edit.html.twig', [
+        return $this->render('admin/templates/airline/edit.html.twig', [
             'airline' => $airline,
             'form' => $form,
         ]);
