@@ -5,11 +5,15 @@ namespace App\Controller;
 use App\Entity\SeatsDiscriptionShablon;
 use App\Form\SeatsDiscriptionShablonType;
 use App\Repository\SeatsDiscriptionShablonRepository;
+use App\Service\seatStructureClasses\seatStructure;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\seatStructureClasses;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 #[Route('/admin/seatsDiscriptionShablon')]
 final class SeatsDiscriptionShablonController extends AbstractController
@@ -17,13 +21,13 @@ final class SeatsDiscriptionShablonController extends AbstractController
     #[Route(name: 'app_seats_discription_shablon_index', methods: ['GET'])]
     public function index(SeatsDiscriptionShablonRepository $seatsDiscriptionShablonRepository): Response
     {
-        return $this->render('seats_discription_shablon/index.html.twig', [
+        return $this->render('admin/templates/seats_discription_shablon/index.html.twig', [
             'seats_discription_shablons' => $seatsDiscriptionShablonRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_seats_discription_shablon_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
     {
         $seatsDiscriptionShablon = new SeatsDiscriptionShablon();
         $form = $this->createForm(SeatsDiscriptionShablonType::class, $seatsDiscriptionShablon);
@@ -36,17 +40,52 @@ final class SeatsDiscriptionShablonController extends AbstractController
             return $this->redirectToRoute('app_seats_discription_shablon_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('seats_discription_shablon/new.html.twig', [
+//        $seatStructure = [
+//            'classes' => [ // seatStructure.planeClasses
+//                [ // planeClass
+//                    'classType' => 'Economy',
+//                    'zones' => [ // planeClass.zones
+//                        [ // zone
+//                            'sectors' => [ //zone.sectors
+//                                [ //sector
+//                                    'rowsCount' => 3,
+//                                    'seatsInRow' => 9,
+//                                ], //sector * 1-2
+//                            ] //zone.sectors
+//                        ], // zone *3
+//                        [ // zone
+//                            'sectors' => [ //zone.sectors
+//                                [ //sector
+//                                    'rowsCount' => 3,
+//                                    'seatsInRow' => 9,
+//                                ], //sector * 1-2
+//                            ] //zone.sectors
+//                        ], // zone *3
+//                        [ // zone
+//                            'sectors' => [ //zone.sectors
+//                                [ //sector
+//                                    'rowsCount' => 3,
+//                                    'seatsInRow' => 9,
+//                                ], //sector * 1-2
+//                            ] //zone.sectors
+//                        ], // zone *3
+//                    ]  // zones
+//                ], // planeClass * 2-3
+//            ] // classes
+//        ];
+
+        $seatStructure = new seatStructure();
+        $seatStructure->addClass("Эконом");
+//        $seatStructure
+        $seatStructure = $serializer->serialize($seatStructure, 'json');
+
+//        $seatStructureJsonConverter = new seatStructureJsonConverter();
+//        $seatStructure = $seatStructureJsonConverter->toJson($seatStructure);
+
+        return $this->render('admin/templates/seats_discription_shablon/new.html.twig', [
             'seats_discription_shablon' => $seatsDiscriptionShablon,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_seats_discription_shablon_show', methods: ['GET'])]
-    public function show(SeatsDiscriptionShablon $seatsDiscriptionShablon): Response
-    {
-        return $this->render('seats_discription_shablon/show.html.twig', [
-            'seats_discription_shablon' => $seatsDiscriptionShablon,
+            'seatStructure' => $seatStructure,
         ]);
     }
 
@@ -62,7 +101,7 @@ final class SeatsDiscriptionShablonController extends AbstractController
             return $this->redirectToRoute('app_seats_discription_shablon_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('seats_discription_shablon/edit.html.twig', [
+        return $this->render('admin/templates/seats_discription_shablon/edit.html.twig', [
             'seats_discription_shablon' => $seatsDiscriptionShablon,
             'form' => $form,
         ]);

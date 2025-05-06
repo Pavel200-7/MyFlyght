@@ -1,0 +1,14 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Изменить данные шаблона мест{% endblock %}
+
+{% block workPlace %}
+    <h1>Изменить данные шаблона мест</h1>
+
+    <button type="submit" class="btn aUpdate" form="myFormId">Обновить</button>
+    <button type="submit" class="btn aDelete" form="myDeleteFormId">Удалить</button>
+
+    {{ include('admin/templates/seats_discription_shablon/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/templates/seats_discription_shablon/_delete_form.html.twig') }}
+
+{% endblock %}

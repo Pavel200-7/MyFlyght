@@ -13,10 +13,8 @@ class SeatsDiscriptionShablonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('SeatsDiscriptionShablonName')
-            ->add('SeatsShablonId', EntityType::class, [
-                'class' => SeatsDiscriptionShablon::class,
-                'choice_label' => 'id',
+            ->add('SeatsDiscriptionShablonName', null, [
+                'label' => 'Наименование шаблона',
             ])
         ;
     }

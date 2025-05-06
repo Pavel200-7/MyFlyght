@@ -14,11 +14,8 @@ class SeatsDiscriptionShablon
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $SeatsDiscriptionShablonName = null;
+    private ?string $seatsDiscriptionShablonName = null;
 
-    #[ORM\ManyToOne(targetEntity: SeatsDiscriptionShablon::class)]
-    #[ORM\JoinColumn(name: 'SeatsShablon_id', referencedColumnName: 'id')]
-    private SeatsDiscriptionShablon|null $SeatsShablonId = null;
 
     public function getId(): ?int
     {
@@ -27,25 +24,14 @@ class SeatsDiscriptionShablon
 
     public function getSeatsDiscriptionShablonName(): ?string
     {
-        return $this->SeatsDiscriptionShablonName;
+        return $this->seatsDiscriptionShablonName;
     }
 
-    public function setSeatsDiscriptionShablonName(string $SeatsDiscriptionShablonName): static
+    public function setSeatsDiscriptionShablonName(string $seatsDiscriptionShablonName): static
     {
-        $this->SeatsDiscriptionShablonName = $SeatsDiscriptionShablonName;
+        $this->seatsDiscriptionShablonName = $seatsDiscriptionShablonName;
 
         return $this;
     }
 
-    public function getSeatsShablonId(): ?int
-    {
-        return $this->SeatsShablonId;
-    }
-
-    public function setSeatsShablonId(int $SeatsShablonId): static
-    {
-        $this->SeatsShablonId = $SeatsShablonId;
-
-        return $this;
-    }
 }

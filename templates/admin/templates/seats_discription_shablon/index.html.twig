@@ -1,15 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/baseAdmin.html.twig' %}
 
-{% block title %}SeatsDiscriptionShablon index{% endblock %}
+{% block title %}Шаблон мест{% endblock %}
 
-{% block body %}
-    <h1>SeatsDiscriptionShablon index</h1>
+{% block workPlace %}
+    <h1>Шаблон мест главная</h1>
+
+    <a href="{{ path('app_seats_discription_shablon_new') }}" class="aCreate">Создать</a>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>SeatsDiscriptionShablonName</th>
+                <th>Идентификатор</th>
+                <th>Шаблон мест</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -19,8 +21,7 @@
                 <td>{{ seats_discription_shablon.id }}</td>
                 <td>{{ seats_discription_shablon.SeatsDiscriptionShablonName }}</td>
                 <td>
-                    <a href="{{ path('app_seats_discription_shablon_show', {'id': seats_discription_shablon.id}) }}">show</a>
-                    <a href="{{ path('app_seats_discription_shablon_edit', {'id': seats_discription_shablon.id}) }}">edit</a>
+                    <a href="{{ path('app_seats_discription_shablon_edit', {'id': seats_discription_shablon.id}) }}" class="aUpdate">Обновить</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +32,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_seats_discription_shablon_new') }}">Create new</a>
 {% endblock %}

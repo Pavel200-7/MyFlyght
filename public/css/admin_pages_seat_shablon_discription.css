@@ -1,0 +1,117 @@
+
+.seat_shablon_window {
+    border: solid black 2px;
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
+    margin-top: 5vw;
+    background-color: #dbeafe;
+}
+
+
+.seat_shablon_window div {
+    padding: 1%;
+}
+
+
+.tablo {
+    border-bottom: solid black 4px;
+    border-top: solid black 4px;
+    text-align: center;
+    margin-top: 10%;
+}
+
+
+.tablo:first-child {
+    margin-top: 1%;
+}
+
+
+.visual_discription {
+    width: 80%;
+    margin: auto;
+
+}
+
+
+.plane_class {
+    border: solid black 4px;
+}
+
+
+.class_zones {
+    display: flex;
+}
+
+
+.class_zone {
+    flex: 1;
+    /*border: solid #B0413E 4px;*/
+}
+
+
+.class_zone:first-child {
+    padding-left: 0;
+}
+
+
+.class_zone:last-child {
+    padding-right: 0;
+}
+
+
+.zone_sector {
+    display: flex;
+}
+
+
+.class_zone .zone_sector *,
+.class_zone .zone_sector{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.class_zone:first-child .zone_sector *,
+.class_zone:first-child .zone_sector{
+    padding-left: 0;
+}
+
+
+.class_zone:last-child .zone_sector *,
+.class_zone:last-child .zone_sector{
+    padding-right: 0;
+
+}
+
+
+.sector_row {
+    flex: 1;
+    flex-direction: row;
+}
+
+
+.row_seat {
+    margin: 2%;
+    height: 50px;
+}
+
+.row_seat button {
+    height: 100%;
+    width: 100%;
+    border: solid black 1px;
+    background-color: #555555;
+}
+
+
+.row_seat button:hover {
+    background-color: #8a8888;
+}
+
+
+.row_seat button:active {
+    background-color: rgba(13, 142, 207, 0.7);
+}
+
+.row_seat button:focus {
+    background-color: rgba(8, 114, 168, 0.7);
+}
