@@ -73,14 +73,10 @@ final class SeatsDiscriptionShablonController extends AbstractController
 //                ], // planeClass * 2-3
 //            ] // classes
 //        ];
-
         $seatStructure = new seatStructure();
         $seatStructure->addClass("Эконом");
-//        $seatStructure
+        $seatStructure->addClass("Первый");
         $seatStructure = $serializer->serialize($seatStructure, 'json');
-
-//        $seatStructureJsonConverter = new seatStructureJsonConverter();
-//        $seatStructure = $seatStructureJsonConverter->toJson($seatStructure);
 
         return $this->render('admin/templates/seats_discription_shablon/new.html.twig', [
             'seats_discription_shablon' => $seatsDiscriptionShablon,

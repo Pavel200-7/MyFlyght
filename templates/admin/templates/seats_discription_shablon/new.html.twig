@@ -24,155 +24,217 @@
             <h1>Шаблон</h1>
         </div>
 
-        <div class="visual_discription">
-            <div class="plane_class">
-                <div class="tablo">
-                    <h1>Класс</h1>
-                </div>
-                <div class="class_zones">
-                    <div class="class_zone">
-                            <div class="zone_sector">
-                                <div class="sector_row">
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                </div>
-                                <div class="sector_row">
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                </div>
-                                <div class="sector_row">
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                </div>
-                                <div class="sector_row">
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                </div>
-                            {#Сектор#}
-                            </div>
-                            <div class="zone_sector">
-                                <div class="sector_row">
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                </div>
-                                <div class="sector_row">
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                </div>
-                                <div class="sector_row">
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                    {{ include(seat) }}
-                                </div>
-                            </div>
-                    {#Зона#}
-                    </div>
-                    <div class="class_zone">
-                        <div class="zone_sector">
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="class_zone">
-                        <div class="zone_sector">
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                            {#Сектор#}
-                        </div>
-                        <div class="zone_sector">
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                            <div class="sector_row">
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                                {{ include(seat) }}
-                            </div>
-                        </div>
-                    </div>
-                {#Зоны класса#}
-                </div>
-            {#Класс#}
-            </div>
+        <div class="visual_discription" id="visual_discription">
+{#            <div class="plane_class">#}
+{#                <div class="tablo">#}
+{#                    <h1>Класс</h1>#}
+{#                </div>#}
+{#                <div class="class_zones">#}
+{#                    <div class="class_zone">#}
+{#                            <div class="zone_sector">#}
+{#                                <div class="sector_row">#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                </div>#}
+{#                                <div class="sector_row">#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                </div>#}
+{#                                <div class="sector_row">#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                </div>#}
+{#                                <div class="sector_row">#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                </div>#}
+{#                            #}{#Сектор#}
+{#                            </div>#}
+{#                            <div class="zone_sector">#}
+{#                                <div class="sector_row">#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                </div>#}
+{#                                <div class="sector_row">#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                </div>#}
+{#                                <div class="sector_row">#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                    {{ include(seat) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                    #}{#Зона#}
+{#                    </div>#}
+{#                    <div class="class_zone">#}
+{#                        <div class="zone_sector">#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="class_zone">#}
+{#                        <div class="zone_sector">#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                            #}{#Сектор#}
+{#                        </div>#}
+{#                        <div class="zone_sector">#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                            <div class="sector_row">#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                                {{ include(seat) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                #}{#Зоны класса#}
+{#                </div>#}
+{#            #}{#Класс#}
+{#            </div>#}
 
-            {{ dump(seatStructure) }}
+{#            {{ dump(seatStructure) }}#}
 
-            <script>
-                console.log(111);
+
+            <script type="module">
+                import { jsonConverter } from "{{ asset('js/SeatShablonScripts/jsonConverter.js') }}";
+                import { seatShablonPrinter } from "{{ asset('js/SeatShablonScripts/seatShablonPrinter.js') }}";
+
+                let seatStructureJSON = JSON.parse({{ seatStructure|json_encode|raw }});
+                // console.log(seatStructureJSON);
+
+
+                let jsonConverterObj = new jsonConverter();
+                let seatStructureObj = jsonConverterObj.parseSeatStructure(seatStructureJSON);
+                console.log(seatStructureObj);
+
+
+                let visualDiscription = document.getElementById('visual_discription');
+                let seatShablonPrinterObj = new seatShablonPrinter(visualDiscription);
+                // seatShablonPrinterObj.updateSeatShablonVisualFromJSON(seatStructureJSON);
+                seatShablonPrinterObj.updateSeatShablonVisualFromObject(seatStructureObj);
+
+
             </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {#            {% for planeClass in seatStructure.classes %}#}
 {#                {% set counter = ( counter | default(0) ) + 1 %}#}
@@ -199,6 +261,7 @@
 {#                    </div>#}
 {#                </div>#}
 {#            {% endfor %}#}
+
         {#Визуальное отображение#}
         </div>
     {#Окно#}
