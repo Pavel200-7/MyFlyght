@@ -78,8 +78,8 @@ export class seatShablonPrinter
             htmlText += `<div class="plane_class">
                         <div class="tablo">
                             <h1>Класс номер: ${readableClassCounter}, тип: ${classType}</h1>
-                            <button id="${delClassBtnId}" class="btn aDelete">Удалить класс</button>
-                            <button id="${addZoneBtnId}" class="btn aCreate">Добавить зону</button>
+                            <button id="${delClassBtnId}" class="btn aDelete toggleable">Удалить класс</button>
+                            <button id="${addZoneBtnId}" class="btn aCreate toggleable">Добавить зону</button>
                         </div>
                         <div class="class_zones">`;
 
@@ -92,48 +92,63 @@ export class seatShablonPrinter
                 let copyZoneBtnId = `copyZoneBTN${zoneId}`;
 
                 htmlText += `<div class="class_zone">
-                            <button id="${delZoneBtnId}" class="btn aDelete">Удалить зону</button>
-                            <button id="${copyZoneBtnId}" class="btn aUpdate">Копировать зону</button>`;
+                            <button id="${delZoneBtnId}" class="btn aDelete toggleable">Удалить зону</button>
+                            <button id="${copyZoneBtnId}" class="btn aUpdate toggleable">Копировать зону</button>`;
 
                 let sectorCounter = 0;
 
+
+
                 for (let sector of zone.sectors) {
-                    htmlText += `<div class="zone_sector">
-                                 `;
+
+                    let sectorID = `${classCounter}_${zoneCounter}_${sectorCounter}`;
+
+                    let delSectorBTN = `delSectorBTN${sectorID}`;
+                    let copySectorBTN = `copySectorBTN${sectorID}`;
+
+                    let delRowBTN = `delRowBTN${sectorID}`;
+                    let addRowBTN = `addRowBTN${sectorID}`;
+                    let delSeatsInRowBTN = `delSeatsInRowBTN${sectorID}`;
+                    let addSeatsInBTN = `addSeatsInRowBTN${sectorID}`;
+
+                    htmlText += `<div class="zone_sector_panel">
+                                <div>
+                                 <div>
+                                     <button id="${delSectorBTN}" class="btn aDelete toggleable">Удалить сектор</button>
+                                     <button id="${copySectorBTN}" class="btn aUpdate toggleable">Копировать сектор</button>
+                                     <div>
+                                         <button id="${delRowBTN}" class="btn some_crementButton delButton toggleable">-</button>
+                                         <button id="${addRowBTN}" class="btn some_crementButton addButton toggleable">+</button>
+                                         <button id="${delSeatsInRowBTN}" class="btn some_crementButton delButton toggleable">-</button>
+                                         <button id="${addSeatsInBTN}" class="btn some_crementButton addButton toggleable">+</button>
+                                     </div>
+                                 </div>
+                                 <div class="zone_sector">`;
+
+                    ///
+
 
 
                     for (let row = 0; row < sector.rowCount; row++) {
+
                         htmlText += `<div class="sector_row">`;
                         for (let seat = 0; seat < sector.seatsInRow; seat++) {
                             htmlText += `<div class="row_seat"><button></button></div>`;
                         }
 
-                        let sectorID = `${classCounter}_${zoneCounter}_${sectorCounter}`;
-                        let delSectorBTN = `delSectorBTN${sectorID}`;
-                        let copySectorBTN = `copySectorBTN${sectorID}`;
+                        htmlText += `</div>`;
 
-                        let delRowBTN = `delRowBTN${sectorID}`;
-                        let addRowBTN = `addRowBTN${sectorID}`;
-                        let delSeatsInRowBTN = `delSeatsInRowBTN${sectorID}`;
-                        let addSeatsInBTN = `addSeatsInRowBTN${sectorID}`;
+                        /////
 
-
-                        htmlText += `<button id="${delSectorBTN}" class="btn aDelete">Удалить сектор</button>
-                                     <button id="${copySectorBTN}" class="btn aUpdate">Копировать сектор</button>
-                                     <div>
-                                     <button id="${delRowBTN}" class="btn some_crementButton delButton">-</button>
-                                     <button id="${addRowBTN}" class="btn some_crementButton addButton">+</button>
-                                     <button id="${delSeatsInRowBTN}" class="btn some_crementButton delButton">-</button>
-                                     <button id="${addSeatsInBTN}" class="btn some_crementButton addButton">+</button>
-                                     </div>
-                                     </div>`;
                     }
-                    htmlText += `</div>`; // конец zone_sector
+                    htmlText += `</div>
+                                 </div>
+                                 </div>`; // конец zone_sector
                     sectorCounter++;
                 }
 
                 let addSectorBTN = `addSectorBTN${zoneId}`;
-                htmlText += `<button id="${addSectorBTN}" class="btn aCreate">Создать сектор</button>
+                htmlText += `<button id="${addSectorBTN}" class="btn aCreate toggleable">Создать сектор</button>
                              </div>`; // конец class_zone
                 zoneCounter++;
             }
@@ -163,9 +178,11 @@ export class seatShablonPrinter
 
                 let sectorCounter = 0;
 
+
                 for (let sector of zone.sectors) {
 
                     let sectorID = `${classCounter}_${zoneCounter}_${sectorCounter}`;
+
                     this.addDelSectorButtonListener(seatStructureObject, zone, sector, sectorID);
                     this.addCopySectorButtonListener(seatStructureObject, zone, sector, sectorID);
 
@@ -254,10 +271,10 @@ export class seatShablonPrinter
 
     addDelSectorButtonListener(seatStructureObject, zone, sector, sectorID)
     {
-        let delZoneBtnId = `delSectorBTN${sectorID}`;
-        let delZoneBtn = document.getElementById(delZoneBtnId);
+        let delSectorBtnId = `delSectorBTN${sectorID}`;
+        let delSectorBtn = document.getElementById(delSectorBtnId);
 
-        delZoneBtn.addEventListener('click', () => {
+        delSectorBtn.addEventListener('click', () => {
             zone.delSector(sector);
             this.updateSeatShablonVisualFromObject(seatStructureObject);
         });

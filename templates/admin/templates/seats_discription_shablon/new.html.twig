@@ -40,6 +40,17 @@
 
         addClassBTN.addEventListener('click', addClass);
 
+        document.getElementById('toggleButtonsBTN').addEventListener('click', () => {
+            const buttons = document.querySelectorAll('.toggleable');
+            buttons.forEach(btn => {
+                if (btn.style.display === 'none') {
+                    btn.style.display = '';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+        });
+
 
 
     </script>
@@ -53,8 +64,9 @@
 
     <div class="seat_shablon_window">
         <div class="tablo">
+            <button id="toggleButtonsBTN" class="btn aUpdate">Режим изменения</button>
             <h1>Шаблон</h1>
-            <button id="addNewClassBTN" class="btn aCreate">Добавить класс</button>
+            <button id="addNewClassBTN" class="btn aCreate toggleable">Добавить класс</button>
         </div>
 
         <div class="visual_discription" id="visual_discription">
