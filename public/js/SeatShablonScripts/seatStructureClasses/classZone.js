@@ -5,6 +5,13 @@ export class ClassZone {
         this.addSector(); // Изначально создаем один сектор
     }
 
+    deepClone() {
+        const clone = new ClassZone();
+        clone.sectors = this.sectors.map(sector => sector.deepClone());
+
+        return clone;
+    }
+
     getSectors() {
         return this.sectors;
     }
@@ -20,7 +27,8 @@ export class ClassZone {
     }
 
     addSectorCopy(zoneSector) {
-        this.sectors.push(zoneSector);
+        let objectCopy = zoneSector.deepClone();
+        this.sectors.push(objectCopy);
         return this;
     }
 
@@ -31,4 +39,6 @@ export class ClassZone {
         }
         return this;
     }
+
+
 }

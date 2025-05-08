@@ -1,3 +1,4 @@
+import { PlaneClass } from "/js/SeatShablonScripts/seatStructureClasses/planeClass.js";
 export class SeatStructure {
     constructor() {
         this.classes = [];
@@ -18,7 +19,8 @@ export class SeatStructure {
     }
 
     addClassCopy(planeClass) {
-        this.classes.push(planeClass);
+        let objectCopy = planeClass.deepClone();
+        this.classes.push(objectCopy);
         return this;
     }
 

@@ -1,7 +1,16 @@
+
 export class ZoneSector {
     constructor() {
         this.rowCount = 1;
         this.seatsInRow = 1;
+    }
+
+    deepClone() {
+        const clone = new ZoneSector();
+        clone.rowCount = this.rowCount;
+        clone.seatsInRow = this.seatsInRow;
+
+        return clone;
     }
 
     getRowCount() {
@@ -32,13 +41,13 @@ export class ZoneSector {
         return this;
     }
 
-    increaseSeatsInSector() {
-        this.seatsInRow++;
+    increaseRowInSector() {
+        this.rowCount++;
         return this;
     }
 
-    decreaseSeatsInSector() {
-        this.seatsInRow--;
+    decreaseRowInSector() {
+        this.rowCount--;
         return this;
     }
 }

@@ -46,7 +46,7 @@
 
 .class_zone {
     flex: 1;
-    /*border: solid #B0413E 4px;*/
+    border: solid #B0413E 4px;
 }
 
 
@@ -62,6 +62,8 @@
 
 .zone_sector {
     display: flex;
+    border: solid black 2px;
+
 }
 
 
@@ -114,4 +116,22 @@
 
 .row_seat button:focus {
     background-color: rgba(8, 114, 168, 0.7);
+}
+
+
+.some_crementButton{ /* Ну, тапа от инкремент - диеремент*/
+    border: solid black 1px;
+    text-align: center;
+    aspect-ratio: 1 / 1;
+    height: 20px;
+
+}
+
+.addButton {
+    color: green;
+
+}
+
+.delButton {
+    color: red;
 }

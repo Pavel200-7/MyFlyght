@@ -7,6 +7,14 @@ export class PlaneClass {
         this.addZone(); // создаем зону по умолчанию
     }
 
+    deepClone() {
+        const clone = new PlaneClass();
+        clone.classType = this.classType;
+        clone.zones = this.zones.map(zone => zone.deepClone());
+
+        return clone;
+    }
+
     getClassType() {
         return this.classType;
     }
@@ -31,7 +39,9 @@ export class PlaneClass {
     }
 
     addZoneCopy(classZone) {
-        this.zones.push(classZone);
+
+        let objectCopy = classZone.deepClone();
+        this.zones.push(objectCopy);
         return this;
     }
 
