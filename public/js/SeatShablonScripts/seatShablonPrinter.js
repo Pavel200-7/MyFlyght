@@ -5,51 +5,6 @@ export class seatShablonPrinter
         this.visualDiscription = visualDiscription;
     }
 
-    updateSeatShablonVisualFromJSON(seatStructure)
-    {
-        this.clearSeatShablonVisual();
-        this.printSeatShablonFromJSON(seatStructure);
-    }
-
-    printSeatShablonFromJSON(seatStructureJSON)
-    {
-        let classCounter = 1;
-        let htmlText = ``;
-
-        for (let planeClass of seatStructureJSON['classes'])
-        {
-            let classType = planeClass['classType'];
-            htmlText += `<div class="plane_class">
-                                            <div class="tablo">
-                                                <h1>Класс номер: ${classCounter}, тип: ${classType}</h1>
-                                            </div>
-                                         <div class="class_zones">`;
-            for (let zone of planeClass['zones'])
-            {
-                htmlText += `<div class="class_zone">`;
-                for (let sector of zone['sectors'])
-                {
-                    htmlText += `<div class="zone_sector">`;
-                    for (let row=0; row<sector['rowCount']; row++)
-                    {
-                        htmlText += `<div class="sector_row">`;
-                        for (let seats=0; seats<sector['seatsInRow']; seats++)
-                        {
-                            htmlText += `<div class="row_seat"><button></button></div>`;
-                        }
-                        htmlText += `</div>`;
-                    }
-                    htmlText += `</div>`;
-                }
-                htmlText += `</div>`;
-            }
-            htmlText += `</div>
-                                         </div>`;
-            classCounter++;
-        }
-        this.visualDiscription.innerHTML = htmlText;
-    }
-
     updateSeatShablonVisualFromObject(seatStructure)
     {
         this.clearSeatShablonVisual();
@@ -59,8 +14,6 @@ export class seatShablonPrinter
     printSeatShablonFromObject(seatStructureObject) {
         this.visualDiscription.innerHTML = this.printSeatShablonFromObject_GetHTML(seatStructureObject);
         this.printSeatShablonFromObject_AddButtonListeners(seatStructureObject);
-        console.log(seatStructureObject);
-
     }
 
     printSeatShablonFromObject_GetHTML(seatStructureObject)
@@ -97,8 +50,6 @@ export class seatShablonPrinter
 
                 let sectorCounter = 0;
 
-
-
                 for (let sector of zone.sectors) {
 
                     let sectorID = `${classCounter}_${zoneCounter}_${sectorCounter}`;
@@ -125,10 +76,6 @@ export class seatShablonPrinter
                                  </div>
                                  <div class="zone_sector">`;
 
-                    ///
-
-
-
                     for (let row = 0; row < sector.rowCount; row++) {
 
                         htmlText += `<div class="sector_row">`;
@@ -137,9 +84,6 @@ export class seatShablonPrinter
                         }
 
                         htmlText += `</div>`;
-
-                        /////
-
                     }
                     htmlText += `</div>
                                  </div>
@@ -190,16 +134,7 @@ export class seatShablonPrinter
                     this.addAddRowButtonListener(seatStructureObject, sector, sectorID);
                     this.addDelSeatsInRowButtonListener(seatStructureObject, sector, sectorID);
                     this.addAddSeatsInRowButtonListener(seatStructureObject, sector, sectorID)
-
-
-                    for (let row = 0; row < sector.rowCount; row++) {
-                        // htmlText += `<div class="sector_row">`;
-                        for (let seat = 0; seat < sector.seatsInRow; seat++) {
-                            // htmlText += `<div class="row_seat"><button></button></div>`;
-                        }
-                        // htmlText += `</div>`;
-                    }
-
+                    
                     sectorCounter++;
                 }
                 zoneCounter++;
