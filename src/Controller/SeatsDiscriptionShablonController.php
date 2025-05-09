@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\SeatsDiscriptionShablon;
+use App\Entity\SeatShablon;
+use App\Enum\CompartmentTypeEnum;
 use App\Form\SeatsDiscriptionShablonType;
 use App\Repository\SeatsDiscriptionShablonRepository;
 use App\Service\seatStructureClasses\seatStructure;
@@ -11,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Service\seatStructureClasses;
+use App\Service\seatStructureClasses\converterSeatsFromJSONtoArray;
 use Symfony\Component\Serializer\SerializerInterface;
 
 
@@ -27,7 +29,7 @@ final class SeatsDiscriptionShablonController extends AbstractController
     }
 
     #[Route('/new', name: 'app_seats_discription_shablon_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, converterSeatsFromJSONtoArray $converterSeatsFromJSONtoArray): Response
     {
         $seatsDiscriptionShablon = new SeatsDiscriptionShablon();
         $form = $this->createForm(SeatsDiscriptionShablonType::class, $seatsDiscriptionShablon);
@@ -37,44 +39,31 @@ final class SeatsDiscriptionShablonController extends AbstractController
             $entityManager->persist($seatsDiscriptionShablon);
             $entityManager->flush();
 
+
+            $seatsDiscriptionShablonNewJSON = $form->get('SeatShablonJSOn')->getData();
+            $seatArray = $converterSeatsFromJSONtoArray->convert($seatsDiscriptionShablonNewJSON);
+
+            foreach ($seatArray as $seatData)
+            {
+                $seat = new SeatShablon();
+                $seat->setSeatShablon($seatsDiscriptionShablon);
+                $seat->setCompartmentType($seatData['compartmentType']);
+                $seat->setCompartmentNumber($seatData['compartmentNumber']);
+                $seat->setZoneNumber($seatData['zoneNumber']);
+                $seat->setSectorNumber($seatData['sectorNumber']);
+                $seat->setRow($seatData['row']);
+                $seat->setNumberInRow($seatData['seatNumber']);
+
+                $entityManager->persist($seat);
+                $entityManager->flush();
+            }
+
             return $this->redirectToRoute('app_seats_discription_shablon_index', [], Response::HTTP_SEE_OTHER);
         }
-
-//        $seatStructure = [
-//            'classes' => [ // seatStructure.planeClasses
-//                [ // planeClass
-//                    'classType' => 'Economy',
-//                    'zones' => [ // planeClass.zones
-//                        [ // zone
-//                            'sectors' => [ //zone.sectors
-//                                [ //sector
-//                                    'rowsCount' => 3,
-//                                    'seatsInRow' => 9,
-//                                ], //sector * 1-2
-//                            ] //zone.sectors
-//                        ], // zone *3
-//                        [ // zone
-//                            'sectors' => [ //zone.sectors
-//                                [ //sector
-//                                    'rowsCount' => 3,
-//                                    'seatsInRow' => 9,
-//                                ], //sector * 1-2
-//                            ] //zone.sectors
-//                        ], // zone *3
-//                        [ // zone
-//                            'sectors' => [ //zone.sectors
-//                                [ //sector
-//                                    'rowsCount' => 3,
-//                                    'seatsInRow' => 9,
-//                                ], //sector * 1-2
-//                            ] //zone.sectors
-//                        ], // zone *3
-//                    ]  // zones
-//                ], // planeClass * 2-3
-//            ] // classes
-//        ];
+        
         $seatStructure = new seatStructure();
-        $seatStructure->addClass("Эконом");
+        $classType = CompartmentTypeEnum::Economy->value;
+        $seatStructure->addClass($classType);
         $seatStructure = $serializer->serialize($seatStructure, 'json');
 
         return $this->render('admin/templates/seats_discription_shablon/new.html.twig', [

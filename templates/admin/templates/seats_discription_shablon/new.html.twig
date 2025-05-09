@@ -51,11 +51,21 @@
             });
         });
 
+
+        let saveSubmitBTN = document.getElementById('save');
+        saveSubmitBTN.addEventListener('click', function (e) {
+            // e.preventDefault();
+
+            let newSeatStructureJSON = JSON.stringify(seatStructureObj);
+            console.log(newSeatStructureJSON);
+            document.getElementById('seats_discription_shablon_SeatShablonJSOn').value = newSeatStructureJSON;
+
+        });
     </script>
 
     <h1>Создать новую запись: шаблон мест</h1>
 
-    <button type="submit" class="btn aCreate" form="myFormId">Сохранить</button>
+    <button type="submit" id="save" class="btn aCreate" form="myFormId">Сохранить</button>
 
     {{ form_start(form, {'attr': {'id': 'myFormId'}} ) }}
         {{ form_label(form.SeatsDiscriptionShablonName) }}
@@ -63,8 +73,7 @@
 
         {{ form_widget(form.SeatShablonJSOn, {'attr': {'style': 'display:none;'}}) }}
 
-
-        <div class="seat_shablon_window">
+    <div class="seat_shablon_window">
             <div class="tablo">
                 <button type="button" id="toggleButtonsBTN" class="btn aUpdate">Режим изменения</button>
                 <h1>Шаблон расположения мест в самолете</h1>

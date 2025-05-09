@@ -14,7 +14,7 @@ export class seatShablonPrinter
 
     printSeatShablonFromObject(seatStructureObject) {
         this.visualDiscription.innerHTML = this.printSeatShablonFromObject_GetHTML(seatStructureObject);
-        this.printSeatShablonFromObject_AddButtonListeners_withoutBlocker(seatStructureObject);
+        this.printSeatShablonFromObject_AddButtonListeners_withBlocker(seatStructureObject);
     }
 
     printSeatShablonFromObject_GetHTML(seatStructureObject)
@@ -199,9 +199,6 @@ export class seatShablonPrinter
                     for (let row of sector.rows) {
 
                         for (let seat of row.seats) {
-                            console.log(seatCounter);
-                            console.log(seat);
-
                             this.addSetSeatStatusButtonListener(seatStructureObject, seat, seatCounter);
                             seatCounter++
                         }
@@ -336,8 +333,9 @@ export class seatShablonPrinter
         let delSeatsInRowBTN = document.getElementById(delSeatsInRowBTNId);
 
         delSeatsInRowBTN.addEventListener('click', () => {
-            let rows = sector.rows[0];  // Такая уж структура данных
-            rows.delLastSeat();
+            for (let row of sector.rows){
+                row.delLastSeat();
+            }
             this.updateSeatShablonVisualFromObject(seatStructureObject);
         });
 
@@ -349,8 +347,9 @@ export class seatShablonPrinter
         let addSeatsInRowBTN = document.getElementById(addSeatsInRowBTNID);
 
         addSeatsInRowBTN.addEventListener('click', () => {
-            let rows = sector.rows[0];  // Такая уж структура данных
-            rows.addSeat();
+            for (let row of sector.rows){
+                row.addSeat();
+            }
             this.updateSeatShablonVisualFromObject(seatStructureObject);
         });
 
@@ -370,12 +369,6 @@ export class seatShablonPrinter
         });
 
     }
-
-
-
-
-
-
 
     clearSeatShablonVisual(seatStructureObject)
     {

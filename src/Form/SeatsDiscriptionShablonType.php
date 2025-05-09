@@ -18,6 +18,7 @@ class SeatsDiscriptionShablonType extends AbstractType
         $builder
             ->add('SeatsDiscriptionShablonName', null, [
                 'label' => 'Наименование шаблона',
+
             ])
             ->add('ClassType', EnumType::class , [
                 'class' => CompartmentTypeEnum::class,
