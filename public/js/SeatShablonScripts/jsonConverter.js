@@ -1,34 +1,57 @@
-import { ClassZone } from "/js/SeatShablonScripts/seatStructureClasses/classZone.js";
-import { PlaneClass } from "/js/SeatShablonScripts/seatStructureClasses/planeClass.js";
-import { SeatStructure } from "/js/SeatShablonScripts/seatStructureClasses/seatStructure.js";
-import { ZoneSector } from "/js/SeatShablonScripts/seatStructureClasses/zoneSector.js";
+import { seatStructure } from "/js/SeatShablonScripts/seatStructureClasses/seatStructure.js";
+import { planeClass } from "/js/SeatShablonScripts/seatStructureClasses/planeClass.js";
+import { classZone } from "/js/SeatShablonScripts/seatStructureClasses/classZone.js";
+import { zoneSector } from "/js/SeatShablonScripts/seatStructureClasses/zoneSector.js";
+import { sectorRow } from "/js/SeatShablonScripts/seatStructureClasses/sectorRow.js";
+import { rowSeat } from "/js/SeatShablonScripts/seatStructureClasses/rowSeat.js";
 
-export class jsonConverter
-{
-    parseSeatStructure(jsonData)
-    {
-    const seatStructure = new SeatStructure();
+export class jsonConverter {
+    parseSeatStructure(jsonData) {
+        const seatStructureObj = new seatStructure();
 
-    jsonData.classes.forEach(cls => {
-        const planeClass = new PlaneClass(cls.classType);
 
-        cls.zones.forEach(zoneData => {
-            const zone = new ClassZone();
+        // Перебираем все классы
+        jsonData.classes.forEach(cls => {
+            const planeClassObj = new planeClass(cls.classType);
 
-            zoneData.sectors.forEach(sectorData => {
-                const sector = new ZoneSector()
-                    .setRowCount(sectorData.rowCount)
-                    .setSeatsInRow(sectorData.seatsInRow);
-                // zone.addSectorCopy(sector);
+            // Перебираем зоны внутри класса
+            cls.zones.forEach(zoneData => {
+                const zoneObj = new classZone();
+
+                // Перебираем сектора внутри зоны
+                zoneData.sectors.forEach(sectorData => {
+                    const sectorObj = new zoneSector();
+
+
+                    sectorData.rows.forEach(rowData => {
+                        const rowObj = new sectorRow();
+
+                         // Внутренний уровень - массив rows (что содержит массив seats)
+                        rowData.seats.forEach(seatsData => {
+                            const seatObj = new rowSeat();
+
+                            let status = true;
+                            if (seatsData.seatStatus !== true) {
+                                status = false;
+                            }
+                            seatObj.setSeatStatus(status);
+
+                            // rowObj.addSeatCopy(seatObj);
+                            rowObj.addSeatCopy(seatObj); // добавляем сиденье в ряд
+                        });
+
+                        // sectorObj.addRowCopy(rowObj);
+                        sectorObj.addRowCopy(rowObj); // добавляем ряд в сектор
+                    });
+                    zoneObj.addSectorCopy(sectorObj); // добавляем сектор в зону
+                });
+
+                planeClassObj.addZoneCopy(zoneObj); // добавляем зону в класс
             });
 
-            // planeClass.addZoneCopy(zone);
+            seatStructureObj.addClassCopy(planeClassObj);
         });
 
-        seatStructure.addClassCopy(planeClass);
-    });
-
-    return seatStructure;
+        return seatStructureObj;
     }
-
 }

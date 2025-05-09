@@ -18,17 +18,17 @@ class seatStructure
         return $this;
     }
 
-    public function addClass($classType)
+    public function addClass($classType): void
     {
         $this->classes[] = new planeClass($classType);
     }
 
-    public function addClassCopy(planeClass $planeClass)
+    public function addClassCopy(planeClass $planeClass): void
     {
         $this->classes[] = $planeClass;
     }
 
-    public function delClass(planeClass $planeClass)
+    public function delClass(planeClass $planeClass): void
     {
         unset($this->classes[array_search($planeClass, $this->classes)]);
     }

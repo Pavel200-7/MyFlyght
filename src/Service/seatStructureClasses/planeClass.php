@@ -10,8 +10,7 @@ class planeClass
     public function __construct($classType)
     {
         $this->classType = $classType;
-        $this->zones[] = new classZone;
-
+        $this->addZone();
     }
 
     public function getClassType(): string
@@ -19,7 +18,7 @@ class planeClass
         return $this->classType;
     }
 
-    public function setClassType(string $classType): static
+    public function setClassType(string $classType): planeClass
     {
         $this->classType = $classType;
 
@@ -31,24 +30,24 @@ class planeClass
         return $this->zones;
     }
 
-    public function setZones(array $zones): static
+    public function setZones(array $zones): planeClass
     {
         $this->zones = $zones;
 
         return $this;
     }
 
-    public function addZone()
+    public function addZone(): void
     {
         $this->zones[] = new classZone;
     }
 
-    public function addZoneCopy(classZone $classZone)
+    public function addZoneCopy(classZone $classZone): void
     {
         $this->zones[] = $classZone;
     }
 
-    public function delZone(classZone $classZone)
+    public function delZone(classZone $classZone): void
     {
         unset($this->zones[array_search($classZone, $this->zones)]);
     }

@@ -7,7 +7,7 @@ class classZone
     private array $sectors;
 
     public function __construct(){
-        $this->sectors[] = new zoneSector();
+        $this->addSector();
     }
 
     public function getSectors(): array
@@ -15,22 +15,24 @@ class classZone
         return $this->sectors;
     }
 
-    public function setSectors(array $sectors): static
+    public function setSectors(array $sectors): classZone
     {
         $this->sectors = $sectors;
 
         return $this;
     }
 
-    public function addSector(){
+    public function addSector(): void
+    {
         $this->sectors[] = new zoneSector();
     }
 
-    public function addSectorCopy(zoneSector $zoneSector){
+    public function addSectorCopy(zoneSector $zoneSector): void
+    {
         $this->sectors[] = $zoneSector;
     }
 
-    public function delSector(zoneSector $zoneSector)
+    public function delSector(zoneSector $zoneSector): void
     {
         unset($this->sectors[array_search($zoneSector, $this->sectors)]);
     }

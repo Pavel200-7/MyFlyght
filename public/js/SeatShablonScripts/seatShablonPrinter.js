@@ -1,3 +1,4 @@
+
 export class seatShablonPrinter
 {
     constructor(visualDiscription)
@@ -13,12 +14,13 @@ export class seatShablonPrinter
 
     printSeatShablonFromObject(seatStructureObject) {
         this.visualDiscription.innerHTML = this.printSeatShablonFromObject_GetHTML(seatStructureObject);
-        this.printSeatShablonFromObject_AddButtonListeners(seatStructureObject);
+        this.printSeatShablonFromObject_AddButtonListeners_withoutBlocker(seatStructureObject);
     }
 
     printSeatShablonFromObject_GetHTML(seatStructureObject)
     {
         let classCounter = 0;
+        let seatCounter = 0;
         let htmlText = ``;
 
         for (let planeClass of seatStructureObject.classes) {
@@ -31,8 +33,8 @@ export class seatShablonPrinter
             htmlText += `<div class="plane_class">
                         <div class="tablo">
                             <h1>Класс номер: ${readableClassCounter}, тип: ${classType}</h1>
-                            <button id="${delClassBtnId}" class="btn aDelete toggleable">Удалить класс</button>
-                            <button id="${addZoneBtnId}" class="btn aCreate toggleable">Добавить зону</button>
+                            <button type="button" id="${delClassBtnId}" class="btn aDelete toggleable">Удалить класс</button>
+                            <button type="button" id="${addZoneBtnId}" class="btn aCreate toggleable">Добавить зону</button>
                         </div>
                         <div class="class_zones">`;
 
@@ -45,8 +47,8 @@ export class seatShablonPrinter
                 let copyZoneBtnId = `copyZoneBTN${zoneId}`;
 
                 htmlText += `<div class="class_zone">
-                            <button id="${delZoneBtnId}" class="btn aDelete toggleable">Удалить зону</button>
-                            <button id="${copyZoneBtnId}" class="btn aUpdate toggleable">Копировать зону</button>`;
+                            <button type="button" id="${delZoneBtnId}" class="btn aDelete toggleable">Удалить зону</button>
+                            <button type="button" id="${copyZoneBtnId}" class="btn aUpdate toggleable">Копировать зону</button>`;
 
                 let sectorCounter = 0;
 
@@ -65,22 +67,28 @@ export class seatShablonPrinter
                     htmlText += `<div class="zone_sector_panel">
                                 <div>
                                  <div>
-                                     <button id="${delSectorBTN}" class="btn aDelete toggleable">Удалить сектор</button>
-                                     <button id="${copySectorBTN}" class="btn aUpdate toggleable">Копировать сектор</button>
+                                     <button type="button" id="${delSectorBTN}" class="btn aDelete toggleable">Удалить сектор</button>
+                                     <button type="button" id="${copySectorBTN}" class="btn aUpdate toggleable">Копировать сектор</button>
                                      <div>
-                                         <button id="${delRowBTN}" class="btn some_crementButton delButton toggleable">-</button>
-                                         <button id="${addRowBTN}" class="btn some_crementButton addButton toggleable">+</button>
-                                         <button id="${delSeatsInRowBTN}" class="btn some_crementButton delButton toggleable">-</button>
-                                         <button id="${addSeatsInBTN}" class="btn some_crementButton addButton toggleable">+</button>
+                                         <button type="button" id="${delRowBTN}" class="btn some_crementButton delButton toggleable">-</button>
+                                         <button type="button" id="${addRowBTN}" class="btn some_crementButton addButton toggleable">+</button>
+                                         <button type="button" id="${delSeatsInRowBTN}" class="btn some_crementButton delButton toggleable">-</button>
+                                         <button type="button" id="${addSeatsInBTN}" class="btn some_crementButton addButton toggleable">+</button>
                                      </div>
                                  </div>
                                  <div class="zone_sector">`;
 
-                    for (let row = 0; row < sector.rowCount; row++) {
+                    for (let row of sector.rows) {
 
                         htmlText += `<div class="sector_row">`;
-                        for (let seat = 0; seat < sector.seatsInRow; seat++) {
-                            htmlText += `<div class="row_seat"><button></button></div>`;
+                        for (let seat of row.seats) {
+                            let seatID = `setSeatStatusBTN${seatCounter}`
+                            if (seat.available === true) {
+                                htmlText += `<div id="${seatID}" class="row_seat"><button type="button" class="seat-btn"></button></div>`;
+                            } else {
+                                htmlText += `<div id="${seatID}" class="row_seat blocked"><button type="button" class="seat-btn"></button></div>`;
+                            }
+                            seatCounter++;
                         }
 
                         htmlText += `</div>`;
@@ -102,10 +110,9 @@ export class seatShablonPrinter
         return htmlText;
     }
 
-    printSeatShablonFromObject_AddButtonListeners(seatStructureObject)
+    printSeatShablonFromObject_AddButtonListeners_withoutBlocker(seatStructureObject)
     {
         let classCounter = 0;
-        // console.log(seatStructureObject);
         for (let planeClass of seatStructureObject.classes) {
 
             this.addDelClassButtonListener(seatStructureObject, planeClass, classCounter);
@@ -130,11 +137,78 @@ export class seatShablonPrinter
                     this.addDelSectorButtonListener(seatStructureObject, zone, sector, sectorID);
                     this.addCopySectorButtonListener(seatStructureObject, zone, sector, sectorID);
 
+
                     this.addDelRowButtonListener(seatStructureObject, sector, sectorID);
                     this.addAddRowButtonListener(seatStructureObject, sector, sectorID);
                     this.addDelSeatsInRowButtonListener(seatStructureObject, sector, sectorID);
                     this.addAddSeatsInRowButtonListener(seatStructureObject, sector, sectorID)
-                    
+
+                    for (let row of sector.rows) {
+
+                        for (let seat of row.seats) {
+
+                        }
+
+                    }
+
+
+                    sectorCounter++;
+                }
+                zoneCounter++;
+            }
+            classCounter++;
+        }
+
+    }
+
+    printSeatShablonFromObject_AddButtonListeners_withBlocker(seatStructureObject)
+    {
+        let classCounter = 0;
+        let seatCounter = 0;
+
+        for (let planeClass of seatStructureObject.classes) {
+
+            this.addDelClassButtonListener(seatStructureObject, planeClass, classCounter);
+            this.addAddZoneButtonListener(seatStructureObject, planeClass, classCounter);
+
+            let zoneCounter = 0;
+
+            for (let zone of planeClass.zones) {
+
+                let zoneId = `${classCounter}_${zoneCounter}`;
+                this.addDelZoneButtonListener(seatStructureObject, planeClass, zone, zoneId);
+                this.addCopyZoneButtonListener(seatStructureObject, planeClass, zone, zoneId);
+                this.addAddSectorButtonListener(seatStructureObject, zone, zoneId);
+
+                let sectorCounter = 0;
+
+
+                for (let sector of zone.sectors) {
+
+                    let sectorID = `${classCounter}_${zoneCounter}_${sectorCounter}`;
+
+                    this.addDelSectorButtonListener(seatStructureObject, zone, sector, sectorID);
+                    this.addCopySectorButtonListener(seatStructureObject, zone, sector, sectorID);
+
+
+                    this.addDelRowButtonListener(seatStructureObject, sector, sectorID);
+                    this.addAddRowButtonListener(seatStructureObject, sector, sectorID);
+                    this.addDelSeatsInRowButtonListener(seatStructureObject, sector, sectorID);
+                    this.addAddSeatsInRowButtonListener(seatStructureObject, sector, sectorID)
+
+                    for (let row of sector.rows) {
+
+                        for (let seat of row.seats) {
+                            console.log(seatCounter);
+                            console.log(seat);
+
+                            this.addSetSeatStatusButtonListener(seatStructureObject, seat, seatCounter);
+                            seatCounter++
+                        }
+
+                    }
+
+
                     sectorCounter++;
                 }
                 zoneCounter++;
@@ -234,7 +308,7 @@ export class seatShablonPrinter
         let delRowBTN = document.getElementById(delRowBTNId);
 
         delRowBTN.addEventListener('click', () => {
-            sector.decreaseRowInSector();
+            sector.delLastRow();
             this.updateSeatShablonVisualFromObject(seatStructureObject);
         });
 
@@ -246,7 +320,11 @@ export class seatShablonPrinter
         let addRowBTN = document.getElementById(addRowBTNId);
 
         addRowBTN.addEventListener('click', () => {
-            sector.increaseRowInSector();
+            if (!sector.rows.length){ // Пуст
+                sector.addNewRow();
+            } else {
+                sector.addRowCopy(sector.rows[0]);
+            }
             this.updateSeatShablonVisualFromObject(seatStructureObject);
         });
 
@@ -258,7 +336,8 @@ export class seatShablonPrinter
         let delSeatsInRowBTN = document.getElementById(delSeatsInRowBTNId);
 
         delSeatsInRowBTN.addEventListener('click', () => {
-            sector.decreaseSeatsInRow();
+            let rows = sector.rows[0];  // Такая уж структура данных
+            rows.delLastSeat();
             this.updateSeatShablonVisualFromObject(seatStructureObject);
         });
 
@@ -270,7 +349,23 @@ export class seatShablonPrinter
         let addSeatsInRowBTN = document.getElementById(addSeatsInRowBTNID);
 
         addSeatsInRowBTN.addEventListener('click', () => {
-            sector.increaseSeatsInRow();
+            let rows = sector.rows[0];  // Такая уж структура данных
+            rows.addSeat();
+            this.updateSeatShablonVisualFromObject(seatStructureObject);
+        });
+
+    }
+
+    addSetSeatStatusButtonListener(seatStructureObject, seat, seatCounter)
+    {
+        let SetSeatStatusBtnId = `setSeatStatusBTN${seatCounter}`;
+        let SetSeatStatusBTN = document.getElementById(SetSeatStatusBtnId);
+
+        SetSeatStatusBTN.addEventListener('click', () => {
+            console.log(seat);
+            let newStatus = !seat.getSeatStatus();
+
+            seat.setSeatStatus(newStatus);
             this.updateSeatShablonVisualFromObject(seatStructureObject);
         });
 

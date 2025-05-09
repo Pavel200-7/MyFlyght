@@ -1,14 +1,14 @@
-import { ClassZone } from "/js/SeatShablonScripts/seatStructureClasses/classZone.js";
+import { classZone } from "/js/SeatShablonScripts/seatStructureClasses/classZone.js";
 
-export class PlaneClass {
+export class planeClass {
     constructor(classType) {
         this.classType = classType;
         this.zones = [];
-        this.addZone(); // создаем зону по умолчанию
+        // this.addZone(); // создаем зону по умолчанию
     }
 
     deepClone() {
-        const clone = new PlaneClass();
+        const clone = new planeClass();
         clone.classType = this.classType;
         clone.zones = this.zones.map(zone => zone.deepClone());
 
@@ -34,7 +34,7 @@ export class PlaneClass {
     }
 
     addZone() {
-        this.zones.push(new ClassZone());
+        this.zones.push(new classZone());
         return this;
     }
 

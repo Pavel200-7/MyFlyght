@@ -4,56 +4,37 @@ namespace App\Service\seatStructureClasses;
 
 class zoneSector
 {
-    private int $rowCount;
-    private int $seatsInRow;
+    private array $rows;
 
     public function __construct(){
-        $this->rowCount = 1;
-        $this->seatsInRow = 1;
+        $this->addRow();
     }
 
-    public function getRowCount(): int
+    public function getRows(): array
     {
-        return $this->rowCount;
+        return $this->rows;
     }
 
-    public function setRowCount(int $rowCount): static
+    public function setRows(array $rows): static
     {
-        $this->rowCount = $rowCount;
+        $this->rows = $rows;
 
         return $this;
     }
 
-    public function getSeatsInRow(): int
+    public function addRow(): void
     {
-        return $this->seatsInRow;
+        $this->rows[] = new sectorRow();
     }
 
-    public function setSeatsInRow(int $seatsInRow): static
+    public function addRowCopy(sectorRow $row): void
     {
-        $this->seatsInRow = $seatsInRow;
-
-        return $this;
+        $this->rows[] = $row;
     }
 
-    public function increaseSeatsInRow()
+    public function delRow(sectorRow $row): void
     {
-        $this->seatsInRow++;
-    }
-
-    public function decreaseSeatsInRow()
-    {
-        $this->seatsInRow--;
-    }
-
-    public function increaseSeatsInSector()
-    {
-        $this->seatsInRow++;
-    }
-
-    public function decreaseSeatsInSector()
-    {
-        $this->seatsInRow--;
+        unset($this->rows[array_search($row, $this->rows)]);
     }
 
 }

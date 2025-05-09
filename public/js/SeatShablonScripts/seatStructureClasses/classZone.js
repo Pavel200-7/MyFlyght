@@ -1,14 +1,13 @@
-import { ZoneSector } from "/js/SeatShablonScripts/seatStructureClasses/zoneSector.js";
-export class ClassZone {
+import { zoneSector } from "/js/SeatShablonScripts/seatStructureClasses/zoneSector.js";
+export class classZone {
     constructor() {
         this.sectors = [];
-        this.addSector(); // Изначально создаем один сектор
+        // this.addSector(); // Изначально создаем один сектор
     }
 
     deepClone() {
-        const clone = new ClassZone();
+        const clone = new classZone();
         clone.sectors = this.sectors.map(sector => sector.deepClone());
-
         return clone;
     }
 
@@ -22,7 +21,7 @@ export class ClassZone {
     }
 
     addSector() {
-        this.sectors.push(new ZoneSector());
+        this.sectors.push(new zoneSector());
         return this;
     }
 

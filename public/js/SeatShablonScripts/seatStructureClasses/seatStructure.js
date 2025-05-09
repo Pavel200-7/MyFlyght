@@ -1,5 +1,5 @@
-import { PlaneClass } from "/js/SeatShablonScripts/seatStructureClasses/planeClass.js";
-export class SeatStructure {
+import { planeClass } from "/js/SeatShablonScripts/seatStructureClasses/planeClass.js";
+export class seatStructure {
     constructor() {
         this.classes = [];
     }
@@ -14,7 +14,7 @@ export class SeatStructure {
     }
 
     addClass(classType) {
-        this.classes.push(new PlaneClass(classType));
+        this.classes.push(new planeClass(classType));
         return this;
     }
 

@@ -138,4 +138,6 @@
     color: red;
 }
 
-b
+.blocked Button{
+    background-color: red;
+}

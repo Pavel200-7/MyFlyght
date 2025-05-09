@@ -1,53 +1,54 @@
+import { sectorRow } from "/js/SeatShablonScripts/seatStructureClasses/sectorRow.js";
 
-export class ZoneSector {
+export class zoneSector {
     constructor() {
-        this.rowCount = 1;
-        this.seatsInRow = 1;
+        this.rows =  [];
     }
 
     deepClone() {
-        const clone = new ZoneSector();
-        clone.rowCount = this.rowCount;
-        clone.seatsInRow = this.seatsInRow;
+        const clone = new zoneSector();
+        clone.rows = this.rows.map(row => row.deepClone());
 
         return clone;
     }
 
-    getRowCount() {
-        return this.rowCount;
+    getRows() {
+        return this.rows;
     }
 
-    setRowCount(rowCount) {
-        this.rowCount = rowCount;
+    setRows(rows) {
+        this.rows = rows;
         return this;
     }
 
-    getSeatsInRow() {
-        return this.seatsInRow;
-    }
-
-    setSeatsInRow(seatsInRow) {
-        this.seatsInRow = seatsInRow;
+    addRow() {
+        this.rows.push(new sectorRow());
         return this;
     }
 
-    increaseSeatsInRow() {
-        this.seatsInRow++;
+    addNewRow() {
+        let row = new sectorRow();
+        row.addSeat();
+        this.rows.push(row);
         return this;
     }
 
-    decreaseSeatsInRow() {
-        this.seatsInRow--;
+    addRowCopy(ClassRow) {
+        let objectCopy = ClassRow.deepClone();
+        this.rows.push(objectCopy);
         return this;
     }
 
-    increaseRowInSector() {
-        this.rowCount++;
+    delRow(ClassRow) {
+        const index = this.rows.indexOf(ClassRow);
+        if (index !== -1) {
+            this.rows.slice(index, 1);
+        }
         return this;
     }
 
-    decreaseRowInSector() {
-        this.rowCount--;
+    delLastRow() {
+        this.rows.splice(-1);
         return this;
     }
 }
