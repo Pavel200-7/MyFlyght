@@ -2,13 +2,97 @@
 
 {% block title %}Изменить данные шаблона мест{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin_pages_seat_shablon_discription.css') }}">
+{% endblock %}
+
 {% block workPlace %}
+
+
+    <script type="module">
+        import { jsonConverter } from "{{ asset('js/SeatShablonScripts/jsonConverter.js') }}";
+        import { seatShablonPrinter } from "{{ asset('js/SeatShablonScripts/seatShablonPrinter.js') }}";
+
+        // Конверсия строки или какой-то другой веши (я не помню) в JSON, и дальше в объект js
+        let seatStructureJSON = JSON.parse({{ seatStructure|json_encode|raw }});
+        // console.log(seatStructureJSON);
+
+        let jsonConverterObj = new jsonConverter();
+        let seatStructureObj = jsonConverterObj.parseSeatStructure(seatStructureJSON);
+        console.log(seatStructureObj);
+
+        // Подготовка класса - рисовальщика
+        let visualDiscription = document.getElementById('visual_discription');
+        let seatShablonPrinterObj = new seatShablonPrinter(visualDiscription);
+        // console.log(seatStructureObj);
+
+        // Первое отрисовывание шаблона
+        seatShablonPrinterObj.updateSeatShablonVisualFromObject(seatStructureObj);
+
+        // Эта кнопка добавляет классы самолета в шаблон
+        let addClassBTN = document.getElementById('addNewClassBTN');
+        addClassBTN.addEventListener('click', () => {
+            let classType = document.getElementById('seats_discription_shablon_ClassType').value;
+            seatStructureObj.addClass(classType);
+            seatShablonPrinterObj.updateSeatShablonVisualFromObject(seatStructureObj);
+        });
+
+        // Эта штука включает/выключает отображение кнопок кастомизации шаблона мест
+        document.getElementById('toggleButtonsBTN').addEventListener('click', () => {
+            const buttons = document.querySelectorAll('.toggleable');
+            buttons.forEach(btn => {
+                if (btn.style.display === 'none') {
+                    btn.style.display = '';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+        });
+
+
+        let saveSubmitBTN = document.getElementById('save');
+        saveSubmitBTN.addEventListener('click', function (e) {
+            // e.preventDefault();
+
+            let newSeatStructureJSON = JSON.stringify(seatStructureObj);
+            console.log(newSeatStructureJSON);
+            document.getElementById('seats_discription_shablon_SeatShablonJSOn').value = newSeatStructureJSON;
+
+        });
+    </script>
+
+
     <h1>Изменить данные шаблона мест</h1>
 
-    <button type="submit" class="btn aUpdate" form="myFormId">Обновить</button>
+    <button type="submit" id="save" class="btn aUpdate" form="myFormId">Обновить</button>
     <button type="submit" class="btn aDelete" form="myDeleteFormId">Удалить</button>
 
-    {{ include('admin/templates/seats_discription_shablon/_form.html.twig', {'button_label': 'Update'}) }}
+{#    {{ include('admin/templates/seats_discription_shablon/_form.html.twig', {'button_label': 'Update'}) }}#}
+
+    {{ form_start(form, {'attr': {'id': 'myFormId'}} ) }}
+    {{ form_label(form.SeatsDiscriptionShablonName) }}
+    {{ form_widget(form.SeatsDiscriptionShablonName) }}
+
+    {{ form_widget(form.SeatShablonJSOn, {'attr': {'style': 'display:none;'}}) }}
+
+    <div class="seat_shablon_window">
+        <div class="tablo">
+            <button type="button" id="toggleButtonsBTN" class="btn aUpdate">Режим изменения</button>
+            <h1>Шаблон расположения мест в самолете</h1>
+            <div STYLE="display: flex">
+                {{ form_widget(form.ClassType) }}
+                <button type="button" id="addNewClassBTN" class="btn aCreate toggleable">Добавить класс</button>
+            </div>
+        </div>
+
+        <div class="visual_discription" id="visual_discription">
+            {#Визуальное отображение#}
+        </div>
+        {#Окно#}
+    </div>
+    {{ form_end(form) }}
+
     {{ include('admin/templates/seats_discription_shablon/_delete_form.html.twig') }}
 
 {% endblock %}
