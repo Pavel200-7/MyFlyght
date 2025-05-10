@@ -3,6 +3,7 @@
 namespace App\Service\seatStructureClasses;
 
 use App\Enum\CompartmentTypeEnum;
+use Throwable;
 
 class converterArrayToSeatsJSON
 {
@@ -13,16 +14,13 @@ class converterArrayToSeatsJSON
         $classesMap = [];
 
         foreach ($seatsArray as $seat) {
-            // Вместо $seat['compartmentType']
-            $classTypeObj = $seat->getCompartmentType();
+            $classTypeObj = $seat->getCompartmentType() ?? null;
 
-            // Проверка типа
             if ($classTypeObj instanceof CompartmentTypeEnum) {
-                $classTypeStr = $classTypeObj->value; // получаем строковое значение
+                $classTypeStr = $classTypeObj->value;
             } elseif (is_string($classTypeObj)) {
-                $classTypeStr = $classTypeObj; // если строка
+                $classTypeStr = $classTypeObj;
             } else {
-                // Невалидное значение, пропускаем
                 continue;
             }
 
@@ -34,9 +32,13 @@ class converterArrayToSeatsJSON
             $sectorNumber = $seat->getSectorNumber() ?? 1;
             $rowNumber = $seat->getRow() ?? 1;
             $seatNumber = $seat->getNumberInRow() ?? 1;
-            $available = true; // у вас нет метода getAvailable(), добавьте при необходимости
+            try {
+                $available = $seat->isAvalible(); // Если брать данные из одних таблиц, то этот метод будет, а в других нет
+            }
+            catch (Throwable $e){
+                $available = true;
+            }
 
-            // остальной код без изменений
             if (!isset($classesMap[$classTypeStr])) {
                 $classesMap[$classTypeStr] = [
                     'classType' => $classTypeStr,
@@ -71,7 +73,6 @@ class converterArrayToSeatsJSON
             ];
         }
 
-        // остальной код
         foreach ($classesMap as &$classData) {
             $classData['zones'] = array_values($classData['zones']);
             foreach ($classData['zones'] as &$zone) {

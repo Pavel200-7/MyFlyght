@@ -28,6 +28,8 @@ final class MainPageController extends AbstractController
         }
 
         $isAdmin = $security->isGranted('ROLE_ADMIN');
+        $isAirline = $security->isGranted('ROLE_AIRLINE');
+
 
 
 
@@ -36,6 +38,7 @@ final class MainPageController extends AbstractController
             'controller_name' => 'MainPageController',
             'form' => $form,
             'isAdmin' => $isAdmin,
+            'isAirline' => $isAirline,
         ]);
     }
 }

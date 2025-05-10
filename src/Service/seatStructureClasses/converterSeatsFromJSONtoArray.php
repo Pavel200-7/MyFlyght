@@ -49,12 +49,12 @@ class converterSeatsFromJSONtoArray
                             $seatNumber = $seatIndex + 1;
 
                             $result[] = [
-                                'compartmentType' => $classType,
                                 'compartmentNumber' => $compartmentNumber,
+                                'compartmentType' => $classType,
                                 'zoneNumber' => $zoneNumber,
                                 'sectorNumber' => $sectorNumber,
                                 'row' => $rowNumber,
-                                'seatNumber' => $seatNumber,
+                                'NumberInRow' => $seatNumber,
                                 'available' => $seat['available'] ?? null
                             ];
                         }

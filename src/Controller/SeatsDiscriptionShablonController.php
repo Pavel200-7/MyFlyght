@@ -30,7 +30,7 @@ final class SeatsDiscriptionShablonController extends AbstractController
     }
 
     #[Route('/new', name: 'app_seats_discription_shablon_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, converterSeatsFromJSONtoArray $converterSeatsFromJSONtoArray, converterArrayToSeatsJSON $arrayToSeatsJSON): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, converterSeatsFromJSONtoArray $converterSeatsFromJSONtoArray): Response
     {
         $seatsDiscriptionShablon = new SeatsDiscriptionShablon();
         $form = $this->createForm(SeatsDiscriptionShablonType::class, $seatsDiscriptionShablon);
@@ -43,7 +43,6 @@ final class SeatsDiscriptionShablonController extends AbstractController
 
             $seatsDiscriptionShablonNewJSON = $form->get('SeatShablonJSOn')->getData();
             $seatArray = $converterSeatsFromJSONtoArray->convert($seatsDiscriptionShablonNewJSON);
-
             foreach ($seatArray as $seatData)
             {
                 $seat = new SeatShablon();
@@ -53,7 +52,7 @@ final class SeatsDiscriptionShablonController extends AbstractController
                 $seat->setZoneNumber($seatData['zoneNumber']);
                 $seat->setSectorNumber($seatData['sectorNumber']);
                 $seat->setRow($seatData['row']);
-                $seat->setNumberInRow($seatData['seatNumber']);
+                $seat->setNumberInRow($seatData['NumberInRow']);
 
                 $entityManager->persist($seat);
                 $entityManager->flush();
@@ -102,7 +101,7 @@ final class SeatsDiscriptionShablonController extends AbstractController
                 $seat->setZoneNumber($seatData['zoneNumber']);
                 $seat->setSectorNumber($seatData['sectorNumber']);
                 $seat->setRow($seatData['row']);
-                $seat->setNumberInRow($seatData['seatNumber']);
+                $seat->setNumberInRow($seatData['NumberInRow']);
 
                 $entityManager->persist($seat);
                 $entityManager->flush();
@@ -110,7 +109,7 @@ final class SeatsDiscriptionShablonController extends AbstractController
 
             return $this->redirectToRoute('app_seats_discription_shablon_index', [], Response::HTTP_SEE_OTHER);
         }
-
+//        dd($entityManager->getRepository(SeatShablon::class)->findOneBy(['SeatShablon' => $seatsDiscriptionShablon]));
         $seats = $entityManager->getRepository(SeatShablon::class)->findBy(['SeatShablon' => $seatsDiscriptionShablon]);
         $seatStructure = $arrayToSeatsJSON->convert($seats);
 
