@@ -14,6 +14,9 @@ class BaggagePoliticy
     private ?int $id = null;
 
     #[ORM\Column]
+    private ?string $baggagePoliticyname = null;
+
+    #[ORM\Column]
     private ?int $itemsCount = null;
 
     #[ORM\Column]
@@ -23,6 +26,20 @@ class BaggagePoliticy
     {
         return $this->id;
     }
+
+    public function getBaggagePoliticyname(): ?string
+    {
+        return $this->baggagePoliticyname;
+    }
+
+    public function setBaggagePoliticyname(?string $baggagePoliticyname): static
+    {
+        $this->baggagePoliticyname = $baggagePoliticyname;
+
+        return $this;
+    }
+
+
 
     public function getItemsCount(): ?int
     {

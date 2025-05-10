@@ -37,6 +37,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+    #[ORM\ManyToOne(targetEntity: Airline::class)]
+    #[ORM\JoinColumn(name: 'Airline_id', referencedColumnName: 'id')]
+    private ?Airline $airlineId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -124,4 +128,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getAirlineId(): ?Airline
+    {
+        return $this->airlineId;
+    }
+
+    public function setAirlineId(?Airline $airlineId): static
+    {
+        $this->airlineId = $airlineId;
+
+        return $this;
+    }
+
+
 }

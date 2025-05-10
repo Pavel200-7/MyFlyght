@@ -13,6 +13,8 @@ class HundLuggagePoliticy
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?string $hundLuggagePoliticyname = null;
 
     #[ORM\Column]
     private ?int $ItemsCount = null;
@@ -45,6 +47,20 @@ class HundLuggagePoliticy
 
         return $this;
     }
+
+    public function getHundLuggagePoliticyname(): ?string
+    {
+        return $this->hundLuggagePoliticyname;
+    }
+
+    public function setHundLuggagePoliticyname(?string $hundLuggagePoliticyname): static
+    {
+        $this->hundLuggagePoliticyname = $hundLuggagePoliticyname;
+
+        return $this;
+    }
+
+
 
     public function getItemsCount(): ?int
     {

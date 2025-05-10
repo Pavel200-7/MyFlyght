@@ -2,25 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\BaggagePoliticy;
+use App\Entity\Airline;
+use App\Entity\PlaneClassRate;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BaggagePoliticyType extends AbstractType
+class PlaneClassRateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('baggagePoliticyname', null, [
-                'label' => 'Политика багажа',
-            ])
-            ->add('itemsCount', null, [
-                'label' => 'Количество вещей',
-            ])
-            ->add('weightPerItem', null, [
-                'label' => 'Вес на единицу (кг)',
+            ->add('classType', null, [
+                'label' => ' Класс обслуживания',
+                'attr' => ['readonly' => true],
+                ])
+            ->add('costPerKM', null, [
+                'label' => 'стоимость за километр',
             ])
         ;
     }
@@ -28,7 +27,7 @@ class BaggagePoliticyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => BaggagePoliticy::class,
+            'data_class' => PlaneClassRate::class,
         ]);
     }
 }

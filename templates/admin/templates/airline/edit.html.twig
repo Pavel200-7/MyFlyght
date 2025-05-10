@@ -6,9 +6,10 @@
     <h1>Изменить данные авиакомпании</h1>
 
     <button type="submit" class="btn aUpdate" form="myFormId">Обновить</button>
-    <button type="submit" class="btn aDelete" form="myDeleteFormId">Удалить</button>
+{#    <button type="submit" class="btn aDelete" form="myDeleteFormId">Удалить</button>#}
 
     {{ include('admin/templates/airline/_form.html.twig', {'button_label': 'Update'}) }}
-    {{ include('admin/templates/airline/_delete_form.html.twig') }}
+{#    {{ include('admin/templates/airline/_delete_form.html.twig') }}#}
+{#    Да, я заблокировал эти строки чтоб реализовывать удаление#}
 
 {% endblock %}

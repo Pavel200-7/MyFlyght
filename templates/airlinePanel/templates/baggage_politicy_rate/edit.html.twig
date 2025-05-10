@@ -1,0 +1,12 @@
+{% extends 'airlinePanel/baseAirlinePanel.html.twig' %}
+
+{% block title %}Изменить данные тарифа багажа{% endblock %}
+
+{% block workPlace %}
+    <h1>Изменить данные тарифа багажа</h1>
+
+    <button type="submit" class="btn aUpdate" form="myFormId">Обновить</button>
+
+    {{ include('airlinePanel/templates/baggage_politicy_rate/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

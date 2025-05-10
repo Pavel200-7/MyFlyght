@@ -2,33 +2,35 @@
 
 namespace App\Form;
 
-use App\Entity\BaggagePoliticy;
+use App\Entity\Airline;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BaggagePoliticyType extends AbstractType
+class UserAccountsAirlineType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('baggagePoliticyname', null, [
-                'label' => 'Политика багажа',
+            ->add('email', null, [
+                'label' => 'Email',
+                'attr' => ['readonly' => true],
             ])
-            ->add('itemsCount', null, [
-                'label' => 'Количество вещей',
+            ->add('airlineId', EntityType::class, [
+                'class' => Airline::class,
+                'label' => 'Авиакомпания',
+                'choice_label' => 'airlineName',
             ])
-            ->add('weightPerItem', null, [
-                'label' => 'Вес на единицу (кг)',
-            ])
-        ;
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => BaggagePoliticy::class,
+            'data_class' => User::class,
         ]);
     }
+
 }

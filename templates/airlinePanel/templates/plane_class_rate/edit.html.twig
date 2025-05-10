@@ -1,0 +1,11 @@
+{% extends 'airlinePanel/baseAirlinePanel.html.twig' %}
+
+{% block title %}Изменить данные классов обслуживания{% endblock %}
+
+{% block workPlace %}
+    <h1>Изменить данные классов обслуживания</h1>
+
+    <button type="submit" class="btn aUpdate" form="myFormId">Обновить</button>
+    {{ include('airlinePanel/templates/plane_class_rate/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

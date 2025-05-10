@@ -1,0 +1,34 @@
+{% extends 'airlinePanel/baseAirlinePanel.html.twig' %}
+
+{% block title %}Тарифы классов обслуживания{% endblock %}
+
+{% block workPlace %}
+    <h1>Тарифы классов обслуживания главная</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Идентификатор</th>
+                <th>Класс обслуживания</th>
+                <th>Стоимость на километр</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for plane_class_rate in plane_class_rates %}
+            <tr>
+                <td>{{ plane_class_rate.id }}</td>
+                <td>{{ plane_class_rate.classType }}</td>
+                <td>{{ plane_class_rate.costPerKM }}</td>
+                <td>
+                    <a href="{{ path('app_plane_class_rate_edit', {'id': plane_class_rate.id}) }}" class="aUpdate">Обновить</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Записей нет</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
