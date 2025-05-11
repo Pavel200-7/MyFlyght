@@ -24,6 +24,9 @@ class FlightsType extends AbstractType
         $airline = $options['airline'] ?? null;
 
         $builder
+            ->add('flightNumber', null, [
+                'label' => 'Номер авиаперелета',
+            ])
             ->add('sheduledDeparture', null, [
                 'widget' => 'single_text',
                 'label' => 'Время отправки',
@@ -31,7 +34,6 @@ class FlightsType extends AbstractType
             ->add('sheduledArrival', null, [
                 'widget' => 'single_text',
                 'label' => 'Время прибытия',
-
             ])
             ->add('departureAirport', EntityType::class, [
                 'class' => Airports::class,
@@ -39,6 +41,8 @@ class FlightsType extends AbstractType
                     return $airport->getAirportName() . ' (' . $airport->getCity()->getCityName() . ')';
                 },
                 'label' => 'Аэропорт отправки',
+                'empty_data' => 'Аэропорт отправки',
+
             ])
             ->add('arrivalAirport', EntityType::class, [
                 'class' => Airports::class,
@@ -46,6 +50,7 @@ class FlightsType extends AbstractType
                     return $airport->getAirportName() . ' (' . $airport->getCity()->getCityName() . ')';
                 },
                 'label' => 'Аэропорт прибытия',
+                'empty_data' => 'Аэропорт прибытия',
             ])
             ->add('aircraftId', EntityType::class, [
                 'class' => Aircraft::class,
@@ -60,16 +65,9 @@ class FlightsType extends AbstractType
                             ->where('a.airlineId = :airline')
                             ->setParameter('airline', $airline);
                     }
-
                     // Если авиакомпания не указана, возвращат все
                     return $repository->createQueryBuilder('a');
                 }
-            ])
-            ->add('airliniID', EntityType::class, [
-                'class' => Airline::class,
-                'choice_label' => 'airlineName',
-                'attr' => ['readonly' => true],
-                'label' => 'Авиакомпания',
             ])
             ->add('handLuggagePoliticyID', EntityType::class, [
                 'class' => HundLuggagePoliticy::class,
@@ -81,28 +79,7 @@ class FlightsType extends AbstractType
                 'choice_label' => 'baggagePoliticyname',
                 'label' => 'Политика багажа',
             ])
-            ->add('flightNumber', null, [
-                'label' => 'Номер авиаперелета',
-            ])
-            ->add('finished', null, [
-                'label' => 'завершен',
-            ])
         ;
-
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            $data = $event->getData();
-            $form = $event->getForm();
-
-            if (!isset($data['departureAirport']) || !isset($data['arrivalAirport'])) {
-                return;
-            }
-
-            if ($data['departureAirport'] == $data['arrivalAirport']) {
-                // Можно выбросить ошибку или сбросить одно из значений
-                $form->get('arrivalAirport')->addError(new FormError('Аэропорты не могут быть одинаковыми.'));
-            }
-        });
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

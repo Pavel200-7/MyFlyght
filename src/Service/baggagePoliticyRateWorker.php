@@ -63,7 +63,6 @@ class baggagePoliticyRateWorker
             $this->entityManager->flush();
         }
 
-
     }
 
 }

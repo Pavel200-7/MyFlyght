@@ -22,7 +22,7 @@ class FlightsSeats
     private ?int $compartmentNumber = null;
 
     #[ORM\Column]
-    private CompartmentTypeEnum|null $compartmentType = null;
+    private ?string $compartmentType = null;
 
     #[ORM\Column]
     private ?int $zoneNumber = null;
@@ -44,12 +44,12 @@ class FlightsSeats
         return $this->id;
     }
 
-    public function getFlightId(): ?int
+    public function getFlightId(): ?Flights
     {
         return $this->flightId;
     }
 
-    public function setFlightId(int $flightId): static
+    public function setFlightId(Flights $flightId): static
     {
         $this->flightId = $flightId;
 
@@ -68,14 +68,14 @@ class FlightsSeats
         return $this;
     }
 
-    public function getCompartmentType(): ?int
+    public function getCompartmentType(): ?string
     {
         return $this->compartmentType;
     }
 
-    public function setCompartmentType(int $compartmentType): static
+    public function setCompartmentType(?CompartmentTypeEnum $compartmentType): static
     {
-        $this->compartmentType = $compartmentType;
+        $this->compartmentType = $compartmentType->value;
 
         return $this;
     }

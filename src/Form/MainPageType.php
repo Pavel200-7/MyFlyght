@@ -18,12 +18,12 @@ class MainPageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('departureAirport', EntityType::class, [
+            ->add('departureCity', EntityType::class, [
                 'placeholder' => 'Откуда',
                 'class' => Cities::class,
                 'choice_label' => 'CityName',
             ])
-            ->add('arrivalAirport', EntityType::class, [
+            ->add('arrivalCity', EntityType::class, [
                 'placeholder' => 'Куда',
                 'class' => Cities::class,
                 'choice_label' => 'CityName',

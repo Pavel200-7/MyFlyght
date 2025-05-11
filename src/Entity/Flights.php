@@ -3,12 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\FlightsRepository;
+use App\Service\IsPlaneCanBeInTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 
 #[ORM\Entity(repositoryClass: FlightsRepository::class)]
 class Flights
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,11 +26,12 @@ class Flights
     private ?\DateTimeInterface $sheduledArrival = null;
 
     #[ORM\ManyToOne(targetEntity: Airports::class)]
-    #[ORM\JoinColumn(name: 'Airports_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'departure_airports_id', referencedColumnName: 'id')]
     private Airports|null $departureAirport = null;
 
+//    #[Assert\NotIdenticalTo($this->departureAirport)]
     #[ORM\ManyToOne(targetEntity: Airports::class)]
-    #[ORM\JoinColumn(name: 'Airports_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'arrival_airports_id', referencedColumnName: 'id')]
     private Airports|null $arrivalAirport = null;
 
     #[ORM\Column]
@@ -187,4 +193,19 @@ class Flights
 
         return $this;
     }
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, mixed $payload): void
+    {
+        if ($this->getDepartureAirport() ===  $this->getArrivalAirport()) {
+            $context->buildViolation('Аэропорт отправки и прибытия должны быть разными')
+                ->atPath('arrivalAirport')
+                ->addViolation()
+            ;
+        }
+    }
+
+
 }
+
+
