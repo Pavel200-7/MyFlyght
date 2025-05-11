@@ -10,6 +10,7 @@
         <thead>
             <tr>
                 <th>Идентификатор</th>
+                <th>Политика багажа</th>
                 <th>Стоимость на километр</th>
                 <th>Действия</th>
             </tr>
@@ -18,6 +19,7 @@
         {% for baggage_politicy_rate in baggage_politicy_rates %}
             <tr>
                 <td>{{ baggage_politicy_rate.id }}</td>
+                <td>{{ baggage_politicy_rate.baggagePoliticyID.baggagePoliticyname }}</td>
                 <td>{{ baggage_politicy_rate.costPerKM }}</td>
                 <td>
                     <a href="{{ path('app_baggage_politicy_rate_edit', {'id': baggage_politicy_rate.id}) }}" class="aUpdate">Обновить</a>
@@ -25,7 +27,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">Записей нет</td>
+                <td colspan="4">Записей нет</td>
             </tr>
         {% endfor %}
         </tbody>

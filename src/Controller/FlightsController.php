@@ -7,6 +7,7 @@ use App\Form\FlightsType;
 use App\Repository\FlightsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,17 +18,24 @@ final class FlightsController extends AbstractController
     #[Route(name: 'app_flights_index', methods: ['GET'])]
     public function index(FlightsRepository $flightsRepository): Response
     {
-        return $this->render('flights/index.html.twig', [
+        return $this->render('airlinePanel/templates/flights/index.html.twig', [
             'flights' => $flightsRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_flights_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
+        $airline = $security->getUser()->getAirlineId();
+
         $flight = new Flights();
-        $form = $this->createForm(FlightsType::class, $flight);
+        $flight->setAirliniID($airline);
+
+        $form = $this->createForm(FlightsType::class, $flight, [
+            'airline' => $airline,
+        ]);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($flight);
@@ -36,19 +44,12 @@ final class FlightsController extends AbstractController
             return $this->redirectToRoute('app_flights_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('flights/new.html.twig', [
+        return $this->render('airlinePanel/templates/flights/new.html.twig', [
             'flight' => $flight,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_flights_show', methods: ['GET'])]
-    public function show(Flights $flight): Response
-    {
-        return $this->render('flights/show.html.twig', [
-            'flight' => $flight,
-        ]);
-    }
 
     #[Route('/{id}/edit', name: 'app_flights_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Flights $flight, EntityManagerInterface $entityManager): Response
@@ -62,7 +63,7 @@ final class FlightsController extends AbstractController
             return $this->redirectToRoute('app_flights_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('flights/edit.html.twig', [
+        return $this->render('airlinePanel/templates/flights/edit.html.twig', [
             'flight' => $flight,
             'form' => $form,
         ]);

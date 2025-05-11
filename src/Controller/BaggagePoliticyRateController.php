@@ -7,6 +7,7 @@ use App\Form\BaggagePoliticyRateType;
 use App\Repository\BaggagePoliticyRateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,10 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BaggagePoliticyRateController extends AbstractController
 {
     #[Route(name: 'app_baggage_politicy_rate_index', methods: ['GET'])]
-    public function index(BaggagePoliticyRateRepository $baggagePoliticyRateRepository): Response
+    public function index(BaggagePoliticyRateRepository $baggagePoliticyRateRepository, Security $security): Response
     {
+        $airline = $security->getUser()->getAirlineId();
+
         return $this->render('airlinePanel/templates/baggage_politicy_rate/index.html.twig', [
-            'baggage_politicy_rates' => $baggagePoliticyRateRepository->findAll(),
+            'baggage_politicy_rates' => $baggagePoliticyRateRepository->findBy(['airlineID' => $airline]),
         ]);
     }
 

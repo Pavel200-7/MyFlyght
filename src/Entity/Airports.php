@@ -21,11 +21,11 @@ class Airports
     #[ORM\JoinColumn(name: 'City_id', referencedColumnName: 'id')]
     private Cities|null $city = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $longtitude = null;
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6)]
+    private ?float $longtitude = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $latitude = null;
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6)]
+    private ?float $latitude = null;
 
     #[ORM\Column]
     private ?int $timezone = null;
@@ -60,24 +60,24 @@ class Airports
     }
 
 
-    public function getLongtitude(): ?string
+    public function getLongtitude(): ?float
     {
         return $this->longtitude;
     }
 
-    public function setLongtitude(string $longtitude): static
+    public function setLongtitude(float $longtitude): static
     {
         $this->longtitude = $longtitude;
 
         return $this;
     }
 
-    public function getLatitude(): ?string
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function setLatitude(string $latitude): static
+    public function setLatitude(float $latitude): static
     {
         $this->latitude = $latitude;
 

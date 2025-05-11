@@ -1,0 +1,43 @@
+{% extends 'airlinePanel/baseAirlinePanel.html.twig' %}
+
+{% block title %}Рейсы главная{% endblock %}
+
+{% block workPlace %}
+    <h1>Рейсы главная</h1>
+
+    <a href="{{ path('app_flights_new') }}" class="aCreate">Создать</a>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Идентификатор</th>
+                <th>Время отправки</th>
+                <th>Время прибытия</th>
+                <th>Завершен</th>
+                <th>Номер рейса</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for flight in flights %}
+            <tr>
+                <td>{{ flight.id }}</td>
+                <td>{{ flight.sheduledDeparture ? flight.sheduledDeparture|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ flight.sheduledArrival ? flight.sheduledArrival|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ flight.finished ? 'Yes' : 'No' }}</td>
+                <td>{{ flight.flightNumber }}</td>
+                <td>
+                    <a href="{{ path('app_flights_edit', {'id': flight.id}) }}" class="aUpdate">Обзор</a>
+{#                    <a href="{{ path('app_flights_edit', {'id': flight.id}) }}" class="aUpdate">Обновить</a>#}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Записей нет</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

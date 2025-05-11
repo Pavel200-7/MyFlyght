@@ -35,11 +35,6 @@ class Flights
     #[ORM\JoinColumn(name: 'Aircraft_id', referencedColumnName: 'id')]
     private Aircraft|null $aircraftId = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $actualDeparture = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $actualArrival = null;
 
     #[ORM\ManyToOne(targetEntity: Airline::class)]
     #[ORM\JoinColumn(name: 'Airline_id', referencedColumnName: 'id')]
@@ -85,24 +80,24 @@ class Flights
         return $this;
     }
 
-    public function getDepartureAirport(): ?int
+    public function getDepartureAirport(): ?Airports
     {
         return $this->departureAirport;
     }
 
-    public function setDepartureAirport(int $departureAirport): static
+    public function setDepartureAirport(Airports $departureAirport): static
     {
         $this->departureAirport = $departureAirport;
 
         return $this;
     }
 
-    public function getArrivalAirport(): ?\DateTimeInterface
+    public function getArrivalAirport(): ?Airports
     {
         return $this->arrivalAirport;
     }
 
-    public function setArrivalAirport(\DateTimeInterface $arrivalAirport): static
+    public function setArrivalAirport(Airports $arrivalAirport): static
     {
         $this->arrivalAirport = $arrivalAirport;
 
@@ -121,26 +116,14 @@ class Flights
         return $this;
     }
 
-    public function getAircraftId(): ?int
+    public function getAircraftId(): ?Aircraft
     {
         return $this->aircraftId;
     }
 
-    public function setAircraftId(int $aircraftId): static
+    public function setAircraftId(Aircraft $aircraftId): static
     {
         $this->aircraftId = $aircraftId;
-
-        return $this;
-    }
-
-    public function getActualDeparture(): ?\DateTimeInterface
-    {
-        return $this->actualDeparture;
-    }
-
-    public function setActualDeparture(\DateTimeInterface $actualDeparture): static
-    {
-        $this->actualDeparture = $actualDeparture;
 
         return $this;
     }
@@ -157,36 +140,36 @@ class Flights
         return $this;
     }
 
-    public function getAirliniID(): ?int
+    public function getAirliniID(): ?Airline
     {
         return $this->airliniID;
     }
 
-    public function setAirliniID(int $airliniID): static
+    public function setAirliniID(Airline $airliniID): static
     {
         $this->airliniID = $airliniID;
 
         return $this;
     }
 
-    public function getHandLuggagePoliticyID(): ?int
+    public function getHandLuggagePoliticyID(): ?HundLuggagePoliticy
     {
         return $this->handLuggagePoliticyID;
     }
 
-    public function setHandLuggagePoliticyID(int $handLuggagePoliticyID): static
+    public function setHandLuggagePoliticyID(HundLuggagePoliticy $handLuggagePoliticyID): static
     {
         $this->handLuggagePoliticyID = $handLuggagePoliticyID;
 
         return $this;
     }
 
-    public function getBaggagePoliticyID(): ?int
+    public function getBaggagePoliticyID(): ?BaggagePoliticy
     {
         return $this->baggagePoliticyID;
     }
 
-    public function setBaggagePoliticyID(int $baggagePoliticyID): static
+    public function setBaggagePoliticyID(BaggagePoliticy $baggagePoliticyID): static
     {
         $this->baggagePoliticyID = $baggagePoliticyID;
 

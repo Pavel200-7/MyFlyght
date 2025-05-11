@@ -1,0 +1,18 @@
+{% extends 'airlinePanel/baseAirlinePanel.html.twig' %}
+
+{#{% block title %}Изменить данные рейса{% endblock %}#}
+{% block title %}Данные рейса{% endblock %}
+
+
+{% block workPlace %}
+    <h1>Данные рейса</h1>
+{#    <h1>Изменить данные рейса</h1>#}
+
+
+    {#    <button type="submit" class="btn aUpdate" form="myFormId">Обновить</button>#}
+{#    <button type="submit" class="btn aDelete" form="myDeleteFormId">Удалить</button>#}
+
+    {{ include('airlinePanel/templates/flights/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('airlinePanel/templates/flights/_delete_form.html.twig') }}
+
+{% endblock %}

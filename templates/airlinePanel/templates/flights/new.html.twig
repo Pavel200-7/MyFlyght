@@ -1,0 +1,13 @@
+{% extends 'airlinePanel/baseAirlinePanel.html.twig' %}
+
+{% block title %}Новый рейс{% endblock %}
+
+{% block workPlace %}
+    <h1>Создать новую запись: Рейс</h1>
+
+    <button type="submit" id="save" class="btn aCreate" form="myFormId">Сохранить</button>
+
+
+    {{ include('airlinePanel/templates/flights/_form.html.twig') }}
+
+{% endblock %}

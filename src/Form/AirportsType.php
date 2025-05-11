@@ -6,6 +6,7 @@ use App\Entity\Airports;
 use App\Entity\Cities;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,14 +18,14 @@ class AirportsType extends AbstractType
             ->add('airportName', null, [
                 'label' => 'Наименование аэропорта',
             ])
-            ->add('longtitude', null, [
+            ->add('longtitude', NumberType::class, [
                 'label' => 'Долгота',
             ])
-            ->add('latitude', null, [
+            ->add('latitude', NumberType::class, [
                 'label' => 'Широта',
             ])
             ->add('timezone', null, [
-                'label' => 'Временная зона',
+                'label' => 'Временная зона (UTC +)',
             ])
             ->add('city', EntityType::class, [
                 'label' => 'Город',
