@@ -4,12 +4,16 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/Main_page.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tickets_page.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/search_form.css') }}">
+
 {% endblock %}
 
 {% block body %}
-    <h1>Билеты главная</h1>
+    <div>
+    </div>
     <div class="Main_poster">
+        <h1>Билеты главная</h1>
         <div class="search_div">
             {{ form_start(form, {'attr': {'class': 'search_form'} } ) }}
 
@@ -20,41 +24,18 @@
                 {{ form_widget(form.PersonCount, {'attr': {'class': 'form_field'}}) }}
                 {{ form_widget(form.ServisClass, {'attr': {'class': 'form_field'}}) }}
             </div>
-
             <div>
                 <input type="submit" name="PerCount" class="submit_button" value="Найти билеты">
             </div>
-
             {{ form_end(form) }}
         </div>
     </div>
 
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Finished</th>
-                <th>Timestamp</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ticket in tickets %}
-            <tr>
-                <td>{{ ticket.id }}</td>
-                <td>{{ ticket.finished ? 'Yes' : 'No' }}</td>
-                <td>{{ ticket.timestamp ? ticket.timestamp|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Записей нет</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="ticket_list">
+    {% for ticket in needFlightsData%}
+        {{ include('tickets/ticket_card.html.twig', { ticket: ticket }) }}
+    {% endfor %}
+    </div>
 
 {% endblock %}

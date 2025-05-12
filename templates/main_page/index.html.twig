@@ -4,11 +4,13 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/Main_page.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/search_form.css') }}">
+
 {% endblock %}
 
 {% block body %}
     <div class="Main_poster" style="background-image: url('{{ asset('img/Main_page_theme.png') }}')">
-        <h1>MyFlight - это профессиональные перелеты</h1>
+        <h1 class="title">MyFlight - это профессиональные перелеты</h1>
 
         <div class="search_div">
             {{ form_start(form, {'attr': {'class': 'search_form'} } ) }}

@@ -1,0 +1,45 @@
+<div class="ticket_card">
+    <div class="left_part_of_ticket_card">
+        <div class="airline_info">
+            <span>{{ ticket.airliniID.airlineName }}</span>
+        </div>
+        <div class="flight_info">
+            <div class="flight_time_info">
+                <div><span>{{ ticket.sheduledDeparture|date('H:i') }}</span></div>
+                <div><span>Время полета</span></div>
+                <div><span>{{ ticket.sheduledArrival|date('H:i') }}</span></div>
+            </div>
+            <div class="custom-line"></div>
+            <div class="flight_date_airport_city_info">
+                <div>
+                    <span>{{ ticket.sheduledDeparture|date('Y-m-d') }}</span>
+                    <span>{{ ticket.departureAirport.airportName }}</span>
+                    <span>{{ ticket.departureAirport.city.cityName }}</span>
+                </div>
+                <div>
+                    <span>{{ ticket.sheduledArrival|date('Y-m-d') }}</span>
+                    <span>{{ ticket.arrivalAirport.airportName }} </span>
+                    <span>{{ ticket.arrivalAirport.city.cityName }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right_part_of_ticket_card">
+        <div class="price">
+            <span>{{ ticket.ticketPrice }} руб</span>
+        </div>
+        <div class="price_info">
+            <span>Без багажа за одного</span>
+        </div>
+        <div class="price_info">
+            <span>С багажем</span>
+            <span>{{ ticket.baggagePoliticyID.itemsCount * ticket.baggagePoliticyID.weightPerItem }}</span>
+            <span>кг</span>
+            <span>+</span>
+            <span>{{ ticket.baggagePrice }}</span>
+            <span>руб</span>
+        </div>
+        {#                <a class="ticket_info_BTN" href="{{ path('app_logout', {'param': 'значение'}) }}">Выбрать билет</a>#}
+        <a class="ticket_info_BTN" href="#">Выбрать билет</a>
+    </div>
+</div>

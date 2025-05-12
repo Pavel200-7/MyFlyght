@@ -46,13 +46,15 @@ class MainPageType extends AbstractType
                     '5' => 5,
                 ],
 //                'choice_label' => 'displayName',
-//                'data' => '1',
+                'data' => '1',
 //                'widget' => 'single_text',
             ])
             ->add('ServisClass', EnumType::class, [
                 'placeholder' => 'Класс обслуживания',
                 'class' => CompartmentTypeEnum::class,
                 'choice_label' => 'value',
+                'data' => CompartmentTypeEnum::Economy,
+
             ])
         ;
     }

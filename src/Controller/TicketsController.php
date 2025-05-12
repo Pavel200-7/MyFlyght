@@ -8,6 +8,7 @@ use App\Form\TicketsType;
 use App\Repository\FlightsRepository;
 use App\Repository\TicketsRepository;
 use App\Service\flightFinder;
+use App\Service\getFlightPricesInfo;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,20 +19,26 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TicketsController extends AbstractController
 {
     #[Route(name: 'app_tickets_index', methods: ['GET', 'POST'])]
-    public function index(TicketsRepository $ticketsRepository, Request $request, FlightsRepository $flightsRepository): Response
+    public function index(TicketsRepository $ticketsRepository, Request $request, FlightsRepository $flightsRepository, getFlightPricesInfo $flightPricesInfo): Response
     {
         $form = $this->createForm(MainPageType::class);
         $form->handleRequest($request);
+        $needFlightsData = [];
 
         if ($form->isSubmitted() && $form->isValid()) {
             $needFlightsID = $flightsRepository->findNeedFlightsID($form);
-            dd($needFlightsID);
-            // Далее нужно преобразовать id в информацию о рейсах и прописать их отрисовку в templates.
+
+            $needFlightsData = $flightsRepository->findNeedFlightsData($needFlightsID);
+
+            $classType = $form->get('ServisClass')->getData()->value; // Так как это перечисление
+            $needFlightsData = $flightPricesInfo->getFlightPricesInfo($needFlightsData , $classType);
+//            dd($needFlightsData);
         }
 
         return $this->render('tickets/index.html.twig', [
             'tickets' => $ticketsRepository->findAll(),
             'form' => $form,
+            'needFlightsData' => $needFlightsData,
         ]);
     }
 }

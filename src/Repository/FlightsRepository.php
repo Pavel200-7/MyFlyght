@@ -16,7 +16,7 @@ class FlightsRepository extends ServiceEntityRepository
         parent::__construct($registry, Flights::class);
     }
 
-    function findNeedFlightsID($form)
+    public function findNeedFlightsID($form): array
     {
         // Подготовка переменных для параметров
         $departureCity = $form->get('departureCity')->getData()->getId();
@@ -69,32 +69,26 @@ class FlightsRepository extends ServiceEntityRepository
         ]);
 
         $results = $result->fetchAllAssociative();
-
+        $results = $this->getCorrectIdArray($results);
         return $results;
     }
 
-    //    /**
-    //     * @return Flights[] Returns an array of Flights objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('f.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    function getCorrectIdArray(array $idArray): array
+    {
+        $idArrayParametr = array();
+        foreach ($idArray as $idSubarray) {
+            array_push($idArrayParametr, $idSubarray['id']);
+        }
+        return $idArrayParametr;
 
-    //    public function findOneBySomeField($value): ?Flights
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    }
+
+
+    public function findNeedFlightsData(array $idArray): array
+    {
+        $needFlightsData = $this->findBy(['id' => $idArray]);
+        return $needFlightsData;
+    }
+
+
 }

@@ -1,0 +1,144 @@
+.Main_poster {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100vw;
+    height: 20vw;
+    text-align: center;
+    border-top: solid 1px #dbeafe;
+    box-sizing: border-box;
+}
+
+.Main_poster h1 {
+    color: white;
+    font-size: 3vw;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+}
+
+.ticket_list {
+    width: 80%;
+    margin: auto;
+    /*border: solid black 1px;*/
+    padding: 1%;
+}
+
+.ticket_card {
+    border: solid rgba(154, 197, 59, 0.63) 3px;
+    border-radius: 20px;
+    margin-bottom: 1%;
+    display: flex;
+    background-color: #F5F5F5;
+}
+
+.left_part_of_ticket_card {
+    width: 70%;
+    border-right: solid rgba(0, 0, 0, 0.38) 1px;
+    padding: 1%;
+}
+.right_part_of_ticket_card {
+    width: 30%;
+    padding: 2%;
+    text-align: center;
+}
+
+.flight_time_info {
+    display: flex;
+}
+
+.flight_time_info div {
+    width: 32%;
+    text-align: center;
+    margin-top: 1%;
+    padding: 1%;
+}
+
+
+.flight_time_info div:first-child {
+    text-align: left;
+}
+
+.flight_time_info div:last-child {
+    text-align: right;
+}
+
+.custom-line {
+    border-top: 2px solid black;
+    position: relative;
+    height: 0;
+    margin: 10px 0;
+}
+
+.custom-line::before,
+.custom-line::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    width: 12px;
+    height: 12px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.custom-line::before {
+    left: -6px;
+}
+
+.custom-line::after {
+    right: -6px;
+}
+
+.flight_date_airport_city_info {
+    display: flex;
+}
+
+.flight_date_airport_city_info div {
+    width:  50%;
+}
+
+.flight_date_airport_city_info div:first-child {
+    text-align: left;
+    float: left;
+}
+
+.flight_date_airport_city_info div:last-child {
+    text-align: right;
+    float: right;
+}
+
+.flight_date_airport_city_info span {
+    display: block;
+}
+
+
+.price {
+    margin-bottom: 2%;
+}
+
+.price span {
+
+    font-weight: bold;
+    font-size: 24px;
+
+}
+
+.price_info {
+    margin-bottom: 5%;
+}
+
+.ticket_info_BTN {
+    padding: 3%;
+    padding-left: 15%;
+    padding-right: 15%;
+    color: white;
+    border: solid black 1px;
+    border-radius: 10px;
+    background-color: #885afb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ticket_info_BTN:hover {
+
+    background-color: #5328bd;
+}
