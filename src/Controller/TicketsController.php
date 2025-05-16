@@ -2,14 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Tickets;
 use App\Form\MainPageType;
-use App\Form\TicketsType;
 use App\Repository\FlightsRepository;
 use App\Repository\TicketsRepository;
 use App\Service\flightFinder;
 use App\Service\getFlightPricesInfo;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +21,7 @@ final class TicketsController extends AbstractController
         $form = $this->createForm(MainPageType::class);
         $form->handleRequest($request);
         $needFlightsData = [];
+        $classType = "";
 
         if ($form->isSubmitted() && $form->isValid()) {
             $needFlightsID = $flightsRepository->findNeedFlightsID($form);
@@ -39,6 +37,7 @@ final class TicketsController extends AbstractController
             'tickets' => $ticketsRepository->findAll(),
             'form' => $form,
             'needFlightsData' => $needFlightsData,
+            'classType' => $classType,
         ]);
     }
 }
