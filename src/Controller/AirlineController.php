@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Airline;
 use App\Form\AirlineType;
 use App\Repository\AirlineRepository;
+use App\Repository\BaggagePoliticyRateRepository;
 use App\Service\baggagePoliticyRateWorker;
 use App\Service\planeClassRateCreater;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +26,7 @@ final class AirlineController extends AbstractController
     }
 
     #[Route('/new', name: 'app_airline_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, planeClassRateCreater $classRateCreater, baggagePoliticyRateWorker $baggagePoliticyRateWorker): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, planeClassRateCreater $classRateCreater, BaggagePoliticyRateRepository $baggagePoliticyRateRepository): Response
     {
         $airline = new Airline();
         $form = $this->createForm(AirlineType::class, $airline);
@@ -36,7 +37,7 @@ final class AirlineController extends AbstractController
             $entityManager->flush();
 
             $classRateCreater->createPlaneClassRateNotes($airline);
-            $baggagePoliticyRateWorker->createBaggagePoliticesRateNotes($airline);
+            $baggagePoliticyRateRepository->createBaggagePoliticesRateNotes($airline);
 
             return $this->redirectToRoute('app_airline_index', [], Response::HTTP_SEE_OTHER);
         }

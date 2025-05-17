@@ -31,9 +31,6 @@ final class MainPageController extends AbstractController
         $isAirline = $security->isGranted('ROLE_AIRLINE');
 
 
-
-
-
         return $this->render('main_page/index.html.twig', [
             'controller_name' => 'MainPageController',
             'form' => $form,

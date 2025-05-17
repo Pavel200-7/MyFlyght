@@ -8,6 +8,7 @@ use App\Enum\CompartmentTypeEnum;
 use App\Form\SeatsDiscriptionShablonType;
 use App\Repository\SeatsDiscriptionShablonRepository;
 use App\Service\seatStructureClasses\seatStructure;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/admin/seatsDiscriptionShablon')]
 final class SeatsDiscriptionShablonController extends AbstractController
 {
+
+    // тут жопа в $this->createSeat($seatData, $seatsDiscriptionShablon);
+    // исправь
+
     #[Route(name: 'app_seats_discription_shablon_index', methods: ['GET'])]
     public function index(SeatsDiscriptionShablonRepository $seatsDiscriptionShablonRepository): Response
     {
@@ -43,16 +48,12 @@ final class SeatsDiscriptionShablonController extends AbstractController
 
             $seatsDiscriptionShablonNewJSON = $form->get('SeatShablonJSOn')->getData();
             $seatArray = $converterSeatsFromJSONtoArray->convert($seatsDiscriptionShablonNewJSON);
+
+
+
             foreach ($seatArray as $seatData)
             {
-                $seat = new SeatShablon();
-                $seat->setSeatShablon($seatsDiscriptionShablon);
-                $seat->setCompartmentType($seatData['compartmentType']);
-                $seat->setCompartmentNumber($seatData['compartmentNumber']);
-                $seat->setZoneNumber($seatData['zoneNumber']);
-                $seat->setSectorNumber($seatData['sectorNumber']);
-                $seat->setRow($seatData['row']);
-                $seat->setNumberInRow($seatData['NumberInRow']);
+                $seat = $this->createSeat($seatData, $seatsDiscriptionShablon);
 
                 $entityManager->persist($seat);
                 $entityManager->flush();
@@ -83,33 +84,17 @@ final class SeatsDiscriptionShablonController extends AbstractController
             $entityManager->flush();
 
             $seats = $entityManager->getRepository(SeatShablon::class)->findBy(['SeatShablon' => $seatsDiscriptionShablon]);
-            foreach ($seats as $seat)
-            {
-                $entityManager->remove($seat);
-                $entityManager->flush();
-            }
+            $this->deleteSeats($seats);
 
             $seatsDiscriptionShablonNewJSON = $form->get('SeatShablonJSOn')->getData();
             $seatArray = $converterSeatsFromJSONtoArray->convert($seatsDiscriptionShablonNewJSON);
 
-            foreach ($seatArray as $seatData)
-            {
-                $seat = new SeatShablon();
-                $seat->setSeatShablon($seatsDiscriptionShablon);
-                $seat->setCompartmentType($seatData['compartmentType']);
-                $seat->setCompartmentNumber($seatData['compartmentNumber']);
-                $seat->setZoneNumber($seatData['zoneNumber']);
-                $seat->setSectorNumber($seatData['sectorNumber']);
-                $seat->setRow($seatData['row']);
-                $seat->setNumberInRow($seatData['NumberInRow']);
+            $this->createSeats($seatArray, $seatsDiscriptionShablon);
 
-                $entityManager->persist($seat);
-                $entityManager->flush();
-            }
 
             return $this->redirectToRoute('app_seats_discription_shablon_index', [], Response::HTTP_SEE_OTHER);
         }
-//        dd($entityManager->getRepository(SeatShablon::class)->findOneBy(['SeatShablon' => $seatsDiscriptionShablon]));
+
         $seats = $entityManager->getRepository(SeatShablon::class)->findBy(['SeatShablon' => $seatsDiscriptionShablon]);
         $seatStructure = $arrayToSeatsJSON->convert($seats);
 
@@ -126,11 +111,7 @@ final class SeatsDiscriptionShablonController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$seatsDiscriptionShablon->getId(), $request->getPayload()->getString('_token'))) {
 
             $seats = $entityManager->getRepository(SeatShablon::class)->findBy(['SeatShablon' => $seatsDiscriptionShablon]);
-            foreach ($seats as $seat)
-            {
-                $entityManager->remove($seat);
-                $entityManager->flush();
-            }
+
             
             $entityManager->remove($seatsDiscriptionShablon);
             $entityManager->flush();
@@ -139,5 +120,35 @@ final class SeatsDiscriptionShablonController extends AbstractController
         }
 
         return $this->redirectToRoute('app_seats_discription_shablon_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function createSeats(array $seatArray, SeatsDiscriptionShablon $seatsDiscriptionShablon): void
+    {
+        $entityManager = new EntityManager();
+
+        foreach ($seatArray as $seatData)
+        {
+            $seat = new SeatShablon();
+
+            $seat->setSeatShablon($seatsDiscriptionShablon);
+            $seat->setCompartmentType($seatData['compartmentType']);
+            $seat->setCompartmentNumber($seatData['compartmentNumber']);
+            $seat->setZoneNumber($seatData['zoneNumber']);
+            $seat->setSectorNumber($seatData['sectorNumber']);
+            $seat->setRow($seatData['row']);
+            $seat->setNumberInRow($seatData['NumberInRow']);
+
+            $entityManager->persist($seat);
+            $entityManager->flush();
+        }
+    }
+
+    private function deleteSeats(array $seats): void
+    {
+        foreach ($seats as $seat)
+        {
+            $this->en $entityManager->remove($seat);
+            $entityManager->flush();
+        }
     }
 }

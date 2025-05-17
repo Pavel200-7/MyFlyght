@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BaggagePoliticy;
 use App\Form\BaggagePoliticyType;
+use App\Repository\BaggagePoliticyRateRepository;
 use App\Repository\BaggagePoliticyRepository;
 use App\Service\baggagePoliticyRateWorker;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +25,7 @@ final class BaggagePoliticyController extends AbstractController
     }
 
     #[Route('/new', name: 'app_baggage_politicy_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, baggagePoliticyRateWorker $baggagePoliticyRateWorker): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, BaggagePoliticyRateRepository $baggagePoliticyRateRepository): Response
     {
         $baggagePoliticy = new BaggagePoliticy();
         $form = $this->createForm(BaggagePoliticyType::class, $baggagePoliticy);
@@ -34,7 +35,7 @@ final class BaggagePoliticyController extends AbstractController
             $entityManager->persist($baggagePoliticy);
             $entityManager->flush();
 
-            $baggagePoliticyRateWorker->createNewBaggagePoliticesRateNote($baggagePoliticy);
+            $baggagePoliticyRateRepository->createNewBaggagePoliticesRateNote($baggagePoliticy);
 
             return $this->redirectToRoute('app_baggage_politicy_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -53,7 +54,6 @@ final class BaggagePoliticyController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             return $this->redirectToRoute('app_baggage_politicy_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,10 +64,10 @@ final class BaggagePoliticyController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_baggage_politicy_delete', methods: ['POST'])]
-    public function delete(Request $request, BaggagePoliticy $baggagePoliticy, EntityManagerInterface $entityManager, baggagePoliticyRateWorker $baggagePoliticyRateWorker): Response
+    public function delete(Request $request, BaggagePoliticy $baggagePoliticy, EntityManagerInterface $entityManager, BaggagePoliticyRateRepository $baggagePoliticyRateRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$baggagePoliticy->getId(), $request->getPayload()->getString('_token'))) {
-            $baggagePoliticyRateWorker->deleteBaggagePolitice($baggagePoliticy);
+            $baggagePoliticyRateRepository->deleteBaggagePolitice($baggagePoliticy);
             $entityManager->remove($baggagePoliticy);
             $entityManager->flush();
         }

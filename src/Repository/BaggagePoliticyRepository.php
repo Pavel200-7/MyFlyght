@@ -16,6 +16,8 @@ class BaggagePoliticyRepository extends ServiceEntityRepository
         parent::__construct($registry, BaggagePoliticy::class);
     }
 
+
+
     //    /**
     //     * @return BaggagePoliticy[] Returns an array of BaggagePoliticy objects
     //     */

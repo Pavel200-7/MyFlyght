@@ -26,31 +26,3 @@ final class OrderTicketsController extends AbstractController
     }
 
 }
-
-//#[Route('/tickets')]
-//final class TicketsController extends AbstractController
-//{
-//    #[Route(name: 'app_tickets_index', methods: ['GET', 'POST'])]
-//    public function index(TicketsRepository $ticketsRepository, Request $request, FlightsRepository $flightsRepository, getFlightPricesInfo $flightPricesInfo): Response
-//    {
-//        $form = $this->createForm(MainPageType::class);
-//        $form->handleRequest($request);
-//        $needFlightsData = [];
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $needFlightsID = $flightsRepository->findNeedFlightsID($form);
-//
-//            $needFlightsData = $flightsRepository->findNeedFlightsData($needFlightsID);
-//
-//            $classType = $form->get('ServisClass')->getData()->value; // Так как это перечисление
-//            $needFlightsData = $flightPricesInfo->getFlightPricesInfo($needFlightsData , $classType);
-////            dd($needFlightsData);
-//        }
-//
-//        return $this->render('tickets/index.html.twig', [
-//            'tickets' => $ticketsRepository->findAll(),
-//            'form' => $form,
-//            'needFlightsData' => $needFlightsData,
-//        ]);
-//    }
-//}
