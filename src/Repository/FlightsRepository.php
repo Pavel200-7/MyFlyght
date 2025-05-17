@@ -84,7 +84,7 @@ class FlightsRepository extends ServiceEntityRepository
     }
 
 
-    public function findNeedFlightsData(array $idArray): array
+    public function findNeedFlightsData(int|array $idArray): array
     {
         $needFlightsData = $this->findBy(['id' => $idArray]);
         return $needFlightsData;

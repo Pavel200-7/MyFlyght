@@ -27,11 +27,13 @@ class converterArrayToSeatsJSON
             if (!$classTypeStr) continue;
 
             // Аналогично для остальных ключей
-            $compartmentNumber = $seat->getCompartmentNumber() ?? 1; // предполагается что есть геттер
+            $compartmentNumber = $seat->getCompartmentNumber() ?? 1;
             $zoneNumber = $seat->getZoneNumber() ?? 1;
             $sectorNumber = $seat->getSectorNumber() ?? 1;
             $rowNumber = $seat->getRow() ?? 1;
             $seatNumber = $seat->getNumberInRow() ?? 1;
+            $seatId = $seat->getId() ?? 1;
+
             try {
                 $available = $seat->isAvalible(); // Если брать данные из одних таблиц, то этот метод будет, а в других нет
             }

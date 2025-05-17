@@ -19,12 +19,17 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TicketsController extends AbstractController
 {
     #[Route(name: 'app_tickets_index', methods: ['GET', 'POST'])]
-    public function index(TicketsRepository $ticketsRepository, Request $request, FlightsRepository $flightsRepository, getFlightPricesInfo $flightPricesInfo): Response
+    public function index(
+        TicketsRepository $ticketsRepository, 
+        Request $request, 
+        FlightsRepository $flightsRepository, 
+        getFlightPricesInfo $flightPricesInfo,
+    ): Response
     {
         $form = $this->createForm(MainPageType::class);
         $form->handleRequest($request);
         $needFlightsData = [];
-
+        $classType = "";
         if ($form->isSubmitted() && $form->isValid()) {
             $needFlightsID = $flightsRepository->findNeedFlightsID($form);
 
@@ -32,13 +37,31 @@ final class TicketsController extends AbstractController
 
             $classType = $form->get('ServisClass')->getData()->value; // Так как это перечисление
             $needFlightsData = $flightPricesInfo->getFlightPricesInfo($needFlightsData , $classType);
-//            dd($needFlightsData);
         }
 
         return $this->render('tickets/index.html.twig', [
             'tickets' => $ticketsRepository->findAll(),
             'form' => $form,
             'needFlightsData' => $needFlightsData,
+            'classType' => $classType,
         ]);
+    }
+
+    #[Route('/order/{flightId}/{classType}', name: 'app_order_tickets', methods: ['GET'])]
+    public function orderTickets(
+        $flightId, 
+        $classType,
+        FlightsRepository $flightsRepository,
+        getFlightPricesInfo $flightPricesInfo,
+
+    ): Response
+    {
+        $needFlightsData = $flightsRepository->findNeedFlightsData($flightId);
+        $needFlightsData = $flightPricesInfo->getFlightPricesInfo($needFlightsData , $classType);
+        
+        dd($needFlightsData);
+
+
+        return $this->render('tickets/tickets_order.html.twig');
     }
 }

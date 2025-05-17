@@ -39,7 +39,5 @@
             <span>{{ ticket.baggagePrice }}</span>
             <span>руб</span>
         </div>
-        {#                <a class="ticket_info_BTN" href="{{ path('app_logout', {'param': 'значение'}) }}">Выбрать билет</a>#}
-        <a class="ticket_info_BTN" href="#">Выбрать билет</a>
-    </div>
+        <a class="ticket_info_BTN" href="{{ path('app_order_tickets', {'flightId': ticket.id, 'classType': classType}) }}">Выбрать билет</a>    </div>
 </div>

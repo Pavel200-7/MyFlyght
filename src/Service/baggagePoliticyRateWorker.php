@@ -65,4 +65,16 @@ class baggagePoliticyRateWorker
 
     }
 
+    function deleteBaggagePoliticeForAirline(Airline $airline)
+    {
+        $baggagePoliticeRates = $this->baggagePoliticyRateRepository->findBy(['airlineID' => $airline]);
+
+        foreach ($baggagePoliticeRates as $baggagePoliticeRate)
+        {
+            $this->entityManager->remove($baggagePoliticeRate);
+            $this->entityManager->flush();
+        }
+
+    }
+
 }

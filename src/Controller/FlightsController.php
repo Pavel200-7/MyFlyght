@@ -22,10 +22,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class FlightsController extends AbstractController
 {
     #[Route(name: 'app_flights_index', methods: ['GET'])]
-    public function index(FlightsRepository $flightsRepository): Response
+    public function index(FlightsRepository $flightsRepository, Security $security): Response
     {
+        $airline = $security->getUser()->getAirlineId();
+
         return $this->render('airlinePanel/templates/flights/index.html.twig', [
-            'flights' => $flightsRepository->findAll(),
+            'flights' => $flightsRepository->findBy(['airliniID' => $airline]),
         ]);
     }
 
