@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\FlightsSeats;
+use App\Entity\SeatShablon;
 use App\Entity\Tickets;
 use App\Form\MainPageType;
 use App\Form\TicketsType;
@@ -9,6 +11,8 @@ use App\Repository\FlightsRepository;
 use App\Repository\TicketsRepository;
 use App\Service\flightFinder;
 use App\Service\getFlightPricesInfo;
+use App\Service\seatStructureClasses\converterArrayToSeatsJSON;
+use App\Service\seatStructureClasses\converterSeatsFromJSONtoArray;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,15 +57,25 @@ final class TicketsController extends AbstractController
         $classType,
         FlightsRepository $flightsRepository,
         getFlightPricesInfo $flightPricesInfo,
+        EntityManagerInterface $entityManager,
+        converterArrayToSeatsJSON $arrayToSeatsJSON,
+        converterSeatsFromJSONtoArray $converterSeatsFromJSONtoArray,
 
     ): Response
     {
         $needFlightsData = $flightsRepository->findNeedFlightsData($flightId);
         $needFlightsData = $flightPricesInfo->getFlightPricesInfo($needFlightsData , $classType);
-        
-        dd($needFlightsData);
+
+        $seats = $entityManager->getRepository(FlightsSeats::class)->findBy(['flightId' => $flightId, 'compartmentType' => $classType]);
+        $seatStructure = $arrayToSeatsJSON->convert($seats);
+//        dd($seatStructure);
+//        dd($needFlightsData);
 
 
-        return $this->render('tickets/tickets_order.html.twig');
+        return $this->render('tickets/tickets_order.html.twig', [
+            'needFlightsData' => $needFlightsData,
+            'seatStructure' =>  $seatStructure,
+        ]);
+
     }
 }

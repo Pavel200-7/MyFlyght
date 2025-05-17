@@ -1,22 +1,31 @@
 export class rowSeat{
 
     constructor(){
-        this.available = true;
+        this._available = true;
+        this._seatId = 1;
     }
 
     deepClone(){
         const clone = new rowSeat();
-        clone.available = this.available;
+        clone._available = this._available;
+        clone._seatId = this._seatId;
         return clone;
 
     }
 
-    getSeatStatus() {
-        return this.available;
+    get available() {
+        return this._available;
     }
 
-    setSeatStatus(status) {
-        this.available = status;
+    set available(value) {
+        this._available = value;
     }
 
+    get seatId() {
+        return this._seatId;
+    }
+
+    set seatId(value) {
+        this._seatId = value;
+    }
 }

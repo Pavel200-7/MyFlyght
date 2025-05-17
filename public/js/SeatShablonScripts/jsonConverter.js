@@ -34,22 +34,27 @@ export class jsonConverter {
                             if (seatsData.seatStatus !== true) {
                                 status = false;
                             }
-                            seatObj.setSeatStatus(status);
+                            let seatId = seatsData.seatID;
 
-                            // rowObj.addSeatCopy(seatObj);
+                            seatObj._available = status;
+                            seatObj._seatId = seatId;
+
                             rowObj.addSeatCopy(seatObj); // добавляем сиденье в ряд
+
                         });
 
-                        // sectorObj.addRowCopy(rowObj);
                         sectorObj.addRowCopy(rowObj); // добавляем ряд в сектор
+
                     });
                     zoneObj.addSectorCopy(sectorObj); // добавляем сектор в зону
+
                 });
 
                 planeClassObj.addZoneCopy(zoneObj); // добавляем зону в класс
-            });
 
+            });
             seatStructureObj.addClassCopy(planeClassObj);
+
         });
 
         return seatStructureObj;

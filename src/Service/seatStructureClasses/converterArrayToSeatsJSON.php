@@ -71,7 +71,8 @@ class converterArrayToSeatsJSON
             $rowEntry = &$sectorEntry['rows'][$rowNumber];
 
             $rowEntry['seats'][] = [
-                'seatStatus' => $available
+                'seatStatus' => $available,
+                'seatID' => $seatId,
             ];
         }
 
