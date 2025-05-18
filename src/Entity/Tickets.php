@@ -14,11 +14,6 @@ class Tickets
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Flights::class)]
-    #[ORM\JoinColumn(name: 'Flights_id', referencedColumnName: 'id')]
-    private Flights|null $flightId = null;
-
-
     #[ORM\ManyToOne(targetEntity: FlightsSeats::class)]
     #[ORM\JoinColumn(name: 'FlightsSeats_id', referencedColumnName: 'id')]
 
@@ -29,7 +24,7 @@ class Tickets
     private User|null $clientId = null;
 
     #[ORM\Column]
-    private ?bool $finished = null;
+    private ?bool $baggage = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $timestamp = null;
@@ -39,53 +34,43 @@ class Tickets
         return $this->id;
     }
 
-    public function getFlightId(): ?int
-    {
-        return $this->flightId;
-    }
-
-    public function setFlightId(int $flightId): static
-    {
-        $this->flightId = $flightId;
-
-        return $this;
-    }
-
-    public function getFlightSeatsId(): ?int
+    public function getFlightSeatsId(): ?FlightsSeats
     {
         return $this->flightSeatsId;
     }
 
-    public function setFlightSeatsId(int $flightSeatsId): static
+    public function setFlightSeatsId(FlightsSeats $flightSeatsId): static
     {
         $this->flightSeatsId = $flightSeatsId;
 
         return $this;
     }
 
-    public function getClientId(): ?int
+    public function getClientId(): ?User
     {
         return $this->clientId;
     }
 
-    public function setClientId(int $clientId): static
+    public function setClientId(User $clientId): static
     {
         $this->clientId = $clientId;
 
         return $this;
     }
 
-    public function isFinished(): ?bool
+    public function getBaggage(): ?bool
     {
-        return $this->finished;
+        return $this->baggage;
     }
 
-    public function setFinished(bool $finished): static
+    public function setBaggage(?bool $baggage): static
     {
-        $this->finished = $finished;
+        $this->baggage = $baggage;
 
         return $this;
     }
+
+
 
     public function getTimestamp(): ?\DateTimeInterface
     {

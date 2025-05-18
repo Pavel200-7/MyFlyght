@@ -6,11 +6,13 @@ use App\Entity\FlightsSeats;
 use App\Entity\SeatShablon;
 use App\Entity\Tickets;
 use App\Form\MainPageType;
+use App\Form\TicketsOrderType;
 use App\Form\TicketsType;
 use App\Repository\FlightsRepository;
 use App\Repository\TicketsRepository;
 use App\Service\flightFinder;
 use App\Service\getFlightPricesInfo;
+use App\Service\orderPerformer;
 use App\Service\seatStructureClasses\converterArrayToSeatsJSON;
 use App\Service\seatStructureClasses\converterSeatsFromJSONtoArray;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,7 +53,7 @@ final class TicketsController extends AbstractController
         ]);
     }
 
-    #[Route('/order/{flightId}/{classType}', name: 'app_order_tickets', methods: ['GET'])]
+    #[Route('/order/{flightId}/{classType}', name: 'app_order_tickets', methods: ['GET', 'POST'])]
     public function orderTickets(
         $flightId, 
         $classType,
@@ -68,14 +70,44 @@ final class TicketsController extends AbstractController
 
         $seats = $entityManager->getRepository(FlightsSeats::class)->findBy(['flightId' => $flightId, 'compartmentType' => $classType]);
         $seatStructure = $arrayToSeatsJSON->convert($seats);
-//        dd($seatStructure);
-//        dd($needFlightsData);
-
 
         return $this->render('tickets/tickets_order.html.twig', [
             'needFlightsData' => $needFlightsData,
             'seatStructure' =>  $seatStructure,
         ]);
+
+    }
+
+
+    #[Route('/buy', name: 'app_buy_tickets', methods: ['GET', 'POST'])]
+    public function BuyTickets(
+        Request $request,
+        orderPerformer $orderPerformer,
+
+    )
+    {
+        $jsonString = $request->request->get('tickets_order_JSON');
+        if (!$jsonString) {
+            throw new \Exception("Нет данных заказа");
+        }
+        $ticketsData = json_decode($jsonString, true);
+
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('notice', 'Для совершения заказа требуется регистрация!');
+        } elseif (empty($ticketsData)) {
+            $this->addFlash('notice', 'Заказ пуст!');
+        } else {
+            try {
+                $orderPerformer->processTickets($ticketsData, $user, new \DateTime());
+                $this->addFlash('notice', 'Билеты успешно приобретены!');
+            } catch (\Exception $e) {
+                $this->addFlash('notice', $e->getMessage());
+            }
+        }
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
 
     }
 }

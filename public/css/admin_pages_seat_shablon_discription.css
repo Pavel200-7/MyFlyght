@@ -141,3 +141,7 @@
 .blocked Button{
     background-color: red;
 }
+
+.chosen Button {
+    background-color: #6e9ded;
+}

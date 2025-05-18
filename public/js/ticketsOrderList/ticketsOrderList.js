@@ -22,4 +22,13 @@ export class TicketsOrderList {
     getBaggageStatus(ticketId) {
         return this.tickets.get(ticketId);
     }
+
+    toJSON() {
+        // Map надо превратить в обычный объект или массив
+        const obj = Object.create(null);
+        for (let [key, value] of this.tickets) {
+            obj[key] = value;
+        }
+        return obj;
+    }
 }

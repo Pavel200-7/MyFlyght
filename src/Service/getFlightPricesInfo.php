@@ -61,7 +61,6 @@ class getFlightPricesInfo
     {
         $result = $this->baggagePoliticyRateRepository->findBy(['airlineID' => $airline, 'baggagePoliticyID' => $baggageType]);
         return $result[0]->getCostPerKM();
-
     }
 
 }
