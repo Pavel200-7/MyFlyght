@@ -37,6 +37,9 @@ class FlightsSeats
     private ?int $numberInRow = null;
 
     #[ORM\Column]
+    private ?string $strDiscription = null;
+
+    #[ORM\Column]
     private ?bool $avalible = null;
 
     public function getId(): ?int
@@ -127,6 +130,19 @@ class FlightsSeats
 
         return $this;
     }
+
+    public function getStrDiscription(): ?string
+    {
+        return $this->strDiscription;
+    }
+
+    public function setStrDiscription(?string $strDiscription): static
+    {
+        $this->strDiscription = $strDiscription;
+
+        return $this;
+    }
+
 
     public function isAvalible(): ?bool
     {

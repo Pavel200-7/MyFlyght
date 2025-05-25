@@ -1,0 +1,10 @@
+<tr>
+    <td>{{ ticketNumber }}</td>
+    <td>{{ ticketInfo.flightSeatsId.strDiscription }}</td>
+    {% if ticketInfo.baggage %}
+        <td>Есть</td>
+    {% else %}
+        <td>Нет</td>
+    {% endif %}
+</tr>
+{% set ticketNumber = ticketNumber + 1 %}

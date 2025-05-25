@@ -28,6 +28,7 @@ class SeatsShablonWorker
             $seat->setSectorNumber($seatData['sectorNumber']);
             $seat->setRow($seatData['row']);
             $seat->setNumberInRow($seatData['NumberInRow']);
+            $seat->setStrDiscription($seatData['strDiscription']);
 
             $this->entityManager->persist($seat);
             $this->entityManager->flush();

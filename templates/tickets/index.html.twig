@@ -33,9 +33,15 @@
 
 
     <div class="ticket_list">
-    {% for ticket in needFlightsData%}
-        {{ include('tickets/ticket_card.html.twig', { ticket: ticket }) }}
-    {% endfor %}
+        {% if not needFlightsData %}
+        <div class="ticket_card" style="text-align: center; padding: 2%">
+            <h1>Рейсов, соответствующих запросу нет.</h1>
+        </div>
+        {% endif %}
+
+        {% for ticket in needFlightsData%}
+            {{ include('tickets/ticket_card.html.twig', { ticket: ticket }) }}
+        {% endfor %}
     </div>
 
 {% endblock %}

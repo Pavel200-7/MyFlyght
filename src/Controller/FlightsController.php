@@ -77,6 +77,7 @@ final class FlightsController extends AbstractController
                 $flightSeat->setRow($seatData->getRow());
                 $flightSeat->setNumberInRow($seatData->getNumberInRow());
                 $flightSeat->setAvalible(true);
+                $flightSeat->setStrDiscription($seatData->getStrDiscription());
 
                 $entityManager->persist($flightSeat);
                 $entityManager->flush();

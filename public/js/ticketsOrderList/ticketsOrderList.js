@@ -4,8 +4,8 @@ export class TicketsOrderList {
         this.tickets = new Map();
     }
 
-    addTicket(ticketId) {
-        this.tickets.set(ticketId, false);
+    addTicket(ticketId, seatPlace) {
+        this.tickets.set(ticketId, [false, seatPlace]);
     }
 
     delTicket(ticketId) {

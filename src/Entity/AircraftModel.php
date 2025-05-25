@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\AircraftModelRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AircraftModelRepository::class)]
+#[UniqueEntity(fields: ['model'], message: 'Это название модели уже занято')]
 class AircraftModel
 {
     #[ORM\Id]

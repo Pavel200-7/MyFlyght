@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\AircraftRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AircraftRepository::class)]
+#[UniqueEntity(fields: ['registrationNumber'], message: 'Этот регистрационный номер занят')]
 class Aircraft
 {
     #[ORM\Id]
@@ -15,7 +17,7 @@ class Aircraft
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Airline::class)]
-    #[ORM\JoinColumn(name: 'Airline_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'Airline_id', referencedColumnName: 'id', onDelete: "CASCADE")]
     private ?Airline $airlineId = null;
 
     #[ORM\ManyToOne(targetEntity: AircraftModel::class)]

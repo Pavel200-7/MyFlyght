@@ -1,11 +1,16 @@
 body {
-    /*background-color: skyblue;*/
     background: linear-gradient(#9A5044, #E8D9A9) fixed;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: "Noto Looped Lao Regular";
 }
 
 .main-content {
-    flex: 1; /* занимает всё доступное пространство */
+    flex: 1;
+}
+
+.white_line {
+    border-top: 2px solid #d3bfae;
+    margin: 20px 0;
 }

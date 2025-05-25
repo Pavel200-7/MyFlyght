@@ -85,4 +85,21 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_register');
     }
+
+    #[Route('/sendVerifyMail', name: 'app_send_verify_mail')]
+    public function forgotPassword(Request $request, TranslatorInterface $translator): Response
+    {
+        $user = $this->getUser();
+
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('pavel.yakovlev.2000makron@gmail.com', 'MyFlight'))
+                    ->to((string) $user->getEmail())
+                    ->subject('Пожалуйста, подтвердите вашу почту')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
 }

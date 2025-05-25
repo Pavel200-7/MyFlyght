@@ -35,9 +35,11 @@ export class jsonConverter {
                                 status = false;
                             }
                             let seatId = seatsData.seatID;
+                            let strDiscription = seatsData.strDiscription;
 
                             seatObj._available = status;
                             seatObj._seatId = seatId;
+                            seatObj._strDiscription = strDiscription
 
                             rowObj.addSeatCopy(seatObj); // добавляем сиденье в ряд
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Enum\CompartmentTypeEnum;
 use App\Repository\SeatShablonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: SeatShablonRepository::class)]
 class SeatShablon
@@ -35,6 +36,9 @@ class SeatShablon
 
     #[ORM\Column]
     private ?int $numberInRow = null;
+
+    #[ORM\Column]
+    private ?string $strDiscription = null;
 
     public function getId(): ?int
     {
@@ -125,4 +129,19 @@ class SeatShablon
 
         return $this;
     }
+
+    public function getStrDiscription(): ?string
+    {
+        return $this->strDiscription;
+    }
+
+    public function setStrDiscription(?string $strDiscription): static
+    {
+        $this->strDiscription = $strDiscription;
+
+        return $this;
+    }
+
+
+
 }

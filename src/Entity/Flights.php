@@ -6,11 +6,13 @@ use App\Repository\FlightsRepository;
 use App\Service\IsPlaneCanBeInTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 #[ORM\Entity(repositoryClass: FlightsRepository::class)]
+#[UniqueEntity(fields: ['flightNumber'], message: 'Данный номер рейса занят')]
 class Flights
 {
 
@@ -29,7 +31,6 @@ class Flights
     #[ORM\JoinColumn(name: 'departure_airports_id', referencedColumnName: 'id')]
     private Airports|null $departureAirport = null;
 
-//    #[Assert\NotIdenticalTo($this->departureAirport)]
     #[ORM\ManyToOne(targetEntity: Airports::class)]
     #[ORM\JoinColumn(name: 'arrival_airports_id', referencedColumnName: 'id')]
     private Airports|null $arrivalAirport = null;

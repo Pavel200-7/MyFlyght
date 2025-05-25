@@ -89,12 +89,15 @@ final class SeatsDiscriptionShablonController extends AbstractController
             $seatsDiscriptionShablonNewJSON = $form->get('SeatShablonJSOn')->getData();
             $seatArray = $converterSeatsFromJSONtoArray->convert($seatsDiscriptionShablonNewJSON);
 
+
             $seatsShablonWorker->createSeatsShablon($seatArray, $seatsDiscriptionShablon);
 
             return $this->redirectToRoute('app_seats_discription_shablon_index', [], Response::HTTP_SEE_OTHER);
         }
         $seats = $entityManager->getRepository(SeatShablon::class)->findBy(['SeatShablon' => $seatsDiscriptionShablon]);
         $seatStructure = $arrayToSeatsJSON->convert($seats);
+
+//        dd($seatStructure);
 
         return $this->render('admin/templates/seats_discription_shablon/edit.html.twig', [
             'seats_discription_shablon' => $seatsDiscriptionShablon,

@@ -99,12 +99,14 @@
     height: 50px;
 }
 
-.row_seat button {
-    height: 100%;
-    width: 100%;
-    border: solid black 1px;
-    background-color: #555555;
-}
+
+/*.row_seat button {*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*    border: solid black 1px;*/
+/*    background-color: #555555;*/
+/*    color: #F5F5F5;*/
+/*}*/
 
 
 .row_seat button:hover {
@@ -138,10 +140,19 @@
     color: red;
 }
 
-.blocked Button{
+
+
+.seat-btn{
+    height: 100%;
+    width: 100%;
+    background-color: #555555;;
+    color: #F5F5F5;
+}
+
+.blocked {
     background-color: red;
 }
 
-.chosen Button {
+.chosen {
     background-color: #6e9ded;
 }

@@ -20,7 +20,8 @@ class orderPerformer
         $this->em->getConnection()->beginTransaction();
 
         try {
-            foreach ($ticketsInfo as $seatId => $haveBaggage) {
+            foreach ($ticketsInfo as $seatId => $ticketInfo) {
+                $haveBaggage = $ticketInfo[0];
                 // Получая место
                 $seat = $this->em->find(FlightsSeats::class, $seatId);
 

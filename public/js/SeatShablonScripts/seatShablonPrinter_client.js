@@ -68,20 +68,24 @@ export class seatShablonPrinter
 
                         htmlText += `<div class="sector_row">`;
                         for (let seat of row.seats) {
-                            let seatID = `setSeatStatusBTN${seatCounter}`
-                            if (seat.available === true) {
-                                if (seat._chosen === true){
-                                    htmlText += `<div id="${seatID}" class="row_seat chosen"><button type="button" class="seat-btn"></button></div>`;
-                                } else {
-                                    htmlText += `<div id="${seatID}" class="row_seat"><button type="button" class="seat-btn"></button></div>`;
-                                }
-                            } else {
-                                htmlText += `<div id="${seatID}" class="row_seat blocked"><button type="button" class="seat-btn"></button></div>`;
+                            let seatID = `setSeatStatusBTN${seatCounter}`;
+
+                            // определим класс для кнопки
+                            let buttonClass = "seat-btn";
+
+                            if (seat.available === true && seat._chosen === true) {
+                                buttonClass += " chosen";
+                            } else if (seat.available !== true) {
+                                buttonClass += " blocked";
                             }
+
+                            htmlText += `<div id="${seatID}" class="row_seat">`;
+                            htmlText += `<button type="button"  class="${buttonClass}">${seat._strDiscription}</button>`;
+                            htmlText += `</div>`; // конец row_seat
                             seatCounter++;
                         }
 
-                        htmlText += `</div>`;
+                        htmlText += `</div>`; // конец sector_row
                     }
                     htmlText += `</div>
                                  </div>
@@ -139,14 +143,14 @@ export class seatShablonPrinter
         SetSeatStatusBTN.addEventListener('click', () => {
             let currentStatus = seat._available;
             let currentChoseStatus = seat._chosen;
-            // seat._available = !currentStatus;
             seat._chosen = !currentChoseStatus;
 
             let seatId = seat._seatId
+            let seatPlase = seat._strDiscription;
             if (currentStatus == true){
                 if (currentChoseStatus == false)
                 {
-                    ticketsOrderListObj.addTicket(seatId);
+                    ticketsOrderListObj.addTicket(seatId, seatPlase);
                 } else
                 {
                     ticketsOrderListObj.delTicket(seatId);
@@ -166,8 +170,8 @@ export class seatShablonPrinter
         let finalPriceSum = 0;
         for (let ticket of ticketsOrderListObj.tickets)
         {
-            let haveExtraBuggage = ticket[1];
-
+            let haveExtraBuggage = ticket[1][0];
+            let ticketStrDiscription = ticket[1][1];
 
             let btnId = `btnId${seatCount}`;
             let buttonLable = haveExtraBuggage ? "Да" : "Нет";
@@ -180,6 +184,7 @@ export class seatShablonPrinter
             htmlText += `
                 <tr>
                     <td>${seatCount}</td>
+                    <td>${ticketStrDiscription}</td>
                     <td>${tiketPrice} руб</td>
                     
                     <td>
@@ -191,7 +196,7 @@ export class seatShablonPrinter
 
             seatCount++;
         }
-        htmlText += `<td colspan="3">Итоговая цена заказа:</td>
+        htmlText += `<td colspan="4">Итоговая цена заказа:</td>
                     <td>${finalPriceSum} руб</td>`;
 
         return htmlText;

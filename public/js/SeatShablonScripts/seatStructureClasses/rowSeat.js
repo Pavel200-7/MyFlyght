@@ -3,6 +3,7 @@ export class rowSeat{
     constructor(){
         this._available = true;
         this._chosen = false;
+        this._strDiscription = "";
 
         this._seatId = 1;
     }
@@ -12,6 +13,7 @@ export class rowSeat{
         clone._available = this._available;
         clone._chosen = this._chosen;
         clone._seatId = this._seatId;
+        clone._strDiscription = this._strDiscription;
         return clone;
 
     }
@@ -41,4 +43,11 @@ export class rowSeat{
     }
 
 
+    get strDiscription() {
+        return this._strDiscription;
+    }
+
+    set strDiscription(value) {
+        this._strDiscription = value;
+    }
 }

@@ -7,6 +7,7 @@ use App\Form\AirlineType;
 use App\Repository\AirlineRepository;
 use App\Service\baggagePoliticyRateWorker;
 use App\Service\planeClassRateWorker;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

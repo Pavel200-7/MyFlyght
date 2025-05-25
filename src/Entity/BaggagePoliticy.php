@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\BaggagePoliticyRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: BaggagePoliticyRepository::class)]
+#[UniqueEntity(fields: ['baggagePoliticyname'], message: 'Название занято')]
+
 class BaggagePoliticy
 {
     #[ORM\Id]

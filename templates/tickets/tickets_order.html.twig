@@ -14,11 +14,7 @@
 {% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-info">
-            {{ message }}
-        </div>
-    {% endfor %}
+
 
 
     {% set ticketPrise = 0 %}
@@ -41,6 +37,7 @@
 
         let jsonConverterObj = new jsonConverter();
         let seatStructureObj = jsonConverterObj.parseSeatStructure(seatStructureJSON);
+        console.log(seatStructureObj);
 
         // Подготовка класса - рисовальщика
         let visualDiscriptionSeats = document.getElementById('visual_discription');
@@ -74,6 +71,7 @@
                 <thead>
                 <tr>
                     <th>Номер</th>
+                    <th>Место</th>
                     <th>Базовая цена</th>
                     <th>Тариф багажа</th>
                     <th>Итоговая цена</th>

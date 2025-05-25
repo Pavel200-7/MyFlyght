@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\AirportsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AirportsRepository::class)]
+#[UniqueEntity(fields: ['airportName'], message: 'Данный аэропорт уже внесен')]
+#[UniqueEntity(fields: ['latitude', 'latitude'], message: 'Аэропорт с такими координатами уже внесен')]
 class Airports
 {
     #[ORM\Id]
