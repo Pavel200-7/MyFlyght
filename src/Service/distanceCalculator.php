@@ -2,8 +2,26 @@
 
 namespace App\Service;
 
+use App\Entity\Airports;
+
 class distanceCalculator
 {
+
+//    public function __construct(
+//        private
+//
+//    )
+//    {}
+
+    public function calculateDistaceBetweenAirports(Airports $airport1, Airports $airport2): float
+    {
+        $latitude1 = $airport1->getLatitude();
+        $longitude1 = $airport1->getLongtitude();
+        $latitude2 = $airport2->getLatitude();
+        $longitude2 = $airport2->getLongtitude();
+
+        return $this->calculateDistace($latitude1, $longitude1, $latitude2, $longitude2);
+    }
 
     function calculateDistace(float $latitude1, float $longitude1, float $latitude2, float $longitude2): float
     {
@@ -32,5 +50,6 @@ class distanceCalculator
 
         return $distance; // в километрах
     }
+
 
 }

@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class Flights
 {
 
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -198,15 +199,12 @@ class Flights
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, mixed $payload): void
     {
-        if ($this->getDepartureAirport() ===  $this->getArrivalAirport()) {
+        if ($this->getDepartureAirport() === $this->getArrivalAirport()) {
             $context->buildViolation('Аэропорт отправки и прибытия должны быть разными')
                 ->atPath('arrivalAirport')
-                ->addViolation()
-            ;
+                ->addViolation();
         }
     }
-
-
 }
 
 

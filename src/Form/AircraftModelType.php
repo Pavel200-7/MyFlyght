@@ -28,17 +28,8 @@ class AircraftModelType extends AbstractType
                 'choice_label' => 'manufacturerName',
                 'label' => 'Изготовитель'
             ])
-            ->add('maxSits', null,[
-                'label' => 'Максимум мест',
-            ])
-            ->add('maxWeight', null,[
-                'label' => 'Максимальный вес (кг)',
-            ])
             ->add('averageSpeed', null,[
                 'label' => 'Средняя скорость (км/ч)',
-            ])
-            ->add('range', null,[
-                'label' => 'Максимальная дальность перелета(км)',
             ])
         ;
     }
