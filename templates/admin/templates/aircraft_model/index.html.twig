@@ -14,10 +14,7 @@
                 <th>Модель</th>
                 <th>Шаблон посадочных мест</th>
                 <th>Изготовитель</th>
-                <th>Максимум мест</th>
-                <th>Максимальный вес (кг)</th>
                 <th>Средняя скорость (км/ч)</th>
-                <th>Максимальная дальность перелета(км)</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -28,10 +25,7 @@
                 <td>{{ aircraft_model.model }}</td>
                 <td>{{ aircraft_model.seatsDiscriptionId.SeatsDiscriptionShablonName }}</td>
                 <td>{{ aircraft_model.manufacturerId.manufacturerName }}</td>
-                <td>{{ aircraft_model.maxSits }}</td>
-                <td>{{ aircraft_model.maxWeight }}</td>
                 <td>{{ aircraft_model.averageSpeed }}</td>
-                <td>{{ aircraft_model.range }}</td>
                 <td>
                     <a href="{{ path('app_aircraft_model_edit', {'id': aircraft_model.id}) }}" class="aUpdate">Изменить</a>
                 </td>

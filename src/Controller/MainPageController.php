@@ -24,7 +24,17 @@ final class MainPageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            dd($form->getData());
+//            $data = $form->getData();
+            $data = [
+                'departureCityId' => $form->get('departureCity')->getData()->getId(),
+                'arrivalCityId' => $form->get('arrivalCity')->getData()->getId(),
+                'sheduledDeparture' => $form->get('sheduledDeparture')->getData()->format('Y-m-d'),
+                'PersonCount' => $form->get('PersonCount')->getData(),
+                'ServisClass' => $form->get('ServisClass')->getData(),
+
+            ];
+            $params = http_build_query($data);
+            return $this->redirectToRoute('app_tickets_index', ['params' => $params]);
         }
 
         $isAdmin = $security->isGranted('ROLE_ADMIN');

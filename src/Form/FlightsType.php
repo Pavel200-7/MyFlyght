@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FlightsType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
@@ -31,10 +32,10 @@ class FlightsType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Время отправки',
             ])
-            ->add('sheduledArrival', null, [
-                'widget' => 'single_text',
-                'label' => 'Время прибытия',
-            ])
+//            ->add('sheduledArrival', null, [
+//                'widget' => 'single_text',
+//                'label' => 'Время прибытия',
+//            ])
             ->add('departureAirport', EntityType::class, [
                 'class' => Airports::class,
                 'choice_label' => function (Airports $airport) {

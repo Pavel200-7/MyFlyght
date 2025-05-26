@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\SeatsDiscriptionShablonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: SeatsDiscriptionShablonRepository::class)]
+#[UniqueEntity(fields: ['seatsDiscriptionShablonName'], message: 'Это название шаблона занято')]
 class SeatsDiscriptionShablon
 {
     #[ORM\Id]

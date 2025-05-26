@@ -1,0 +1,35 @@
+{% set flightInfo = flight.flight %}
+{% set ticketsInfo = flight.tickets %}
+
+<div class="flight">
+    <button class="ticket_summary_button">
+        <div class="compact_ticket">
+            <div class="header_line">
+                <span class="airports">{{ flightInfo.departureAirport.airportName }} ({{ flightInfo.departureAirport.city.cityName }}) — {{ flightInfo.arrivalAirport.airportName }} ({{ flightInfo.arrivalAirport.city.cityName }})</span>
+            </div>
+            <div class="date_line">
+                <span class="times">{{ flightInfo.sheduledDeparture|date('Y-m-d')}}</span>
+                <span class="times">{{ flightInfo.sheduledDeparture|date('H:i')}} → {{ flightInfo.sheduledArrival|date('H:i')}}</span>
+            </div>
+        </div>
+    </button>
+
+    <div class="ticket-details" style="display: none">
+        <table class="order_info_table" style="width: 100%">
+            <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Место</th>
+                <th>Тариф багажа</th>
+            </tr>
+            </thead>
+            <tbody id="order_info_table_body" class="order_info_table_body">
+            {% set ticketNumber = 1 %}
+            {% for ticketInfo in ticketsInfo %}
+                {{ include('personal_account/ticket_info.html.twig', {ticketInfo: ticketInfo} ) }}
+
+            {% endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>

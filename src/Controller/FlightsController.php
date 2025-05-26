@@ -8,6 +8,8 @@ use App\Entity\SeatShablon;
 use App\Form\FlightsType;
 use App\Repository\FlightsRepository;
 use App\Service\getEnumFromString;
+use App\Service\IsPlaneCanBeInTime;
+use App\Service\seatStructureClasses\ArrivalTimeCalculator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -21,16 +23,40 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/flights')]
 final class FlightsController extends AbstractController
 {
-    #[Route(name: 'app_flights_index', methods: ['GET'])]
-    public function index(FlightsRepository $flightsRepository): Response
+    private EntityManagerInterface $EntityManagerInterface;
+    private getEnumFromString $getEnumFromString;
+    private IsPlaneCanBeInTime $isPlaneCanBeInTime;
+
+    public function __construct(
+        EntityManagerInterface $EntityManagerInterface,
+        getEnumFromString $getEnumFromString,
+        IsPlaneCanBeInTime $isPlaneCanBeInTime,
+    )
     {
+        $this->EntityManagerInterface = $EntityManagerInterface;
+        $this->getEnumFromString = $getEnumFromString;
+        $this->isPlaneCanBeInTime = $isPlaneCanBeInTime;
+    }
+
+
+    #[Route(name: 'app_flights_index', methods: ['GET'])]
+    public function index(FlightsRepository $flightsRepository, Security $security): Response
+    {
+        $airline = $security->getUser()->getAirlineId();
+
         return $this->render('airlinePanel/templates/flights/index.html.twig', [
-            'flights' => $flightsRepository->findAll(),
+            'flights' => $flightsRepository->findBy(['airliniID' => $airline]),
         ]);
     }
 
     #[Route('/new', name: 'app_flights_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security, ValidatorInterface $validator, getEnumFromString $enumFromString): Response
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Security $security,
+        ValidatorInterface $validator,
+        ArrivalTimeCalculator $arrivalTimeCalculator
+    ): Response
     {
         $airline = $security->getUser()->getAirlineId();
 
@@ -46,41 +72,42 @@ final class FlightsController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $shedualArrival = $arrivalTimeCalculator->calculateArrivalTime($flight);
+            $flight->setSheduledArrival($shedualArrival);
 
             $errors = $validator->validate($flight);
-            if (count($errors) > 0) {
-                foreach ($errors as $error) {
-                    $form->get($error->getPropertyPath())->addError(new FormError($error->getMessage()));
+            $canThePlaneBeInTime = $this->isPlaneCanBeInTime->IsPlaneCanBeInTime($flight);
+
+            if (count($errors) > 0 || !$canThePlaneBeInTime) {
+                if (count($errors) > 0) {
+                    foreach ($errors as $error) {
+                        $form->get($error->getPropertyPath())->addError(new FormError($error->getMessage()));
+                    }
                 }
+
+                if (!$canThePlaneBeInTime) {
+                    $errorMes = new FormError("Самолет не способен прибыть вовремя");
+                    $form->get('aircraftId')->addError($errorMes);
+                }
+
                 // Не сохраняем, возвращаемся к форме
                 return $this->render('airlinePanel/templates/flights/new.html.twig', [
                     'flight' => $flight,
                     'form' => $form,
                 ]);
             }
+
+
+
+
+
             // Если ошибок нет, сохраняем
             $entityManager->persist($flight);
             $entityManager->flush();
 
             $seatsDiscriptionShablon = $flight->getAircraftId()->getAircraftModelId()->getSeatsDiscriptionId();
             $seats = $entityManager->getRepository(SeatShablon::class)->findBy(['SeatShablon' => $seatsDiscriptionShablon]);
-            foreach ($seats as $seatData)
-            {
-                $flightSeat = new FlightsSeats();
-                $flightSeat->setFlightId($flight);
-                $flightSeat->setCompartmentNumber($seatData->getCompartmentNumber());
-                $flightSeat->setCompartmentType($enumFromString->getCompartmentTypeEnumFromString($seatData->getCompartmentType()));
-                $flightSeat->setZoneNumber($seatData->getZoneNumber());
-                $flightSeat->setSectorNumber($seatData->getSectorNumber());
-                $flightSeat->setRow($seatData->getRow());
-                $flightSeat->setNumberInRow($seatData->getNumberInRow());
-                $flightSeat->setAvalible(true);
-
-                $entityManager->persist($flightSeat);
-                $entityManager->flush();
-            }
-
-
+            $this->createFlightSeats($flight, $seats);
 
             return $this->redirectToRoute('app_flights_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -89,6 +116,27 @@ final class FlightsController extends AbstractController
             'flight' => $flight,
             'form' => $form,
         ]);
+    }
+
+    private function createFlightSeats(Flights $flight, array $seats): void
+    {
+        foreach ($seats as $seatData)
+        {
+            $flightSeat = new FlightsSeats();
+            $flightSeat->setFlightId($flight);
+            $flightSeat->setCompartmentNumber($seatData->getCompartmentNumber());
+            $flightSeat->setCompartmentType($this->getEnumFromString->getCompartmentTypeEnumFromString($seatData->getCompartmentType()));
+            $flightSeat->setZoneNumber($seatData->getZoneNumber());
+            $flightSeat->setSectorNumber($seatData->getSectorNumber());
+            $flightSeat->setRow($seatData->getRow());
+            $flightSeat->setNumberInRow($seatData->getNumberInRow());
+            $flightSeat->setAvalible(true);
+            $flightSeat->setStrDiscription($seatData->getStrDiscription());
+
+            $this->EntityManagerInterface->persist($flightSeat);
+            $this->EntityManagerInterface->flush();
+        }
+
     }
 
 

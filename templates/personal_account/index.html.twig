@@ -1,0 +1,76 @@
+{% extends 'personal_account/basePersonalAccount.html.twig' %}
+
+{% block body %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.ticket_summary_button').forEach(item => {
+                item.addEventListener('click', () => {
+                    const answer = item.nextElementSibling;
+                    let lastStile = answer.style.display;
+
+                    document.querySelectorAll('.ticket_summary_button').forEach(item => {
+                        const answer = item.nextElementSibling;
+                        answer.style.display = 'none';
+                    });
+
+                    answer.style.display = lastStile === 'block' ? 'none' : 'block';
+                });
+            });
+        });
+
+    </script>
+
+    <div class="personal_account_window">
+        <h1>Добро пожаловать в личный кабинет.</h1>
+
+        <div class="account_info">
+            <h1>Личные данные</h1>
+            <div class="account_info_string">
+                <div class="account_info_string_property"><span>Электронная почта</span></div>
+                <div class="account_info_string_value"><span>{{ user.email }}</span></div>
+            </div>
+            <div class="account_info_string">
+                <div class="account_info_string_property"><span>ФИО</span></div>
+                <div class="account_info_string_value"><span>{{ user.firstName }} {{ user.lastName }}</span></div>
+            </div>
+            <div class="account_info_string">
+                <div class="account_info_string_property"><span>Имя пользователя</span></div>
+                <div class="account_info_string_value"><span>{{ user.login }}</span></div>
+            </div>
+            <div class="account_info_string">
+                <div class="account_info_string_property"><span>Дата рождения</span></div>
+                <div class="account_info_string_value"><span>{{ user.birthday|date('Y-m-d') }}</span></div>
+            </div>
+
+
+
+            {% if not user.isVerified %}
+                <br>
+                <a href="{{ path('app_send_verify_mail') }}" class="btn btn-primary">Подтвердить аккаунт</a>
+            {% endif %}
+
+
+        </div>
+
+
+        <div class="flights_info">
+            <h1>Данные рейсов</h1>
+
+
+             {% if not flightsInfo %}
+                 <h1>Список пуст</h1>
+             {% else %}
+                <div class="flights">
+                    {% for flight in flightsInfo %}
+                        {{ include('personal_account/flight_info.html.twig', {flight: flight}) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

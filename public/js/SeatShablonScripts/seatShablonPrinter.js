@@ -14,7 +14,7 @@ export class seatShablonPrinter
 
     printSeatShablonFromObject(seatStructureObject) {
         this.visualDiscription.innerHTML = this.printSeatShablonFromObject_GetHTML(seatStructureObject);
-        this.printSeatShablonFromObject_AddButtonListeners_withBlocker(seatStructureObject);
+        this.printSeatShablonFromObject_AddButtonListeners_withoutBlocker(seatStructureObject);
     }
 
     printSeatShablonFromObject_GetHTML(seatStructureObject)
@@ -361,10 +361,10 @@ export class seatShablonPrinter
         let SetSeatStatusBTN = document.getElementById(SetSeatStatusBtnId);
 
         SetSeatStatusBTN.addEventListener('click', () => {
-            console.log(seat);
-            let newStatus = !seat.getSeatStatus();
+            // console.log(seat);
+            let newStatus = !seat._available;
 
-            seat.setSeatStatus(newStatus);
+            seat._available = newStatus;
             this.updateSeatShablonVisualFromObject(seatStructureObject);
         });
 
@@ -374,6 +374,7 @@ export class seatShablonPrinter
     {
         this.visualDiscription.innerHTML = '';
     }
+
 
 }
 

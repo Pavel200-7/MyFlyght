@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Билеты заказ{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/tickets_page.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ticket_single_card.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/admin_pages_seat_shablon_discription.css') }}">
+
+
+{% endblock %}
+
+{% block body %}
+
+
+
+    {% set ticketPrise = 0 %}
+    {% set buggagePrise = 0 %}
+    {% set tickets_order_JSON = "" %};
+
+    {% for ticket in needFlightsData%}
+        {% set ticketPrise = ticket.ticketPrice %}
+        {% set buggagePrise = ticket.baggagePrice %}
+    {% endfor %}
+
+    <script type="module">
+        import { jsonConverter } from "{{ asset('js/SeatShablonScripts/jsonConverter.js') }}";
+        import { seatShablonPrinter } from "{{ asset('js/SeatShablonScripts/seatShablonPrinter_client.js') }}";
+        import { TicketsOrderList } from "{{ asset('js/ticketsOrderList/ticketsOrderList.js') }}";
+
+
+        // Конверсия строки или какой-то другой веши (я не помню) в JSON, и дальше в объект js
+        let seatStructureJSON = JSON.parse({{ seatStructure|json_encode|raw }});
+
+        let jsonConverterObj = new jsonConverter();
+        let seatStructureObj = jsonConverterObj.parseSeatStructure(seatStructureJSON);
+        console.log(seatStructureObj);
+
+        // Подготовка класса - рисовальщика
+        let visualDiscriptionSeats = document.getElementById('visual_discription');
+        let visualDiscriptionTickets = document.getElementById('order_info_table_body');
+        let seatShablonPrinterObj = new seatShablonPrinter(visualDiscriptionSeats, visualDiscriptionTickets);
+        seatShablonPrinterObj.price = {{ ticketPrise }};
+        seatShablonPrinterObj.buggegePrice = {{ buggagePrise }};
+
+        let ticketsOrderListObj = new TicketsOrderList();
+        // Первое отрисовывание шаблона
+        seatShablonPrinterObj.updateSeatShablonVisualFromObject_client(seatStructureObj, ticketsOrderListObj);
+
+
+        document.getElementById('ticketsForm').addEventListener('submit', function(e) {
+            let ticketsOrderListJSON = JSON.stringify(ticketsOrderListObj);
+            document.getElementById('tickets_order_JSON').value = ticketsOrderListJSON;
+        });
+    </script>
+
+
+
+    <div class="current_order_info">
+        <div class="current_flight_info">
+            {% for ticket in needFlightsData%}
+                {{ include('tickets/ticket_single_card.html.twig', { ticket: ticket }) }}
+            {% endfor %}
+        </div>
+
+        <div class="order_info">
+            <table class="order_info_table" >
+                <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Место</th>
+                    <th>Базовая цена</th>
+                    <th>Тариф багажа</th>
+                    <th>Итоговая цена</th>
+                </tr>
+                </thead>
+                <tbody id="order_info_table_body" class="order_info_table_body">
+
+                </tbody>
+            </table>
+
+            <form id="ticketsForm" method="POST" action="{{ path('app_buy_tickets') }}">
+                <input type="hidden" name="tickets_order_JSON" id="tickets_order_JSON">
+                <button class="ticket_info_BTN" type="submit">Отправить заказ</button>
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="seat_shablon_window">
+        <div class="tablo">
+            <h1>Расположение мест в самолете</h1>
+        </div>
+
+        <div class="visual_discription" id="visual_discription">
+            {#Визуальное отображение#}
+        </div>
+        {#Окно#}
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}

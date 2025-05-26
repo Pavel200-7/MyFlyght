@@ -29,10 +29,10 @@
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{{ path('app_main_page') }}" class="nav-link px-2 link-secondary">Главная</a></li>
-                <li><a href="#" class="nav-link px-2">Личный кабинет</a></li>
+                <li><a href="{{ path('app_personal_account') }}" class="nav-link px-2">Личный кабинет</a></li>
                 <li><a href="{{ path('app_tickets_index') }}" class="nav-link px-2">Билеты</a></li>
-                <li><a href="#" class="nav-link px-2">Часто задаваемые вопросы</a></li>
-                <li><a href="#" class="nav-link px-2">О нас</a></li>
+                <li><a href="{{ path('app_faq') }}" class="nav-link px-2">Часто задаваемые вопросы</a></li>
+                <li><a href="{{ path('app_about_us') }}" class="nav-link px-2">О нас</a></li>
             </ul>
 
             <div class="col-md-3 text-end">
@@ -53,6 +53,16 @@
 
     <body>
         <div class="main-content">
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-info">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-info">
+                    {{ message }}
+                </div>
+            {% endfor %}
             {% block body %}
             {% endblock %}
         </div>

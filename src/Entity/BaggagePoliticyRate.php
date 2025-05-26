@@ -14,7 +14,7 @@ class BaggagePoliticyRate
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Airline::class)]
-    #[ORM\JoinColumn(name: 'Airline_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'Airline_id', referencedColumnName: 'id', onDelete: "CASCADE")]
     private Airline|null $airlineID = null;
 
     #[ORM\ManyToOne(targetEntity: BaggagePoliticy::class)]

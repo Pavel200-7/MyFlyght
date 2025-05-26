@@ -7,62 +7,163 @@
 
 namespace App\Service;
 
+use App\Entity\Airports;
 use App\Entity\Flights;
+use App\Repository\FlightsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class IsPlaneCanBeInTime
 {
+    private int $extraMinutesPlaneNeed;
+
     private EntityManagerInterface $entityManager;
+    private FlightsRepository $flightsRepository;
+    private distanceCalculator $distanceCalculator;
+    private flightTimeCalculator $flightTimeCalculator;
 
     function __construct(
         EntityManagerInterface $entityManager,
+        FlightsRepository $flightsRepository,
+        distanceCalculator $distanceCalculator,
+        flightTimeCalculator $flightTimeCalculator,
     )
     {
+        $this->extraMinutesPlaneNeed = 120;
+
+
         $this->entityManager = $entityManager;
+        $this->flightsRepository = $flightsRepository;
+        $this->distanceCalculator = $distanceCalculator;
+        $this->flightTimeCalculator = $flightTimeCalculator;
 
     }
 
 
-    private function IsPlaneCanBeInTime($thisFlight): bool
+    public function IsPlaneCanBeInTime(Flights $flight): bool
     {
-        $flightsRepository = $this->entityManager->getRepository(Flights::class);;
-        $lastFlightOfPlane = $flightsRepository->createQueryBuilder('f')
-            ->where('f.aircraft = :aircraftId')
-            ->AndWhere('f.sheduledArrival <= :sheduledDeparture')
-            ->setParameter('aircraftId', $this->aircraftId)
-            ->setParameter('sheduledDeparture', $this->sheduledDeparture)
-            ->orderBy('f.sheduledArrival', 'DESC') // сортируем по убыванию
-            ->setMaxResults(1) // берем только одну — самую позднюю
-            ->getQuery()
-            ->getOneOrNullResult();
-
-        if ($lastFlightOfPlane === null) {
-            return true;
+        if ($this->IsThereFlightOverlay($flight)) {
+            return false;
+        } elseif (!$this->IsPlaneInTimeAfterLastFlight($flight)) {
+            return false;
+        } elseif (!$this->IsPlaneInTimeBeforeNextFlight($flight)) {
+            return false;
         } else {
-            $lastArrivalAirport = $lastFlightOfPlane->getArrivalAirport();
+            return true;
+        }
+    }
 
-            $latitude1 = $lastArrivalAirport->getLatitude();
-            $longitude1 = $lastArrivalAirport->getLongtitude();
+    private function IsThereFlightOverlay(Flights $flight): bool
+    {
+        $aircraftId = $flight->getAircraftId();
+        $sheduledDeparture = $flight->getSheduledDeparture();
+        $sheduledArrival = $flight->getSheduledArrival();
 
-            $latitude2 = $thisFlight->getDepartureAirport()->getLatitude();
-            $longitude2 = $thisFlight->getDepartureAirport()->getLongtitude();
 
-            $distanceCalculator = new DistanceCalculator();
-            $distance = $distanceCalculator->calculateDistace($latitude1, $longitude1, $latitude2, $longitude2);
 
-            $planeSpeed = $thisFlight->getAircraftId()->getAircraftModelId()->getAverageSpeed();
 
-            $timeThePlaneNeed = $distance / $planeSpeed;
-            $timeThePlaneHave = $thisFlight->getSheduledDeparture() - $lastFlightOfPlane->getSheduledArrival();
+        $foundFlights = $this->flightsRepository->createQueryBuilder('f')
+            ->where('f.aircraftId = :aircraftId')
+            ->andWhere(
+                '(f.sheduledArrival BETWEEN :dep AND :arr OR
+                         f.sheduledDeparture BETWEEN :dep AND :arr OR
+                         f.sheduledDeparture > :dep AND f.sheduledArrival < :arr OR
+                         f.sheduledDeparture < :dep AND f.sheduledArrival > :arr)'
 
-            if ($timeThePlaneHave >= $timeThePlaneNeed)
-            {
-                return true;
-            }
+            )
+            ->setParameter('aircraftId', $aircraftId)
+            ->setParameter('dep', $sheduledDeparture)
+            ->setParameter('arr', $sheduledArrival)
+            ->getQuery()
+            ->getResult();
+
+        return empty($foundFlights) ? false : true;
+    }
+
+
+    private function IsPlaneInTimeAfterLastFlight(Flights $flight): bool
+    {
+        $lastFlight = $this->getLastFlight($flight);
+
+        if (is_null($lastFlight)) {
+            return true;
         }
 
-        return false;
+        $departureAirport = $lastFlight->getArrivalAirport();
+        $arrivalAirport = $flight->getDepartureAirport();
 
+        $timePlaneNeed = $this->getTimePlaneNeed($departureAirport, $arrivalAirport, $flight);
+        $timePlaneHave = $this->getTimePlaneHave($lastFlight->getSheduledArrival(), $flight->getSheduledDeparture());
+
+        return $timePlaneNeed <= $timePlaneHave ? true : false;
+
+    }
+
+    private function IsPlaneInTimeBeforeNextFlight(Flights $flight): bool
+    {
+        $nextFlight = $this->getNextFlight($flight);
+
+        if (is_null($nextFlight)) {
+            return true;
+        }
+
+        $departureAirport = $flight->getArrivalAirport();
+        $arrivalAirport = $nextFlight->getDepartureAirport();
+
+        $timePlaneNeed = $this->getTimePlaneNeed($departureAirport, $arrivalAirport, $flight);
+        $timePlaneHave = $this->getTimePlaneHave($flight->getSheduledArrival(), $nextFlight->getSheduledDeparture());
+
+        return $timePlaneNeed <= $timePlaneHave ? true : false;
+    }
+
+    private function getLastFlight(Flights $flight): ?Flights
+    {
+        $aircraftId = $flight->getAircraftId();
+        $sheduledDeparture = $flight->getSheduledDeparture();
+
+        return $this->flightsRepository->createQueryBuilder('f')
+            ->where('f.aircraftId = :aircraftId')
+            ->andWhere('f.sheduledArrival < :sheduledDeparture')
+            ->setParameter('aircraftId', $aircraftId)
+            ->setParameter('sheduledDeparture', $sheduledDeparture)
+            ->orderBy('f.sheduledArrival', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    private function getNextFlight(Flights $flight): ?Flights
+    {
+        $aircraftId = $flight->getAircraftId();
+        $sheduledArrival = $flight->getSheduledArrival();
+
+        return $this->flightsRepository->createQueryBuilder('f')
+            ->where('f.aircraftId = :aircraftId')
+            ->andWhere('f.sheduledDeparture > :sheduledArrival')
+            ->setParameter('aircraftId', $aircraftId)
+            ->setParameter('sheduledArrival', $sheduledArrival)
+            ->orderBy('f.sheduledArrival', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    private function getTimePlaneNeed(Airports $departureAirport, Airports $arrivalAirport, Flights $flight): int
+    {
+        $aircraftId = $flight->getAircraftId();
+        $distance = $this->distanceCalculator->calculateDistaceBetweenAirports($departureAirport, $arrivalAirport);
+        $timePlaneNeed = $this->flightTimeCalculator->calculateFlightTimeForAircraft($aircraftId, $distance);
+        $timePlaneNeed = $timePlaneNeed + $this->extraMinutesPlaneNeed;
+
+        return $timePlaneNeed;
+    }
+
+    private function getTimePlaneHave( \DateTimeInterface $time1, \DateTimeInterface $time2,): int
+    {
+        $interval = $time1->diff($time2);
+        $minutes = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
+        $minutes = abs($minutes);
+
+        return $minutes;
     }
 
 }

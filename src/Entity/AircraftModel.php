@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\AircraftModelRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AircraftModelRepository::class)]
+#[UniqueEntity(fields: ['model'], message: 'Это название модели уже занято')]
 class AircraftModel
 {
     #[ORM\Id]
@@ -25,16 +27,7 @@ class AircraftModel
     private ?Manufacturers $manufacturerId = null;
 
     #[ORM\Column]
-    private ?int $maxSits = null;
-
-    #[ORM\Column]
-    private ?int $maxWeight = null;
-
-    #[ORM\Column]
     private ?int $averageSpeed = null;
-
-    #[ORM\Column]
-    private ?int $range = null;
 
     public function getId(): ?int
     {
@@ -69,42 +62,6 @@ class AircraftModel
     public function setSeatsDiscriptionId(?SeatsDiscriptionShablon $seatsDiscriptionId): static
     {
         $this->seatsDiscriptionId = $seatsDiscriptionId;
-
-        return $this;
-    }
-
-    public function getMaxSits(): ?int
-    {
-        return $this->maxSits;
-    }
-
-    public function setMaxSits(int $maxSits): static
-    {
-        $this->maxSits = $maxSits;
-
-        return $this;
-    }
-
-    public function getMaxWeight(): ?int
-    {
-        return $this->maxWeight;
-    }
-
-    public function setMaxWeight(int $maxWeight): static
-    {
-        $this->maxWeight = $maxWeight;
-
-        return $this;
-    }
-
-    public function getRange(): ?string
-    {
-        return $this->range;
-    }
-
-    public function setRange(string $range): static
-    {
-        $this->range = $range;
 
         return $this;
     }

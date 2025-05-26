@@ -3,14 +3,17 @@
 namespace App\Service;
 
 use App\Entity\Airline;
+use App\Entity\BaggagePoliticy;
 use App\Entity\PlaneClassRate;
 use App\Enum\CompartmentTypeEnum;
+use App\Repository\PlaneClassRateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class planeClassRateCreater
+class planeClassRateWorker
 {
     function __construct(
         private EntityManagerInterface $entityManager,
+        private PlaneClassRateRepository $planeClassRateRepository,
     )
     {}
     function createPlaneClassRateNotes(Airline $airline)
@@ -27,6 +30,20 @@ class planeClassRateCreater
         }
 
     }
+
+    function deletePlaneClassForAirline(Airline $airline)
+    {
+        $baggagePoliticeRates = $this->planeClassRateRepository->findBy(['airlineID' => $airline]);
+
+        foreach ($baggagePoliticeRates as $baggagePoliticeRate)
+        {
+            $this->entityManager->remove($baggagePoliticeRate);
+            $this->entityManager->flush();
+        }
+
+    }
+
+
 
 
 }

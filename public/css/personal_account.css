@@ -1,0 +1,179 @@
+.personal_account_window {
+    width: 80%;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #efd3b3;
+    border: 2px solid #ac9c88;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+
+}
+
+.personal_account_window > div {
+    margin: auto;
+    margin-top: 5% ;
+    background-color: #ece5e5;
+    border: 6px double #775151;
+    border-radius: 10px;
+    padding: 2%;
+
+}
+
+.personal_account_window > div > h1 {
+    margin-bottom: 5%;
+}
+
+.account_info {
+    width: 50%;
+}
+
+.account_info_string {
+    display: flex;
+    flex: 1;
+    padding: 2%;
+    padding-left: 4%;
+    padding-right: 4%;
+    border-bottom: 1px solid black;
+}
+
+.account_info_string:first-child {
+    border-top: 1px solid black;
+}
+
+.account_info_string_property {
+    text-align: left;
+    width: 49%;
+}
+
+.account_info_string_value {
+    text-align: right;
+    width: 49%;
+}
+
+.flights_info {
+    width: 90%;
+
+}
+
+.flights {
+    border: 2px solid #4CAF50;
+    background-color: white;
+    border-radius: 15px;
+
+}
+
+.flights * {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+
+.flight {
+    border-bottom: 2px solid #4CAF50;
+}
+
+.flight:last-child {
+    border-bottom: none;
+}
+
+.flight > * {
+    /*border-bottom: 2px solid #4CAF50;*/
+    margin-left: 2%;
+    margin-right: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+/*//////////////////////////////////////////////////////////////*/
+
+.ticket_summary_button {
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    margin-top: 2%;
+    font-size: 1.4em;
+    line-height: 1.5em;
+    font-weight: 600;
+}
+
+.compact_ticket {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.header_line {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.times {
+    color: #333;
+}
+
+.airports {
+    font-size: 1.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date_line {
+    margin-bottom: 10px;
+}
+
+/*.ticket-details {*/
+/*    border-top: 2px solid #4CAF50;*/
+/*}*/
+
+
+/* Скрытый блок, при необходимости можно добавить стили для отображения */
+.ticket-details {
+    border-top: 2px solid #4CAF50;
+
+}
+
+/* Таблица с плавными границами и стилем */
+.order_info_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1%;
+}
+
+/* Заголовки таблицы */
+.order_info_table th {
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Строки таблицы */
+.order_info_table td {
+    text-align: center;
+    font-size: 14px;
+    border-right: 1px solid #555555;
+}
+
+.order_info_table td:last-child {
+    border-right: none;
+}
+
+/* Каждая строка - легкая полосатость для удобства */
+.order_info_table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Наведение на строки для интерактивности */
+.order_info_table tbody tr:hover {
+    background-color: #e0f7fa;
+}
+
+/* Можно добавить также плавное появление таблицы при отображении */
+.ticket-details.show {
+    display: block;
+}

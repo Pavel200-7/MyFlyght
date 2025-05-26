@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Airline;
 use App\Form\AirlineType;
 use App\Repository\AirlineRepository;
-use App\Repository\BaggagePoliticyRateRepository;
 use App\Service\baggagePoliticyRateWorker;
-use App\Service\planeClassRateCreater;
+use App\Service\planeClassRateWorker;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ final class AirlineController extends AbstractController
     }
 
     #[Route('/new', name: 'app_airline_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, planeClassRateCreater $classRateCreater, BaggagePoliticyRateRepository $baggagePoliticyRateRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, planeClassRateWorker $planeClassRateWorker, baggagePoliticyRateWorker $baggagePoliticyRateWorker): Response
     {
         $airline = new Airline();
         $form = $this->createForm(AirlineType::class, $airline);
@@ -36,8 +36,8 @@ final class AirlineController extends AbstractController
             $entityManager->persist($airline);
             $entityManager->flush();
 
-            $classRateCreater->createPlaneClassRateNotes($airline);
-            $baggagePoliticyRateRepository->createBaggagePoliticesRateNotes($airline);
+            $planeClassRateWorker->createPlaneClassRateNotes($airline);
+            $baggagePoliticyRateWorker->createBaggagePoliticesRateNotes($airline);
 
             return $this->redirectToRoute('app_airline_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,11 +67,16 @@ final class AirlineController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_airline_delete', methods: ['POST'])]
-    public function delete(Request $request, Airline $airline, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Airline $airline, EntityManagerInterface $entityManager, planeClassRateWorker $planeClassRateWorker, baggagePoliticyRateWorker $baggagePoliticyRateWorker): Response
     {
         if ($this->isCsrfTokenValid('delete'.$airline->getId(), $request->getPayload()->getString('_token'))) {
+
+            $planeClassRateWorker->deletePlaneClassForAirline($airline);
+            $baggagePoliticyRateWorker->deleteBaggagePoliticeForAirline($airline);
+
             $entityManager->remove($airline);
             $entityManager->flush();
+
         }
 
         return $this->redirectToRoute('app_airline_index', [], Response::HTTP_SEE_OTHER);

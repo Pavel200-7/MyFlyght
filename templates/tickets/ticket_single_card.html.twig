@@ -1,0 +1,47 @@
+<div class="ticket-summary">
+    <header class="ticket-header">
+        <h2><strong>{{ ticket.airliniID.airlineName }}</strong></h2>
+    </header>
+
+    <section class="flight-details">
+        <div class="times">
+            <div class="departure-time">
+                <time datetime="{{ ticket.sheduledDeparture|date('Y-m-d H:i') }}">
+                    {{ ticket.sheduledDeparture|date('H:i') }}
+                </time>
+                <small>Вылет</small>
+            </div>
+
+            <div class="arrival-time">
+                <time datetime="{{ ticket.sheduledArrival|date('Y-m-d H:i') }}">
+                    {{ ticket.sheduledArrival|date('H:i') }}
+                </time>
+                <small>Прилет</small>
+            </div>
+        </div>
+
+        <div class="airports-cities">
+            <div class="departure-info">
+                <p><strong>Отправление:</strong></p>
+                <p>{{ ticket.departureAirport.airportName }}, {{ ticket.departureAirport.city.cityName }}</p>
+                <p>{{ ticket.sheduledDeparture|date('Y-m-d') }}</p>
+            </div>
+            <div class="arrival-info">
+                <p><strong>Прибытие:</strong></p>
+                <p>{{ ticket.arrivalAirport.airportName }}, {{ ticket.arrivalAirport.city.cityName }}</p>
+                <p>{{ ticket.sheduledArrival|date('Y-m-d') }}</p>
+            </div>
+        </div>
+    </section>
+
+    <aside class="ticket-pricing">
+        <h3>Цена: {{ ticket.ticketPrice }} руб</h3>
+        <ul>
+            <li>Без багажа за одного</li>
+            <li>
+                С багажем:
+                {{ ticket.baggagePoliticyID.itemsCount * ticket.baggagePoliticyID.weightPerItem }} кг + {{ ticket.baggagePrice }} руб
+            </li>
+        </ul>
+    </aside>
+</div>
